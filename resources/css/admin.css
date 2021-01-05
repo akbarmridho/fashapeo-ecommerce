@@ -1,0 +1,55 @@
+#wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidenav {
+    width: 250px;
+    position: fixed;
+    height: 100vh;
+    z-index: 999;
+    transition: all 0.3s;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#sidenav.active {
+    margin-left: -250px;
+}
+
+#sidenav::-webkit-scrollbar {
+    display: none;
+    background: transparent;
+}
+
+#content {
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#content.active {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    #sidenav {
+        margin-left: -250px;
+    }
+
+    #sidenav.active {
+        margin-left: 0;
+    }
+
+    #content {
+        width: 100%;
+    }
+
+    #content.active {
+        width: calc(100% - 250px);
+    }
+}

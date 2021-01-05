@@ -7,4 +7,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])
         ->middleware(['guest'])
         ->name('login');
+
+    Route::middleware(['auth:admin', 'verified'])->group(function () {
+        Route::get('/', function () {
+            return view('admin.pages.welcome');
+        });
+
+    });
 });

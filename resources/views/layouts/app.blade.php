@@ -19,10 +19,13 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
         />
         <link rel="stylesheet" href="{{ asset('/css/mdb.min.css') }}" />
-        <link rel="stylesheet" href="{{ asset('/css/app.css') }}" />
+        @yield('child-sheet')
+        @yield('additional-sheet')
+
         <script src="{{ asset('/js/mdb.min.js') }}" defer></script>
-        <script src="{{ asset('/js/index.js') }}" defer></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
+        @yield('child-script')
+        @yield('additional-script')
     </head>
 
     <body>

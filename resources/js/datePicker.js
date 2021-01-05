@@ -1,3 +1,4 @@
-const flatpickr = require("flatpickr");
+// const flatpickr = require("flatpickr");
+import flatpickr from "flatpickr";
 
-flatpickr("#dateOfBirth", { dateFormat: "j/m/Y" });
+flatpickr("#dateOfBirth", { dateFormat: "j-m-Y" });

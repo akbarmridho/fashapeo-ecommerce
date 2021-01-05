@@ -20,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'type',
+        'sex',
+        'born_at'
     ];
 
     protected $childTypes = [
