@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateUsersTable extends Migration
 {
@@ -20,9 +21,13 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('type')->nullable();
+            $table->date('born_at');
+            $table->tinyInteger('sex');
             $table->rememberToken();
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE users ADD CHECK (sex IN (0,1,2,9));');
     }
 
     /**

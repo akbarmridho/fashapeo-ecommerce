@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\auth;
 
 use Illuminate\View\Component;
 
@@ -23,6 +23,6 @@ class register extends Component
      */
     public function render()
     {
-        return view('components.customer.register');
+        return view('components.auth.register');
     }
 }

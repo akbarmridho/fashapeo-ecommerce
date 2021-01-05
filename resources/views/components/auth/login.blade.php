@@ -1,35 +1,30 @@
-<form>
-    <div class="text-center mb-3">
-        <p>Sign in with:</p>
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-            <i class="fab fa-facebook-f"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-            <i class="fab fa-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-        </button>
-
-        <button type="button" class="btn btn-primary btn-floating mx-1">
-            <i class="fab fa-github"></i>
-        </button>
-    </div>
-
-    <p class="text-center">or:</p>
+<form action="{{ route('login') }}" method="POST">
+    @csrf
+    <p class="text-center">Login</p>
 
     <!-- Email input -->
     <div class="form-outline mb-4">
-        <input type="email" id="loginName" class="form-control" />
+        <input type="email" id="loginName" 
+        class="form-control @error('email') is-invalid @enderror" 
+        required autofocus autocomplete="email" value="{{ old('email') }}"/>
         <label class="form-label" for="loginName">Email</label>
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control" />
+        <input type="password" id="loginPassword" class="form-control 
+        @error('email') is-invalid @enderror" required autocomplete="current-password"/>
         <label class="form-label" for="loginPassword">Password</label>
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 
     <!-- 2 column grid layout for inline styling -->
@@ -40,9 +35,9 @@
                 <input
                     class="form-check-input"
                     type="checkbox"
-                    value=""
+                    value="remember-me"
                     id="loginCheck"
-                    checked
+                    {{ old("remember") ? "checked" : "" }}
                 />
                 <label class="form-check-label" for="loginCheck">
                     Remember me

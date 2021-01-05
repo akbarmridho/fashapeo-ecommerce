@@ -1,4 +1,4 @@
-@extends('customer.layouts.auth')
+@extends('auth.layouts.auth')
 
 @section('title')
 Register
@@ -6,5 +6,5 @@ Register
 
 @section('content') 
 <p class="text-center h2 fw-bold">Sign Up</p>
-<x-customer.register />
+<x-auth.register />
 @endsection

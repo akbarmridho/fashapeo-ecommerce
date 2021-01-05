@@ -1,10 +1,10 @@
-@extends('customer.layouts.auth')
+@extends('auth.layouts.auth')
 
 @section('title')
-Login
+Admin Login
 @endsection
 
 @section('content') 
 <p class="text-center h2 fw-bold">Sign In</p>
-<x-customer.login />
+<x-auth.login />
 @endsection

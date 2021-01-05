@@ -8,6 +8,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Route; 
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -18,10 +19,14 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (request()->isAdmin()) {
-            config(['fortify.domain' => adminUrl()]);
+        // if (request()->isAdmin()) {
+        //     config(['fortify.domain' => adminUrl()]);
+        //     config(['fortify.guard' => 'admin']);
+        // }
+
+        if (Route::currentRouteName('admin.*')) {
             config(['fortify.guard' => 'admin']);
-        }
+        };
     }
 
     /**
@@ -37,20 +42,20 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::loginView(function () {
-            if (request()->isAdmin()) {
-                return view('admin.auth.login');
+            if (Route::currentRouteName('admin.*')) {
+                return view('auth.admin-login');
             }
-
-            return view('customer.auth.login');
+            return view('auth.customer-login');
         });
 
-        Fortify::registerView(fn () => view('customer.auth.register'));
-        Fortify::requestPasswordResetLinkView(function () {
-            return view('customer.auth.forgot-password');
-        });
-        Fortify::resetPasswordView(function ($request) {
-            return view('customer.auth.reset-password', ['request' => $request]);
-        });
-        Fortify::verifyEmailView(fn () => view('customer.auth.verify-email'));
+        Fortify::registerView(fn () => view('auth.register'));
+        
+        // Fortify::requestPasswordResetLinkView(function () {
+        //     return view('customer.auth.forgot-password');
+        // });
+        // Fortify::resetPasswordView(function ($request) {
+        //     return view('customer.auth.reset-password', ['request' => $request]);
+        // });
+        // Fortify::verifyEmailView(fn () => view('customer.auth.verify-email'));
     }
 }

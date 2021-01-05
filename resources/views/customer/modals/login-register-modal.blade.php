@@ -46,7 +46,7 @@
               role="tabpanel"
               aria-labelledby="mdb-tab-login"
             >
-              <x-customer.login />
+              <x-auth.login />
             </div>
             <div
               class="tab-pane fade"
@@ -54,7 +54,7 @@
               role="tabpanel"
               aria-labelledby="mdb-tab-register"
             >
-              <x-customer.register />
+              <x-auth.register />
             </div>
           </div>
           <!-- Pills content -->
