@@ -2699,7 +2699,7 @@ __webpack_require__.r(__webpack_exports__);
 // const flatpickr = require("flatpickr");
 
 Object(flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"])("#dateOfBirth", {
-  dateFormat: "j/m/Y"
+  dateFormat: "j-m-Y"
 });
 
 /***/ }),

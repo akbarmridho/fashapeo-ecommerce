@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Actions\Fortify;
+namespace App\Actions;
 
-use App\Models\Customer;
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Support\Carbon;
+use App\Actions\Fortify\PasswordValidationRules;
 
-class CreateNewUser implements CreatesNewUsers
+class CreateNewAdmin implements CreatesNewUsers
 {
     use PasswordValidationRules;
 
@@ -31,12 +32,12 @@ class CreateNewUser implements CreatesNewUsers
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'sex' => ['required'],
-            'birthDate' => ['date'],
             'password' => $this->passwordRules(),
+            'sex' => 'required',
+            'birthDate' => 'date',
         ])->validate();
 
-        return Customer::create([
+        return Admin::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),

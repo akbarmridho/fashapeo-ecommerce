@@ -78,14 +78,6 @@
                     </div>
                   </div>
                 </div>
-                <!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul> -->
               </li>
               <li class="nav-item mx-2">
                 <a href="" class="nav-link">Promo</a>
@@ -96,6 +88,7 @@
               <li class="nav-item mx-2">
                 <a href="" class="nav-link">How to Order</a>
               </li>
+              @auth('customer')
               <li class="nav-item dropdown mx-3">
                 <a
                   class="nav-link dropdown-toggle"
@@ -113,9 +106,13 @@
                   <a href="" class="dropdown-item">Orders</a>
                   <a href="" class="dropdown-item">Wishlist</a>
                   <hr class="dropdown-divider" />
-                  <a href="" class="dropdown-item">Logout</a>
+                  <form action="{{ route('logout')}}" method="post">
+                  @csrf
+                  <button class="dropdown-item" type="submit">Logout</button>
+                  </form>
                 </div>
               </li>
+              @else
               <li class="nav-item mx-3">
                 <a
                   role="button"
@@ -129,6 +126,7 @@
                   >
                 </a>
               </li>
+              @endauth
               <li class="nav-item mx-3">
                 <a href="#" class="nav-link"
                   ><i class="fas fa-shopping-cart"></i

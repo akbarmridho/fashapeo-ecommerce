@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RajaongkirController;
 
+Route::name('customer.')->group(function () {
+    //
+});
+
 // Route::get('/cart', function () {
 //     return view('customer.pages.cart');
 // });

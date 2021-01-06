@@ -7,8 +7,12 @@ use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
-use Illuminate\Support\Facades\Route; 
+use App\Models\Customer;
+use App\Models\Admin;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -19,12 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // if (request()->isAdmin()) {
-        //     config(['fortify.domain' => adminUrl()]);
-        //     config(['fortify.guard' => 'admin']);
-        // }
-
-        if (Route::currentRouteName('admin.*')) {
+        if ($this->isAdmin()) {
             config(['fortify.guard' => 'admin']);
         };
     }
@@ -36,13 +35,15 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Fortify::ignoreRoutes();
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::loginView(function () {
-            if (Route::currentRouteName('admin.*')) {
+            if($this->isAdmin()) {
                 return view('auth.admin-login');
             }
             return view('auth.customer-login');
@@ -59,5 +60,38 @@ class FortifyServiceProvider extends ServiceProvider
         });
         
         Fortify::verifyEmailView(fn () => view('auth.verify-email'));
+
+        Fortify::authenticateUsing(function (Request $request) {
+
+            $customer = Customer::where('email', $request->email)->firstOr(function () {
+                return false;
+            });
+
+            if ($customer &&
+                Hash::check($request->password, $customer->password)) {
+                return $customer;
+            }
+
+            $admin = Admin::where('email', $request->email)->firstOr(function () {
+                return false;
+            });
+
+            if ($admin &&
+                Hash::check($request->password, $admin->password)) {
+                return $admin;
+            }
+    
+        });
+
+    }
+
+    private function isAdmin() {
+        $uris = explode('/', $this->app->request->getRequestUri());
+
+        if($uris[1] === 'admin')  {
+            return true;
+        }
+
+        return false;
     }
 }

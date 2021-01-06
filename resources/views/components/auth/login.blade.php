@@ -1,10 +1,10 @@
-<form action="{{ route('login') }}" method="POST">
+<form action="{{ url()->current() }}" method="POST">
     @csrf
     <p class="text-center">Login</p>
 
     <!-- Email input -->
     <div class="form-outline mb-4">
-        <input type="email" id="loginName" 
+        <input name="email" type="email" id="loginName" 
         class="form-control @error('email') is-invalid @enderror" 
         required autofocus autocomplete="email" value="{{ old('email') }}"/>
         <label class="form-label" for="loginName">Email</label>
@@ -17,7 +17,7 @@
 
     <!-- Password input -->
     <div class="form-outline mb-4">
-        <input type="password" id="loginPassword" class="form-control 
+        <input name="password" type="password" id="loginPassword" class="form-control 
         @error('email') is-invalid @enderror" required autocomplete="current-password"/>
         <label class="form-label" for="loginPassword">Password</label>
         @error('password')

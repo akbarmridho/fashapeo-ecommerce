@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE users ADD CHECK (sex IN (0,1,2,9));');
+        // DB::statement('ALTER TABLE users ADD CHECK (sex IN (0,1,2,9));');
     }
 
     /**

@@ -1,4 +1,4 @@
-<form action="{{ route('register') }}" method="POST">
+<form action="{{ url()->current() }}" method="POST">
     @csrf
 
     <p class="text-center">Register:</p>

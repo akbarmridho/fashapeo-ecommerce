@@ -3,8 +3,13 @@
 namespace App\Models;
 
 use App\Models\User;
+use Parental\HasParent;
 
 class Admin extends User
 {
-    use \Parental\HasParent; 
+    use HasParent;
+
+    public function impersonate($user) {
+        
+    }
 }
