@@ -1,4 +1,10 @@
-<form action="{{ url()->current() }}" method="POST">
+<form action="
+@admin
+{{ route('admin.register') }}
+@else
+{{ route('register') }}
+@endadmin
+" method="POST">
     @csrf
 
     <p class="text-center">Register:</p>

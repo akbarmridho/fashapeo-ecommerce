@@ -19,6 +19,7 @@ use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 use App\Http\Controllers\RegisteredAdminController;
 
+// ADMIN ROUTES
 
 Route::prefix('admin')->name('admin.')->group(function () {
     
@@ -30,26 +31,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
         ->middleware(array_filter([
-            'guest',
+            'guest:admin',
             $limiter ? 'throttle:'.$limiter : null,
         ]));
-
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
 
     Route::get('/register', [RegisteredAdminController::class, 'create'])
         ->name('register');
 
     Route::post('/register', [RegisteredAdminController::class, 'store']);
 
-    Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
-        ->middleware(['auth:admin'])
-        ->name('verification.notice');
-    
-    Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-        ->middleware(['auth:admin', 'signed', 'throttle:6,1'])
-        ->name('verification.verify');
 });
+
+// CUSTOMER ROUTES
 
     $limiter = config('fortify.limiters.login');
 
@@ -63,47 +56,48 @@ Route::prefix('admin')->name('admin.')->group(function () {
             $limiter ? 'throttle:'.$limiter : null,
         ]));
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-        ->name('logout');
-
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
-        ->middleware(['guest:customer'])
-        ->name('password.request');
-
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->middleware('guest:customer')
-        ->name('password.reset');
-
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->middleware('guest:customer')
-        ->name('password.email');
-
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])
-        ->middleware('guest:customer')
-        ->name('password.update');
-
     Route::get('/register', [RegisteredUserController::class, 'create'])
         ->name('register');    
 
     Route::post('/register', [RegisteredUserController::class, 'store']);
 
+// COMMON USED ROUTES
+
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+
+    Route::put('/user/password', [PasswordController::class, 'update'])
+        ->middleware(['auth:admin, customer'])
+        ->name('user-password.update');
+
+    Route::put('/user/profile-information', [ProfileInformationController::class, 'update'])
+        ->middleware(['auth:admin, customer'])
+        ->name('user-profile-information.update');
+
     Route::get('/email/verify', [EmailVerificationPromptController::class, '__invoke'])
-        ->middleware(['auth:customer'])
+        ->middleware(['auth:admin, customer'])
         ->name('verification.notice');
     
     Route::get('/email/verify/{id}/{hash}', [VerifyEmailController::class, '__invoke'])
-        ->middleware(['auth:customer', 'signed', 'throttle:6,1'])
+        ->middleware(['auth:admin, customer', 'signed', 'throttle:6,1'])
         ->name('verification.verify');
 
     Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware(['auth:customer', 'throttle:6,1'])
+        ->middleware(['auth:admin, customer', 'throttle:6,1'])
         ->name('verification.send');
 
-    Route::put('/user/profile-information', [ProfileInformationController::class, 'update'])
-        ->middleware(['auth:customer'])
-        ->name('user-profile-information.update');
-    
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
+        ->middleware('guest:admin, customer')
+        ->name('password.request');
 
-    Route::put('/user/password', [PasswordController::class, 'update'])
-        ->middleware(['auth:customer'])
-        ->name('user-password.update');
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
+        ->middleware('guest:admin, customer')
+        ->name('password.reset');
+
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->middleware('guest:admin, customer')
+        ->name('password.email');
+
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])
+        ->middleware('guest:admin, customer')
+        ->name('password.update');

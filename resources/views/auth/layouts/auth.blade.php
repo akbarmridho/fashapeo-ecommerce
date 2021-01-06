@@ -10,7 +10,7 @@
 
 <div class="row my-5">
     <div class="col mx-auto text-center">
-        <img src="img/thin.png" alt="Logo" height="40">
+        <img src="/img/thin.png" alt="Logo" height="40">
     </div>
 </div>
 
@@ -32,7 +32,7 @@
 
 <footer>
     <div class="row mx-5 my-4">
-        © 2020 Copyright: Fashapeo
+        © {{ date('Y') }} Copyright: Fashapeo
     </div>
 </footer>
 

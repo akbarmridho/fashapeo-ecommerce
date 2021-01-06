@@ -1,4 +1,10 @@
-<form action="{{ url()->current() }}" method="POST">
+<form action="
+@admin
+{{ route('admin.login') }}
+@else
+{{ route('login') }}
+@endadmin
+" method="POST">
     @csrf
     <p class="text-center">Login</p>
 

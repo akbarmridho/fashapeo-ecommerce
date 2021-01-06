@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::if('admin', function () {
+            return $this->isAdmin();
+        });
+    }
+
+    private function isAdmin() {
+        $uris = explode('/', $this->app->request->getRequestUri());
+
+        if($uris[1] === 'admin')  {
+            return true;
+        }
+
+        return false;
     }
 }
