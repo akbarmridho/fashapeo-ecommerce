@@ -26,6 +26,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'string',
                 'email',
                 'max:255',
+                'sex' => ['required'],
+                'birthDate' => ['date'],
                 Rule::unique('users')->ignore($user->id),
             ],
         ])->validateWithBag('updateProfileInformation');
@@ -37,6 +39,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'sex' => $input['sex'],
+                'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d')
             ])->save();
         }
     }

@@ -9,7 +9,4 @@ class Customer extends User
 {
     use HasParent;
 
-    public function impersonate($user) {
-        
-    }
 }

@@ -8,8 +8,5 @@ use Parental\HasParent;
 class Admin extends User
 {
     use HasParent;
-
-    public function impersonate($user) {
-        
-    }
+  
 }
