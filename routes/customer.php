@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RajaongkirController;
 
 Route::name('customer.')->group(function () {
-    //
+
+    Route::get('/my-account', function () {
+        return view('customer.pages.my-account.dashboard');
+    })->name('dashboard');
+
 });
 
 // Route::get('/cart', function () {
@@ -15,9 +19,7 @@ Route::name('customer.')->group(function () {
 //     return view('customer.pages.wishlist');
 // });
 
-// Route::get('/my-account', function () {
-//     return view('customer.pages.my-account.dashboard');
-// });
+
 
 // Route::get('/my-account/notifications', function () {
 //     return view('customer.pages.my-account.notifications');

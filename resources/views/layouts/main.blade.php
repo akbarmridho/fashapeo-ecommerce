@@ -12,7 +12,7 @@
 @section('child-layout')
 
 <!--Main Navigation-->
-@include('customer.includes.header')
+@include('main.includes.header')
 <!--Main Navigation-->
 
 <!--Main layout-->
@@ -20,7 +20,7 @@
 <!--Main layout-->
 
 <!-- Footer -->
-@include('customer.includes.footer')
+@include('main.includes.footer')
 <!-- Footer -->
 
 @endsection

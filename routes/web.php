@@ -15,8 +15,8 @@ use App\Http\Controllers\RajaongkirController;
 */
 
 Route::get('/', function () {
-    return view('customer.pages.home');
-});
+    return view('main.pages.home');
+})->name('home');
 
 // Route::get('/category', function () {
 //     return view('customer.pages.category');

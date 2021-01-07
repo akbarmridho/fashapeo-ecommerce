@@ -1,4 +1,4 @@
-@extends('auth.layouts.auth')
+@extends('layouts.auth')
 
 @section('title')
 Forgot Password

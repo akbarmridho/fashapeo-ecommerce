@@ -1,4 +1,4 @@
-@extends('customer.layouts.main')
+@extends('layouts.main')
 
 @section('title')
 My Account

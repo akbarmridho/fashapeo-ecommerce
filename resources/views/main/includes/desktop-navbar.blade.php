@@ -23,7 +23,7 @@
             <!-- Left links -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item mx-2">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
               </li>
               <!-- Navbar dropdown -->
               <li class="nav-item dropdown mx-2">
@@ -102,7 +102,7 @@
                   >
                 </a>
                 <div class="dropdown-menu">
-                  <a href="" class="dropdown-item">My Account</a>
+                  <a href="{{ route('customer.dashboard') }}" class="dropdown-item">My Account</a>
                   <a href="" class="dropdown-item">Orders</a>
                   <a href="" class="dropdown-item">Wishlist</a>
                   <hr class="dropdown-divider" />
@@ -176,5 +176,5 @@
           <!-- Collapsible wrapper -->
         </div>
         <!-- Container wrapper -->
-        @include('customer.modals.login-register-modal')
+        @include('main.modals.login-register-modal')
       </nav>

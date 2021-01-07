@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light">
           <button class="btn shadow-0" id="sidenavCollapse" type="button">
             <i class="fas fa-bars"></i>
           </button>
@@ -50,7 +50,12 @@
                 >
                   <li><a class="dropdown-item" href="#">My profile</a></li>
                   <li><a class="dropdown-item" href="#">Settings</a></li>
-                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                  <li>
+                    <form action="{{ route('logout') }}" method="post">
+                      @csrf
+                      <button class="dropdown-item" type="submit">Logout</button>
+                    </form>
+                  </li>
                 </ul>
               </li>
               <!-- Notification dropdown -->
