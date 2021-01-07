@@ -13,11 +13,11 @@ class BaseRepository implements EloquentRepositoryInterface {
         $this->model = $model;
     }
 
-    public function create(array $input) {
-        return $this->model->create($input);
-    }
+    // public function create(array $input) {
+    //     return $this->model->create($input);
+    // }
 
-    public function find(int $id) {
-        return $this->model->find($id);
-    }
+    // public function find(int $id) {
+    //     return $this->model->find($id);
+    // }
 }
