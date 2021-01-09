@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 
 class UpdateCategory {
 
-    use Subcategory;
-
     public function update(array $input, Category $category) {
 
         Validator::make($input, [
@@ -18,26 +16,36 @@ class UpdateCategory {
                 'required', 
                 'string', 
                 'max:255',
-                Rule::unique(Category::class),
+                Rule::unique(Category::class)->ignore($category->id),
             ],
-             'description' => ['string', 'max:255'],
-             'parent_id' => 'integer',
+             'description' => ['string', 'max:255', 'nullable'],
+             'parent' => 'integer|nullable',
         ])->validate();
 
         $category->forceFill([
-            'name' => $input['name'],
+            'name' => Str::title($input['name']),
             'description' => $input['description'],
             'slug' => Str::slug($input['name'], '-'),
         ])->save();
 
-        if($input['parent_id'] !== null)
+        $hasChild = $category->children->isNotEmpty();
+
+        if($input['parent'] !== null && ! $hasChild)
         {
-            $this->setParent($input['parent_id'], $category);
-        } else
+            $category->parent_id = $input['parent'];
+            $category->save();
+        } 
+        else if ($input['parent'] !== null && $hasChild)
         {
-            $this->unsetParent($input['parent_id'], $category);
+            return false;
+        }
+        else 
+        {
+            $category->parent_id = null;
+            $category->save();
         }
 
+    
         return $category;
     }
     

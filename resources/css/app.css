@@ -67,3 +67,43 @@ input[type="number"] {
     width: 100%;
     padding-top: 100%;
 }
+
+/* Modals Position */
+@media (min-width: 768px) {
+    .modal-dialog.modal-top {
+        top: 0;
+    }
+    .modal-dialog.modal-left {
+        left: 0;
+    }
+    .modal-dialog.modal-right {
+        right: 0;
+    }
+    .modal-dialog.modal-bottom {
+        bottom: 0;
+    }
+    .modal-dialog.modal-top-left {
+        top: 10px;
+        left: 10px;
+    }
+    .modal-dialog.modal-top-right {
+        top: 10px;
+        right: 10px;
+    }
+    .modal-dialog.modal-bottom-left {
+        bottom: 10px;
+        left: 10px;
+    }
+    .modal-dialog.modal-bottom-right {
+        bottom: 10px;
+        right: 10px;
+    }
+}
+
+.modal-side {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 400px;
+    margin: 0;
+}

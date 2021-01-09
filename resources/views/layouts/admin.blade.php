@@ -18,7 +18,7 @@
 
         @include('admin.includes.navbar')
 
-        <div class="container-fluid">
+        <div class="container-fluid p-5">
             @yield('content')
         </div>
 

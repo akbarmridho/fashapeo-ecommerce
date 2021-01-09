@@ -16,6 +16,7 @@ class Category extends Model
         'name',
         'slug',
         'description',
+        'parent_id'
     ];
 
     public function products() {
@@ -27,6 +28,14 @@ class Category extends Model
     }
 
     public function parent() {
-        return $this->belongsTo(Category::class, 'id', 'parent_id');
+        return $this->hasOne(Category::class, 'id', 'parent_id');
+    }
+
+    public function scopeParents($query) {
+        return $query->where('parent_id', null);
+    }
+
+    public function scopeChildren($query) {
+        return $query->where('parent_id', '!=', null);
     }
 }

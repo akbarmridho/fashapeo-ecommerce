@@ -1,14 +1,22 @@
 <?php
 namespace App\Repository;
 
-use App\Model\Category;
+use App\Models\Category;
 use Illuminate\Support\Collection;
 
 interface CategoryRepositoryInterface
 {
    public function all(): Collection;
 
-   public function create(array $input, $creator): Category;
+   public function children(): Collection;
 
-   public function update(array $input, $category, $creator): Category;
+   public function parents(): Collection;
+
+   public function find($key): Category;
+
+   public function create(array $input);
+
+   public function update(array $input, $key);
+
+   public function delete($key);
 }

@@ -2,7 +2,7 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Model\Category;
+use App\Models\Category;
 use App\Actions\CreateNewCategory;
 use App\Actions\UpdateCategory;
 use App\Repository\CategoryRepositoryInterface;
@@ -11,14 +11,19 @@ use Illuminate\Support\Collection;
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
 
+    public $creator;
+    public $handler;
+
    /**
     * CategoryRepostiory constructor.
     *
     * @param Category $model
     */
-   public function __construct(Category $model)
+   public function __construct(Category $model, CreateNewCategory $creator, UpdateCategory $handler)
    {
        parent::__construct($model);
+       $this->creator = $creator;
+       $this->handler = $handler;
    }
 
    /**
@@ -29,17 +34,54 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
        return $this->model->all();    
    }
 
+   public function children(): Collection
+   {
+       return $this->model->children()->get();
+   }
+
+   public function parents(): Collection
+   {
+       return $this->model->parents()->get();
+   }
+
+   /*
+    * Find category models by id
+    */
+    public function find($key): Category
+    {
+        return $this->model->find($key);
+    }
+
    /*
     * Create Category
     */
-    public function create(array $input, CreateNewCategory $creator) {
-       return $creator->create($input);
+    public function create(array $input) 
+    {
+       return $this->creator->create($input);
     }
 
    /*
     * Update category and its child and parent relationship
     */
-    public function update(array $input, Category $category, UpdateCategory $creator) {
-        return $creator->update($input, $category);
+    public function update(array $input, $key) 
+    {
+        return $this->handler->update($input, $this->find($key));
     }
+
+   /*
+    * Create Category
+    */
+    public function delete($key)
+    {
+
+        $category = $this->find($key);
+
+        if($category->children->isNotEmpty())
+        {
+            return false;
+        }
+
+        return $category->delete();
+    }
+    
 }

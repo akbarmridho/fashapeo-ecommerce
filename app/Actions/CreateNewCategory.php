@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 
 class CreateNewCategory {
 
-    use Subcategory;
-
     public function create(array $input) {
 
         Validator::make($input, [
@@ -20,20 +18,16 @@ class CreateNewCategory {
                 'max:255',
                 Rule::unique(Category::class),
             ],
-             'description' => ['string', 'max:255'],
-             'parent_id' => 'integer',
+             'description' => ['string', 'max:255', 'nullable'],
+             'parent' => 'integer|nullable',
         ])->validate();
 
         $category = Category::create([
             'name' => $input['name'],
             'description' => $input['description'],
             'slug' => Str::slug($input['name'], '-'),
+            'parent_id' => $input['parent'],
         ]);
-
-        if($input['parent_id'] !== null)
-        {
-            $this->setParent($input['parent_id'], $category);
-        }
 
         return $category;
     }

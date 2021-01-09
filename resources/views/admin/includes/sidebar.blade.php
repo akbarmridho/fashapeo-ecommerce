@@ -1,7 +1,7 @@
 <div class="navbar-dark bg-dark pt-5" id="sidenav">
         <ul class="navbar-nav ps-4">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"
+            <a class="nav-link active" aria-current="page" href="{{ route('admin.dashboard') }}"
               >Dashboard</a
             >
           </li>
@@ -92,7 +92,10 @@
               </div>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
+          </li>
+          {{-- <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -118,7 +121,7 @@
                 >
               </div>
             </div>
-          </li>
+          </li> --}}
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
