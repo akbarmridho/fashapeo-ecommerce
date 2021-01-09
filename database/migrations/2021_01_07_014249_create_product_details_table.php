@@ -15,7 +15,9 @@ class CreateProductDetailsTable extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('variant_id')->constrained()->onDelete('restrict');
+            $table->foreignId('variant_option_id')->constrained()->onDelete('restrict');
         });
     }
 

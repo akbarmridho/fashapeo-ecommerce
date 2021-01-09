@@ -11,6 +11,7 @@ Categories
 @section('content')
 
 <div class="row">
+    <h3 class="fw-bold">Categories</h3>
     <x-admin.session-alert />
     <div class="col-12 col-md-7">
         <table class="table table-bordered align-middle table-hover">

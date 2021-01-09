@@ -15,6 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('master_product_id')->cascadeOnDelete();
+            $table->unsignedInteger('stock')->default(0);
+            $table->unsignedDecimal('price')->default(0);
+            $table->string('sku')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

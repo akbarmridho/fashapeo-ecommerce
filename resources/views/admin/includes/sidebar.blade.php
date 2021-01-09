@@ -52,12 +52,8 @@
             <!-- Dropdown menu -->
             <div class="collapse list-group pe-4 small" id="products">
               <div class="dropdown-menu-dark">
-                <a class="list-group-item bg-dark dropdown-item" href="#"
-                  >Active Products</a
-                >
-
-                <a class="list-group-item dropdown-item bg-dark" href="#"
-                  >Archived Products</a
+                <a class="list-group-item bg-dark dropdown-item" href="{{ route('admin.products') }}"
+                  >View Products</a
                 >
                 <a class="list-group-item dropdown-item bg-dark" href="#"
                   >Add Product</a

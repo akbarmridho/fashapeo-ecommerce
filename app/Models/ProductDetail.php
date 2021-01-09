@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ProductDetail extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+
+    public function variant () {
+        return $this->hasOne(Variant::class);
+    }
+
+    public function variantOption () {
+        return $this->hasOne(Variant::class);
+    }
 }

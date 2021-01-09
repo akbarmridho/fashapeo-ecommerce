@@ -15,7 +15,7 @@ class CreateVariantOptionsTable extends Migration
     {
         Schema::create('variant_options', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('name');
         });
     }
 

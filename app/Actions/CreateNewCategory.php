@@ -23,7 +23,7 @@ class CreateNewCategory {
         ])->validate();
 
         $category = Category::create([
-            'name' => $input['name'],
+            'name' => Str::title($input['name']),
             'description' => $input['description'],
             'slug' => Str::slug($input['name'], '-'),
             'parent_id' => $input['parent'],

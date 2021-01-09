@@ -15,7 +15,14 @@ class CreateMasterProductsTable extends Migration
     {
         Schema::create('master_products', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('category_id')->constrained()->nullOnDelete();
+            $table->string('name');
+            $table->text('description');
+            $table->string('slug');
+            $table->unsignedInteger('weight');
+            $table->unsignedInteger('sold')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

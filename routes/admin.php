@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     
@@ -23,4 +24,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::put('categories/{id}', [CategoryController::class, 'update'])
             ->name('categories.update');
+
+        Route::get('products', [ProductController::class, 'index'])
+            ->name('products');
 });
