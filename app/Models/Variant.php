@@ -9,6 +9,10 @@ class Variant extends Model
 {
     use HasFactory;
 
+    private $fillable = [
+        'name',
+    ];
+
     public $timestamps = false;
 
 }

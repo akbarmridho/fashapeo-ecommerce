@@ -15,6 +15,13 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('courier_id')->constrained()->nullOnDelete();
+            $table->unsignedTinyInteger('courier_service_code')->nullable();
+            $table->string('courier_service');
+            $table->string('etd', 20);
+            $table->unsignedMediumInteger('weight');
+            $table->decimal('price', $precision = 18, $scale = 0)->nullable();
+            $table->string('tracking_number')->nullable();
             $table->timestamps();
         });
     }

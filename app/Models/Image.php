@@ -9,6 +9,10 @@ class Image extends Model
 {
     use HasFactory;
 
+    private $fillable = [
+       'url'
+    ];
+
     public $timestamps = false;
 
     public function imageable() {

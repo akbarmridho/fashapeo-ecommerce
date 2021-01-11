@@ -23,7 +23,7 @@ class CreateAddressesTable extends Migration
             $table->string('district');
             $table->string('postal_code');
             $table->string('delivery_address');
-            $table->boolean('isMain');
+            $table->boolean('isMain')->default(false);
             $table->timestamps();
         });
     }

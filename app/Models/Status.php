@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class OrderActivity extends Model
+class Status extends Model
 {
     use HasFactory;
 
     private $fillable = [
-        'order_id',
-        'status_id',
+        'code',
+        'type',
+        'name',
         'description',
     ];
 
-    public function status ()
-    {
-        return $this->hasOne(Status::class);
-    }
+    public $timestamps = false;
 }

@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('master_product_id')->cascadeOnDelete();
             $table->unsignedInteger('stock')->default(0);
-            $table->unsignedDecimal('price')->default(0);
+            $table->decimal('price', $precision = 18, $scale = 0)->default(0);
             $table->string('sku')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();

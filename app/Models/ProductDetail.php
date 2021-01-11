@@ -9,6 +9,12 @@ class ProductDetail extends Model
 {
     use HasFactory;
 
+    private $fillable = [
+        'product_id',
+        'variant_id',
+        'variant_option_id',
+    ];
+
     public $timestamps = false;
 
     public function variant () {
