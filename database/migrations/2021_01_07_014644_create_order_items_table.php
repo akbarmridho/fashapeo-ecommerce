@@ -23,7 +23,7 @@ class CreateOrderItemsTable extends Migration
             $table->string('note')->nullable();
             $table->unsignedSmallInteger('quantity');
             $table->decimal('price', $precision = 18, $scale = 0);
-            $table->decimal('price_cut', $precision = 18, $scale = 0);
+            $table->decimal('price_cut', $precision = 18, $scale = 0)->nullable();
             $table->decimal('final_price', $precision = 18, $scale = 0);
         });
     }

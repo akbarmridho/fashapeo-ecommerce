@@ -11,11 +11,9 @@ class Shipment extends Model
 
     private $fillable = [
         'courier_id',
-        'courier_service_code',
-        'courier_service',
-        'etd',
+        'origin_id',
+        'destination_id',
         'weight',
-        'price',
     ];
 
     public function courier ()

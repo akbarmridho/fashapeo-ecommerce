@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Actions\Calculations\ProductItemTotalPrice as CalculatePrice;
 
 class OrderItem extends Model
 {
-    use HasFactory;
+    use HasFactory, CalculatePrice;
 
     private $fillable = [
         'order_id',

@@ -17,19 +17,44 @@ class Product extends Model
         'active',
     ];
 
-    public function masterProduct () {
+    public function masterProduct ()
+    {
         return $this->hasOne(MasterProduct::class);
     }
 
-    public function details () {
+    public function details ()
+    {
         return $this->hasMany(ProductDetail::class);
     }
 
-    public function image () {
+    public function image ()
+    {
         return $this->morphTo(Image::class, 'imageable');
     }
 
-    public function discount () {
+    public function discount ()
+    {
         return $this->hasMany(ProductDiscount::class);
+    }
+
+    public function getProductNameAttribute()
+    {
+        return $this->masterProduct->name;
+    }
+
+    public function getVariantNameAttribute()
+    {
+        $details = $this->details;
+        if($details->isEmpty()) {
+            return '';
+        }
+
+        $variants = [];
+
+        foreach($details as $detail) {
+            array_push($variants, $detail->variant_name);
+        }
+
+        return \implode(', ', $variants);
     }
 }

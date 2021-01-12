@@ -15,10 +15,11 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('status_id');
+            $table->foreignId('status_id')->constrained()->nullOnDelete();
+            $table->foreignId('order_id')->constrained()->nullOnDelete();
             $table->string('transaction_number')->nullable();
-            $table->string('name');
-            $table->string('payment_method');
+            $table->string('name')->nullable();
+            $table->string('payment_method')->nullable();
             $table->decimal('total', $precision = 18, $scale = 0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();

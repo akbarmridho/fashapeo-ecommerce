@@ -24,6 +24,11 @@ class Order extends Model
         return $this->hasOne(Customer::class);
     }
 
+    public function items ()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function orderActivities () 
     {
         return $this->hasMany(OrderActivity::class);

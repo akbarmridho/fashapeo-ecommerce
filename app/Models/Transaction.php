@@ -10,9 +10,7 @@ class Transaction extends Model
     use HasFactory;
 
     private $fillable = [
-        'transaction_number',
-        'name',
-        'payment_method',
+        'order_id',
         'total',
     ];
 
