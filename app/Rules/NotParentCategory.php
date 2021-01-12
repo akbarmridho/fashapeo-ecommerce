@@ -10,7 +10,7 @@ class NotParentCategory implements Rule
 
     public function passes($attribute, Category $category)
     {
-        if ($category->children->isEmpty()) {
+        if (! $category->children->first()) {
             return true;
         }
 
@@ -19,6 +19,6 @@ class NotParentCategory implements Rule
 
     public function message()
     {
-        return 'The category should not be a parent category';
+        return 'Selected category should not be a parent category';
     }
 }

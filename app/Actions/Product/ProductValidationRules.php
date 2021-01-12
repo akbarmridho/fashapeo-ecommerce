@@ -4,6 +4,7 @@ namespace App\Actions\Product;
 
 use App\Models\Product;
 use App\Rules\NotParentCategory;
+use App\Rules\VariantsIsValid;
 
 trait ProductValidationRules {
     
@@ -28,6 +29,7 @@ trait ProductValidationRules {
             'usedVariant' => [
                 'string',
                 'nullable',
+                new VariantsIsValid,
             ],
             'variants.*.price' => 'required|integer',
             'variants.*.stock' => [
@@ -42,7 +44,7 @@ trait ProductValidationRules {
                 'integer',
                 'lte:100000',
             ],
-            'dimensions.*' => 'required|integer|lte:300',
+            'dimensions.*' => 'nullable|integer|lte:300',
         ];
     }
 }

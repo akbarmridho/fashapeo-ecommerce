@@ -15,6 +15,9 @@ class MasterProduct extends Model
         'category_id',
         'slug',
         'weight',
+        'width',
+        'height',
+        'length',
     ];
 
     public function products () {

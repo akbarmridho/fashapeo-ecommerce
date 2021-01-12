@@ -19,8 +19,11 @@ class CreateMasterProductsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('slug');
-            $table->unsignedInteger('weight');
             $table->unsignedInteger('sold')->default(0);
+            $table->unsignedInteger('weight');
+            $table->unsignedTinyInteger('width')->nullable();
+            $table->unsignedTinyInteger('height')->nullable();
+            $table->unsignedTinyInteger('length')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
