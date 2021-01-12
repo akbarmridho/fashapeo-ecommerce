@@ -9,6 +9,8 @@ class Address extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'user_id',
@@ -19,7 +21,8 @@ class Address extends Model
         'delivery_address',
     ];
 
-    public function customer () {
-        return $this->hasOne(Customer::class);
+    public function addressable ()
+    {
+        return $this->morphTo();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Category;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;

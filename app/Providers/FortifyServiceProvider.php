@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Actions\Fortify\CreateNewUser;
-use App\Actions\Fortify\ResetUserPassword;
-use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Actions\Auth\CreateNewUser;
+use App\Actions\Auth\ResetUserPassword;
+use App\Actions\Auth\UpdateUserPassword;
+use App\Actions\Auth\UpdateUserProfileInformation;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;

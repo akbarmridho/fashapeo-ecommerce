@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Calculations;
 
 use Illuminate\Support\Carbon;
 use App\Models\Order;

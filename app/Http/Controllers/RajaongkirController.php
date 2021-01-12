@@ -1,42 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Http;
 
+use App\Actions\Vendor\Rajaongkir;
 use Illuminate\Http\Request;
 
 class RajaongkirController extends Controller
 {
-    private $apiKey;
+    private $rajaongkir;
 
-    function __construct() {
-        $this->apiKey = env('RAJAONGKIR_API_KEY');
+    public function construct (Rajaongkir $rajaongkir)
+    {
+        $this->rajaongkir = $rajaongkir;
     }
 
     public function provinces () {
-        $apiUrl = 'https://api.rajaongkir.com/starter/province';
-
-        $response = Http::withHeaders([
-            'key' => $this->apiKey,
-        ])->get($apiUrl);
-
-        if($response->successful()) {
-            return response()->json($response->json()['rajaongkir']['results']);
+        
+        if($result = $this->rajaongkir->fetchProvinces()) {
+            return response()->json($result);
         }
 
     }
 
-    public function cities ($id) {
-        $apiUrl = 'https://api.rajaongkir.com/starter/city';
-
-        $response = Http::withHeaders([
-            'key' => $this->apiKey,
-        ])->get($apiUrl, [
-            'province' => $id
-        ]);
+    public function cities ($id = null) {
         
-        if($response->successful()){
-            return response()->json($response->json()['rajaongkir']['results']);
+        if($result = $this->rajaongkir->fetchProvinces()) {
+            return response()->json($result);
         }
+        
     }
 }

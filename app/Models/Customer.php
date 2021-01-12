@@ -9,19 +9,28 @@ class Customer extends User
 {
     use HasParent;
 
-    public function wishlists () {
+    public function wishlists ()
+    {
         return $this->hasMany(Wishlist::class);
     }
 
-    public function carts () {
+    public function carts ()
+    {
         return $this->hasMany(Cart::class);
     }
 
-    public function addresses () {
+    public function addresses ()
+    {
         return $this->hasMany(Address::class);
     }
 
-    public function orders () {
+    public function orders ()
+    {
         return $this->hasMany(Order::class);
+    }
+
+    public function address ()
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 }

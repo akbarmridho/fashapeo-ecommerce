@@ -16,7 +16,8 @@ class CreateAddressesTable extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->integer('addressable_id');
+            $table->string('addressable_type');
             $table->unsignedTinyInteger('rajaongkir_id');
             $table->string('province');
             $table->string('city');
@@ -24,7 +25,6 @@ class CreateAddressesTable extends Migration
             $table->string('postal_code');
             $table->string('delivery_address');
             $table->boolean('isMain')->default(false);
-            $table->timestamps();
         });
     }
 

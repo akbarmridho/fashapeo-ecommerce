@@ -32,6 +32,10 @@ class CreateNewProduct {
 
             $product = $this->createProduct($variant, $masterProduct);
 
+            if(! $usedVariants) {
+                return $masterProduct;
+            }
+            
             foreach($usedVariants as $usedVariant) {
                 $option = $this->createVariantOption(
                     $variant[$usedVariant['name']]

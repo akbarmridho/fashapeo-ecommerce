@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Vendor;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;

@@ -3,8 +3,8 @@
 namespace App\Repository\Eloquent;
 
 use App\Models\Category;
-use App\Actions\CreateNewCategory;
-use App\Actions\UpdateCategory;
+use App\Actions\Category\CreateNewCategory;
+use App\Actions\Category\UpdateCategory;
 use App\Repository\CategoryRepositoryInterface;
 use Illuminate\Support\Collection;
 

@@ -4,6 +4,15 @@ namespace App\Actions\Product;
 
 trait UsedVariant {
 
+    /**
+     * Process used variant data from front-end input
+     *
+     * Example of input:
+     * '' or null
+     * size:1,color:2
+     * 
+     * @param $input
+     */
     public function retreiveUsedVariant($input)
     {
         if($input === null) {

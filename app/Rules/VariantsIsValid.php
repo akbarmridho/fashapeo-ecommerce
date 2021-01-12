@@ -5,6 +5,7 @@ namespace App\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use App\Actions\Product\UsedVariant;
 use App\Models\Variant;
+use Illuminate\Support\Str;
 
 class VariantsIsValid implements Rule {
     
@@ -13,6 +14,10 @@ class VariantsIsValid implements Rule {
     public function passes ($attribute, $value)
     {
         $variants = $this->retreiveUsedVariant($value);
+
+        if (! $variants) {
+            return true;
+        }
 
         foreach($variants as $variant) {
 
