@@ -20,8 +20,8 @@ class Address extends Model
         'postal_code',
         'delivery_address',
         'phone',
-        'rajaongkir_id',
-        'isMain',
+        'vendor_id',
+        'is_main',
     ];
 
     public function addressable ()
@@ -31,6 +31,6 @@ class Address extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('isMain', true);
+        return $query->where('is_main', true);
     }
 }

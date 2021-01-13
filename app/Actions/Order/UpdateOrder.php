@@ -31,6 +31,6 @@ class UpdateOrder {
 
     public function setShipmentOption()
     {
-        //
+        // set price, and order address
     }
 }

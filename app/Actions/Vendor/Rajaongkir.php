@@ -50,7 +50,7 @@ class Rajaongkir {
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/cost';
 
-        $origin = $this->retreiveActiveOrigin()->rajaongkir_id;
+        $origin = $this->retreiveActiveOrigin()->vendor_id;
 
         $response = Http::withHeaders([
             'key' => $this->apiKey,
@@ -73,7 +73,7 @@ class Rajaongkir {
         return [
             'city' => $data['type'] . ' ' . $data['city_name'],
             'province' => $data['province'],
-            'rajaongkir_id' => $data['city_id'],
+            'vendor_id' => $data['city_id'],
         ];
     }
 

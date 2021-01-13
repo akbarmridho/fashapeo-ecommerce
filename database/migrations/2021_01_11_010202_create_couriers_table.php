@@ -18,6 +18,11 @@ class CreateCouriersTable extends Migration
             $table->unsignedTinyInteger('code')->nullable();
             $table->string('name');
         });
+
+        Artisan::call('db:seed', [
+            '--class' => 'CourierSeeder',
+            '--force' => true,
+        ]);
     }
 
     /**

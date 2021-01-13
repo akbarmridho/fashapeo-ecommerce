@@ -29,12 +29,12 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function orderActivities () 
+    public function activities () 
     {
         return $this->hasMany(OrderActivity::class);
     }
 
-    public function orderStatus () 
+    public function status () 
     {
         return $this->hasOne(Status::class);
     }

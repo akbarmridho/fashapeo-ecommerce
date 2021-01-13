@@ -17,7 +17,6 @@ class CreateOrderActivitiesTable extends Migration
             $table->id();
             $table->foreignId('order_id')->cascadeOnDelete();
             $table->foreignId('status_id')->nullOnDelete();
-            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

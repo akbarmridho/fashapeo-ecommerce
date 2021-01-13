@@ -23,6 +23,8 @@ class PlaceNewOrder {
 
         $this->createShipment($customer->active_address, $order, $order->weight);
         
+        // create order activity
+
         return $order;
     }
 
@@ -62,8 +64,8 @@ class PlaceNewOrder {
 
         return Shipment::create([
             'order_id' => $order->id,
-            'origin_id' => $origin->rajaongkir_id,
-            'destination_id' => $destination->rajaongkir_id,
+            'origin_id' => $origin->vendor_id,
+            'destination_id' => $destination->vendor_id,
             'weight' => $weight,
         ]);
     }

@@ -12,7 +12,6 @@ class OrderActivity extends Model
     private $fillable = [
         'order_id',
         'status_id',
-        'description',
     ];
 
     public function status ()

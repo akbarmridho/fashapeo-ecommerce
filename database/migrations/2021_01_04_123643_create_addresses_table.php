@@ -19,14 +19,14 @@ class CreateAddressesTable extends Migration
             $table->string('name');
             $table->integer('addressable_id');
             $table->string('addressable_type');
-            $table->unsignedTinyInteger('rajaongkir_id');
+            $table->unsignedTinyInteger('vendor_id');
             $table->string('province');
             $table->string('city');
             $table->string('district');
             $table->string('postal_code');
             $table->string('delivery_address');
             $table->string('phone');
-            $table->boolean('isMain')->default(false);
+            $table->boolean('is_main')->default(false);
         });
     }
 

@@ -14,7 +14,7 @@ class Transaction extends Model
         'total',
     ];
 
-    public function transactionStatus ()
+    public function status ()
     {
         return $this->hasOne(Status::class);
     }

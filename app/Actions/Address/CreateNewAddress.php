@@ -19,12 +19,12 @@ class CreateNewAddress {
             'name' => $input['name'],
             'city' => $input['city'],
             'province' => $input['province'],
-            'rajaongkir_id' => $input['rajaongkir_id'],
+            'rajaongkir_id' => $input['vendor_id'],
             'district' => $input['district'],
             'postal_code' => $input['postal_code'],
             'delivery_address' => $input['delivery_address'],
             'phone' => $input['phone'],
-            'isMain' => $active,
+            'is_main' => $active,
         ]);
     }
 
