@@ -17,6 +17,7 @@ class CreateWarehousesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->boolean('main')->default(false);
         });
     }
 

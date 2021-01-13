@@ -15,6 +15,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->string('label')->nullable();
             $table->string('name');
             $table->integer('addressable_id');
             $table->string('addressable_type');
@@ -24,6 +25,7 @@ class CreateAddressesTable extends Migration
             $table->string('district');
             $table->string('postal_code');
             $table->string('delivery_address');
+            $table->string('phone');
             $table->boolean('isMain')->default(false);
         });
     }

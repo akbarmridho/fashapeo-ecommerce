@@ -19,18 +19,18 @@ class Customer extends User
         return $this->hasMany(Cart::class);
     }
 
-    public function addresses ()
-    {
-        return $this->hasMany(Address::class);
-    }
-
     public function orders ()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function address ()
+    public function addresses ()
     {
-        return $this->morphOne(Address::class, 'addressable');
+        return $this->morphMany(Address::class, 'addressable');
+    }
+
+    public function getActiveAddressAttribute()
+    {
+        return $this->addresses()->active()->first();
     }
 }

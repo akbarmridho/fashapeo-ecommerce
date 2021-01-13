@@ -48,4 +48,15 @@ class Order extends Model
     {
         return $this->hasOne(Shipment::class);
     }
+
+    public function getWeightAttribute()
+    {
+        $subtotal = [];
+
+        foreach($this->items as $item) {
+            array_push($subtotal, $item->quantity * $item->product->weight);
+        }
+
+        return array_sum($subtotal);
+    }
 }

@@ -3,8 +3,11 @@
 namespace App\Actions\Vendor;
 
 use Illuminate\Support\Facades\Http;
+use App\Actions\Address\ActiveOriginAddress;
 
-class Filepond {
+class Rajaongkir {
+
+    use ActiveOriginAddress;
 
     private $apiKey;
 
@@ -24,7 +27,7 @@ class Filepond {
 
     }
 
-    public function fetchCities($provinceId = null)
+    public function fetchCities($provinceId = null, $cityId = null)
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/city';
 
@@ -34,6 +37,8 @@ class Filepond {
 
         if($provinceid) {
             $response = $prepare->get($apiUrl, ['province' => $id]);
+        } else if ($cityId) {
+            $response = $prepare->get($apiUrl, ['id' => $cityId]);
         } else {
             $response = $prepare->get($apiUrl);
         }
@@ -41,9 +46,11 @@ class Filepond {
         return $this->response($response);
     }
 
-    public function fetchCost(int $destination, int $origin, int $weight, string $courier)
+    public function fetchCost(int $destination, int $weight, string $courier)
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/cost';
+
+        $origin = $this->retreiveActiveOrigin()->rajaongkir_id;
 
         $response = Http::withHeaders([
             'key' => $this->apiKey,
@@ -57,7 +64,20 @@ class Filepond {
         return $this->response($response);
     }
 
-    public function response($response)
+    public function fetchAddress(int $cityId)
+    {
+        if (! $data = $this->fetchCities(null, $cityId)) {
+            return false;
+        }
+        
+        return [
+            'city' => $data['type'] . ' ' . $data['city_name'],
+            'province' => $data['province'],
+            'rajaongkir_id' => $data['city_id'],
+        ];
+    }
+
+    private function response($response)
     {
         if ($response->successful()) {
             return $response->json()['rajaongkir']['results'];

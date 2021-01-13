@@ -4,57 +4,62 @@ namespace App\Actions\Order;
 
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Customer;
 use App\Models\Shipment;
+use App\Actions\Calculations\CreateOrderNumber;
 
 class PlaceNewOrder {
 
-    public function place()
+    use CreateorderNumber;
+
+    public function place(Customer $customer)
     {
-        // create order
-        // create items
-        // create shipment
-        // create event order created
+        $order = $this->createOrder($customer, $this->generate());
+
+        foreach($order->carts as $cart) {
+            $this->createOrderItem($order, $cart);
+        }
+
+        $this->createShipment($customer->active_address, $order, $order->weight);
+        
+        return $order;
     }
 
-    public function createOrder(Customer $customer, Address $address, string $orderNumber)
+    public function createOrder(Customer $customer, string $orderNumber)
     {
         return Order::create([
             'order_number' => $orderNumer,
             'user_id' => $customer->id,
             'customer_name' => $customer->name,
-            'destination_province' => $address->province,
-            'destination_city' => $address->city,
-            'destination_district' => $address->district,
-            'destination_delivery'=> $address->delivery_address,
         ]);
     }
 
-    public function createOrderItem(Order $order, Cart $cart, string $note)
+    public function createOrderItem(Order $order, Cart $cart)
     {
 
         $product = $cart->product;
 
-        $order = Order::create([
+        $orderItem = OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
             'name' => $product->product_name,
             'variant' => $product->variant_name,
             'quantity' => $product->quantity,
             'price' => $product->price,
-            'note' => $note,
         ]);
 
         // if product has active discount, add price cut to order
 
-        $order->calculate();
+        $orderItem->calculate();
 
-        return $order;
+        return $orderItem;
     }
 
-    public function createShipment(Address $destination, Address $origin, Order $order, int $weight)
+    public function createShipment(Address $destination, Order $order, int $weight)
     {
+        $origin = $this->retreiveActiveOrigin();
+
         return Shipment::create([
             'order_id' => $order->id,
             'origin_id' => $origin->rajaongkir_id,

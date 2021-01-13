@@ -21,4 +21,9 @@ class Warehouse extends Model
         return $this->morphOne(Address::class, 'addressable');
     }
 
+    public function scopeActive ($query)
+    {
+        return $query->where('main', true);
+    }
+
 }

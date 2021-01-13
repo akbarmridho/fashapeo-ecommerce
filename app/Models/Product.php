@@ -57,4 +57,9 @@ class Product extends Model
 
         return \implode(', ', $variants);
     }
+
+    public function getWeightAttribute()
+    {
+        return $this->masterProduct->weight;
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Actions\Calculations;
 use Illuminate\Support\Carbon;
 use App\Models\Order;
 
-class CreateOrderNumber {
+trait CreateOrderNumber {
 
     public function generate() {
         return (string) $this->getDate() . \sprintf('%04d', strval($this->getnumber()));
