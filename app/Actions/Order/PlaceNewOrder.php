@@ -8,10 +8,11 @@ use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\Shipment;
 use App\Actions\Calculations\CreateOrderNumber;
+use App\Actions\Address\ActiveOriginAddress;
 
 class PlaceNewOrder {
 
-    use CreateorderNumber;
+    use CreateorderNumber, ActiveOriginAddress;
 
     public function place(Customer $customer)
     {
@@ -22,8 +23,6 @@ class PlaceNewOrder {
         }
 
         $this->createShipment($customer->active_address, $order, $order->weight);
-        
-        // create order activity
 
         return $order;
     }
@@ -54,6 +53,7 @@ class PlaceNewOrder {
         // if product has active discount, add price cut to order
 
         $orderItem->calculate();
+        $cart->delete();
 
         return $orderItem;
     }

@@ -3,9 +3,22 @@
 namespace App\Actions\Order;
 
 use App\Models\OrderActivity;
+use App\Models\Order;
+use App\Models\Status;
 
-trait UpdateOrderActivity {
-    // set as bla bla bla
+class UpdateStatus {
+    
+    public function update(Order $order, Status $status)
+    {
+        $this->createActivity($order, $status);
+        
+        if($status->type === 'order') {
+            $this->updateOrderStatus($order, $status);
+        } else if ($status->type === 'transaction') {
+            $this->updateTransactionStatus($order, $status);
+        }
+    }
+
     public function updateTransactionStatus(Order $order, Status $status)
     {
         $order->transaction->status_id = $status->id;
