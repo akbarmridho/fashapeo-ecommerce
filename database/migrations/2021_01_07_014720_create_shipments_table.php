@@ -18,8 +18,7 @@ class CreateShipmentsTable extends Migration
             $table->foreignId('courier_id')->constrained()->nullOnDelete();
             $table->unsignedSmallInteger('destination_id');
             $table->unsignedSmallInteger('origin_id');
-            $table->unsignedTinyInteger('courier_service_code')->nullable();
-            $table->string('courier_service');
+            $table->string('service', 10);
             $table->string('etd', 20);
             $table->unsignedMediumInteger('weight');
             $table->decimal('price', $precision = 18, $scale = 0)->nullable();

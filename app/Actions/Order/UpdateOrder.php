@@ -3,13 +3,15 @@
 namespace App\Actions\Order;
 
 use App\Models\Order;
+use App\Models\Shipment;
 use App\Models\OrderItem;
+use App\Models\Courier;
 
 class UpdateOrder {
 
-    public function update()
+    public function updateShipment(array $input)
     {
-        // 
+        //
     }
 
     // address and shipment fee selected (update order destination)
@@ -26,11 +28,12 @@ class UpdateOrder {
 
     public function updateShipmentAddress(Shipment $shipment, Address $address)
     {
-        //
+        $shipment->origin_id = $address->id;
+        $shipment->save();
     }
 
-    public function setShipmentOption()
+    public function setShipmentOption(Shipment $shipment, Courier $courier, $data)
     {
-        // set price, and order address
+        // set price, etc, price, courier id service
     }
 }
