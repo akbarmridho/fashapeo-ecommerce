@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RajaongkirController;
+use App\Http\Controllers\AdministrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +38,5 @@ Route::get('/', function () {
   
 
 
-Route::get('/api/provinces', [RajaongkirController::class, 'provinces']);
-Route::get('/api/cities/{id}', [RajaongkirController::class, 'cities']);
+Route::get('/api/provinces', [AdministrationController::class, 'provinces']);
+Route::get('/api/cities/{id}', [AdministrationController::class, 'cities']);

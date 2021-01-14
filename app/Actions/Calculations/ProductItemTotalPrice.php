@@ -2,7 +2,7 @@
 
 namespace App\Actions\Calculations;
 
-trait OrderItemPrice {
+trait ProductItemTotalPrice {
 
     public function calculate()
     {

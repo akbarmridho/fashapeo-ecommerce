@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Orders;
 
 use App\Requests\UpdateShipmentRequest;
 use App\Requests\FinalizeShipmentRequest;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
 use App\Actions\Order\UpdateStatus;
 use App\Actions\Order\UpdateOrder;
 use App\Repository\StatusRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class CreatedOrderController extends Controller
+class CreatedShipmentController extends Controller
 {
 
     private $status;
@@ -38,7 +38,10 @@ class CreatedOrderController extends Controller
         return response()->json(['message' => 'Shipment address updated']);
     }
 
-    public function finalize(FinalizeShipmentRequest $request, Order $order, UpdateOrder $updater)
+    public function finalize(FinalizeShipmentRequest $request,
+                             Order $order, 
+                             UpdateOrder $updater,
+                             UpdateStatus $statusUpdater)
     {
         foreach($request->products as $product)
         {
@@ -47,18 +50,25 @@ class CreatedOrderController extends Controller
             }
         }
 
-        // buat repo untuk courier, action untuk serialize cost response dari vendor
+        $shipment = $order->shipment;
 
-        // $shipment = $order->shipment;
+        $cost = $this->delivery->cost(
+            $shipment->destination_id,
+            $shipment->origin_id,
+            $shipment->weight,
+            $request->courier,
+            true
+        );
 
-        // $data = $this->delivery->cost(
-        //     $shipment->destination_id,
-        //     $shipment->origin_id,
-        //     $shipment->weight,
-        //     $request->courier,
-        //     true
-        // );
-        
-        // $updater->setShipmentOption($shipment, )
+        $courier = [
+            'courier' => $request->courier,
+            'service' => $request->service,
+        ];
+
+        $updater->setShipmentOption($shipment, $courier, $service);
+        $updater->createTransaction($order);
+        $statusUpdater->update($order, $this->status->shipmentCreated());
+
+        return redirect()->route('customer.orders.transaction');
     }
 }

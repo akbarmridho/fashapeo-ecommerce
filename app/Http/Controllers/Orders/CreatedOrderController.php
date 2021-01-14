@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Orders;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\Order\PlaceNewOrder;
@@ -11,7 +12,6 @@ use App\Repository\StatusRepositoryInterface;
 
 class CreatedOrderController extends Controller
 {
-
     private $status;
 
     public function __construct(StatusRepositoryInterface $statusRepository)

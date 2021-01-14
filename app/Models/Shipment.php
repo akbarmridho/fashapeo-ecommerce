@@ -13,7 +13,11 @@ class Shipment extends Model
         'courier_id',
         'origin_id',
         'destination_id',
+        'service',
+        'etd',
+        'price',
         'weight',
+        'tracking_number',
     ];
 
     public function courier ()

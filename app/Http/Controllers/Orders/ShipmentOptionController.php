@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Orders;
 
+use App\Http\Controllers\Controller;
 use App\Requests\ShipmentCostRequest;
 use App\Repository\DeliveryRepositoryInterface;
 

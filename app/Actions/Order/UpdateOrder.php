@@ -6,17 +6,22 @@ use App\Models\Order;
 use App\Models\Shipment;
 use App\Models\OrderItem;
 use App\Models\Courier;
+use App\Models\Transaction;
+use App\Calculations\TransactionTotal;
 
 class UpdateOrder {
 
-    public function updateShipment(array $input)
-    {
-        //
-    }
+    use TransactionTotal;
 
-    // address and shipment fee selected (update order destination)
-    // transactions created
-    // transaction done
+    public function createTransaction(Order $order)
+    {
+        $total = $this->calculateTotal($order);
+
+        return Transaction::create([
+            'order_id' => $order->id,
+            'total' => $total,
+        ]);
+    }
 
     public function updateNote(OrderItem $orderItem, string $note)
     {
@@ -32,8 +37,29 @@ class UpdateOrder {
         $shipment->save();
     }
 
-    public function setShipmentOption(Shipment $shipment, Courier $courier, $data)
+    public function setShipmentOption(Shipment $shipment, $courier, $cost)
     {
-        // set price, etc, price, courier id service
+        $data = $this->serializeCost($courier, $cost);
+
+        $shipment->fill([
+            'courier_id' => $data['courier_id'],
+            'service' => $data['service'],
+            'etd' => $data['etd'],
+            'price' => $data['price'],
+        ])->save();
+    }
+
+    private function serializeCost($courier, $cost)
+    {
+        $data = $cost[0]['costs'];
+        $key = array_search($courier['service'], $data);
+        $courier = Courier::where('code', $courier['code'])->first();
+        
+        return array(
+            'courier_id' => $courier->id,
+            'service' => $courier['service'],
+            'etd' => $data[$key]['cost']['etd'],
+            'price' => $data[$key]['cost']['value'],
+        );
     }
 }

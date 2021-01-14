@@ -26,7 +26,7 @@ class RajaongkirRepository
             return $this->arrayResponse($response);
         }
 
-        return $this->JSONResponse($response);
+        return $response;
     }
 
     public function cities($provinceId = null, bool $array = false)
@@ -43,7 +43,7 @@ class RajaongkirRepository
             return $this->arrayResponse($response);
         }
 
-        return $this->JSONResponse($response);
+        return $response;
     }
 
     public function cost(int $destination, int $origin, int $weight, string $courier, bool $array = false)
@@ -61,7 +61,7 @@ class RajaongkirRepository
             return $this->arrayResponse($response);
         }
 
-        return $this->JSONResponse($response);
+        return $response;
     }
 
     public function address(int $cityId)
@@ -79,26 +79,13 @@ class RajaongkirRepository
         ];
     }
 
-    private function JSONResponse($response)
-    {
-        if ($response->successful())
-        {
-            return response()->json(
-                ['results' => $response->json()['rajaongkir']['results']], 200
-            );
-        }
-        else if ($response->clientError())
-        {
-            return response()->json(['message' => 'An error occured'], 400);
-        }
-        else if ($response->serverError())
-        {
-            return response()->json(['message' => 'Your request are currently unavailable'], 503);
-        }
-    }
-
     private function arrayResponse($response)
     {
-        // do something
+        if($response->successful())
+        {
+            return $response['rajaongkir']['results'];
+        }
+
+        return false;
     }
 }
