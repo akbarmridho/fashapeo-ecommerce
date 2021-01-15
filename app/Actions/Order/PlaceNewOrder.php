@@ -68,8 +68,13 @@ class PlaceNewOrder {
             'order_id' => $order->id,
             'origin_id' => $origin->vendor_id,
             'destination_id' => $destination->vendor_id,
+            'destination_province' => $destination->province,
+            'destination_city' => $destination->city,
+            'destination_district' => $destination->district,
+            'destination_delivery' => $destination->delivery_address,
+            'postal_code' => $destination->postal_code,
+            'phone' => $destination->phone,
             'weight' => $weight,
-            // others
         ]);
     }
 }

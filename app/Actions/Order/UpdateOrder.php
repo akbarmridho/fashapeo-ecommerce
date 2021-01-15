@@ -33,8 +33,17 @@ class UpdateOrder {
 
     public function updateShipmentAddress(Shipment $shipment, Address $address)
     {
-        $shipment->origin_id = $address->id;
-        $shipment->save();
+        $shipment->fill(
+            [
+            'destination_id' => $address->vendor_id,
+            'destination_province' => $address->province,
+            'destination_city' => $address->city,
+            'destination_district' => $address->district,
+            'destination_delivery' => $address->delivery_address,
+            'postal_code' => $address->postal_code,
+            'phone' => $address->phone,
+            ]
+        )->save();
     }
 
     public function setShipmentOption(Shipment $shipment, $courier, $cost)
