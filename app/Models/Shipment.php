@@ -18,6 +18,12 @@ class Shipment extends Model
         'price',
         'weight',
         'tracking_number',
+        'destination_province',
+        'destination_city',
+        'destination_district',
+        'destination_delivery',
+        'posatal_code',
+        'phone'
     ];
 
     public function courier ()

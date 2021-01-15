@@ -93,4 +93,8 @@ class StatusRepository {
         return $this->find(602);
     }
 
+    public function transactionCancelled(): Status
+    {
+        return $this->find(603);
+    }
 }

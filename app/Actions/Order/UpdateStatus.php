@@ -22,6 +22,7 @@ class UpdateStatus {
     public function updateTransactionStatus(Order $order, Status $status)
     {
         $order->transaction->status_id = $status->id;
+        $order->save();
     }
 
     public function updateOrderStatus(Order $order, Status $status)

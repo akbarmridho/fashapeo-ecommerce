@@ -41,6 +41,8 @@ class PlaceNewOrder {
 
         $product = $cart->product;
 
+        // decrement stock
+
         $orderItem = OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
@@ -67,6 +69,7 @@ class PlaceNewOrder {
             'origin_id' => $origin->vendor_id,
             'destination_id' => $destination->vendor_id,
             'weight' => $weight,
+            // others
         ]);
     }
 }

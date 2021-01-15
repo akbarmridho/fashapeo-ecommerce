@@ -16,7 +16,6 @@ class CreateProductDiscountsTable extends Migration
         Schema::create('product_discounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->unsignedTinyInteger('discount_percentage');
             $table->decimal('discount_value', $precision = 18, $scale = 0);
             $table->timestamp('valid_until')->nullable();
             $table->timestamps();

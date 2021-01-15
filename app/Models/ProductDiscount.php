@@ -9,6 +9,12 @@ class ProductDiscount extends Model
 {
     use HasFactory;
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'valid_until',
+    ];
+
     private $fillable = [
         'product_id',
         'discount_percentage',

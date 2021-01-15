@@ -12,6 +12,7 @@ class Warehouse extends Model
     protected $fillable = [
         'name',
         'description',
+        'main',
     ];
 
     public $timestamps = false;

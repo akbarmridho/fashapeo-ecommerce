@@ -10,7 +10,8 @@ class Image extends Model
     use HasFactory;
 
     private $fillable = [
-       'url'
+       'url',
+       'order',
     ];
 
     public $timestamps = false;

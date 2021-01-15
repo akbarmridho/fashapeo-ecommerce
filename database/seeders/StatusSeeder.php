@@ -75,6 +75,10 @@ class StatusSeeder extends Seeder
              'type' => 'transaction',
              'code' => 602,
              'description' => 'Unexpected error during transaction. Please check your payment provider'],
+             ['name' => 'Transaction Cancelled',
+             'type' => 'transaction',
+             'code' => 603,
+             'description' => 'Transaction cancelled'],
         ];
         
         Status::insert($data);

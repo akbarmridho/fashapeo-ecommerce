@@ -17,8 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->unsignedTinyInteger('order')->nullable();
             $table->string('url');
-            $table->unsignedInteger('imageable_id');
-            $table->string('imageable_type');
+            $table->nullableMorphs('imageable');
         });
     }
 

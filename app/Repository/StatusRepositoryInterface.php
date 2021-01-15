@@ -38,4 +38,5 @@ interface StatusRepositoryInterface {
 
     public function transactionFailed(): Status;
 
+    public function transactionCancelled(): Status;
 }

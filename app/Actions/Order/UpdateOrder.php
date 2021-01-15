@@ -49,6 +49,15 @@ class UpdateOrder {
         ])->save();
     }
 
+    public function updateTransaction(Order $order, array $input)
+    {
+        $order->transaction->fill([
+            'transaction_number' => $input['transaction_id'],
+            'payment_method' => PaymentMethod::convert($input),
+            'completed_at' => Carbon::parse($input['transaction_time']),
+        ])->save();
+    }
+
     private function serializeCost($courier, $cost)
     {
         $data = $cost[0]['costs'];

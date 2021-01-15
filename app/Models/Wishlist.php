@@ -10,7 +10,7 @@ class Wishlist extends Model
     use HasFactory;
 
     private $fillable = [
-        'used_id',
+        'user_id',
         'master_product_id'
     ];
 

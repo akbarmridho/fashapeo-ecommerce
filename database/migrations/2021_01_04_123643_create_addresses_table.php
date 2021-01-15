@@ -17,13 +17,12 @@ class CreateAddressesTable extends Migration
             $table->id();
             $table->string('label')->nullable();
             $table->string('name');
-            $table->integer('addressable_id');
-            $table->string('addressable_type');
+            $table->nullableMorphs('addressable');
             $table->unsignedTinyInteger('vendor_id');
             $table->string('province');
             $table->string('city');
             $table->string('district');
-            $table->string('postal_code');
+            $table->string('postal_code'); 
             $table->string('delivery_address');
             $table->string('phone');
             $table->boolean('is_main')->default(false);

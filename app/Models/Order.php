@@ -9,14 +9,18 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'completed_at',
+    ];
+
     private $fillable = [
         'order_number',
         'user_id',
-        'customer_name',
-        'destination_province',
-        'destination_city',
-        'destination_district',
-        'destination_delivery',
+        'transaction_id',
+        'shipment_id',
+        'completed_at',
     ];
 
     public function customer ()

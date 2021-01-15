@@ -17,7 +17,7 @@ class CreateMasterProductsTable extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained()->nullOnDelete();
             $table->string('name');
-            $table->text('description');
+            $table->longText('description');
             $table->string('slug');
             $table->unsignedInteger('sold')->default(0);
             $table->unsignedInteger('weight');
@@ -25,7 +25,7 @@ class CreateMasterProductsTable extends Migration
             $table->unsignedTinyInteger('height')->nullable();
             $table->unsignedTinyInteger('length')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            $table->softDeletes(); 
         });
     }
 

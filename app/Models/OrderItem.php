@@ -13,11 +13,14 @@ class OrderItem extends Model
     private $fillable = [
         'order_id',
         'product_id',
+        'product_discount_id',
         'name',
         'variant',
         'note',
         'quantity',
         'price',
+        'price_cut',
+        'final_price',
     ];
 
     public $timestamps = false;

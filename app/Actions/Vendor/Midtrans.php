@@ -2,17 +2,18 @@
 
 namespace App\Actions\Vendor;
 
-use App\Actions\Order\CreateInvoiceDetail;
+use App\Transformers\CreateInvoiceDetail as Invoice;
 use Midtrans\Snap;
 use Midtrans\Config as MidtransConfig;
 use Midtrans\Notification;
-use Midtarns\Transaction;
+use Midtrans\Transaction;
 
 class Midtrans
 {
     use CreateInvoiceDetail;
 
     public $notification;
+    public $transaction;
 
     public function __construct()
     {
@@ -24,7 +25,18 @@ class Midtrans
     
     public function token(Order $order)
     {
-        return Snap::getSnapToken($this->invoiceDetail($order));
+        $transaction = $order->transaction;
+
+        if(! $transaction->token) {
+
+            $newToken = Snap::getSnapToken(Invoice::create($order));
+            $transaction->token = $newToken;
+            $transaction->save();
+
+            return $newToken;
+        }
+
+        return $transaction->token;
     }
 
     public function notification($request)
@@ -32,8 +44,13 @@ class Midtrans
         $this->notification = new Notification($request);
     }
 
-    public function handle()
+    public function approve($orderId)
     {
-        //
+        return Transaction::approve($orderId);
+    }
+
+    public function cancel($orderId)
+    {
+        return Transaction::cancel($orderId);
     }
 }
