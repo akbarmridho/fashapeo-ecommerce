@@ -8,22 +8,22 @@ class Customer extends User
 {
     use HasParent;
 
-    public function wishlists ()
+    public function wishlists()
     {
         return $this->hasMany(Wishlist::class);
     }
 
-    public function carts ()
+    public function carts()
     {
         return $this->hasMany(Cart::class);
     }
 
-    public function orders ()
+    public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function addresses ()
+    public function addresses()
     {
         return $this->morphMany(Address::class, 'addressable');
     }

@@ -40,19 +40,18 @@ class PlaceNewOrder {
     {
 
         $product = $cart->product;
-
-        // decrement stock
+        $product->stock = $product->stock - $cart->quantity;
+        $product->save();
 
         $orderItem = OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
             'name' => $product->product_name,
             'variant' => $product->variant_name,
-            'quantity' => $product->quantity,
+            'quantity' => $cart->quantity,
             'price' => $product->price,
+            'price_cut' => $product->active_discount,
         ]);
-
-        // if product has active discount, add price cut to order
 
         $orderItem->calculate();
         $cart->delete();

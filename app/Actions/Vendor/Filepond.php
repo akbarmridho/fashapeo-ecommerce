@@ -32,4 +32,10 @@ class Filepond {
     {
         return Storage::path(config('images.temp_img_path', 'img_temp'));
     }
+
+    public function move()
+    {
+        //$finalLocation = public_path('output.jpg');
+        //\File::move($path, $finalLocation);
+    }
 }

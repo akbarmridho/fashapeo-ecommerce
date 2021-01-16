@@ -23,7 +23,7 @@ class CreatedTransactionController extends Controller
 
     public function show(Order $order)
     {
-        //
+        session(['order_id' => $order->id]);
     }
 
     public function token(Order $order, Midtrans $payment)
@@ -59,6 +59,7 @@ class CreatedTransactionController extends Controller
                     $updater->update($order, $this->status->transactionCancelled());
                     $updater->update($order, $this->status->orderCancelled());
                     $handler->updateTransaction($order, $request->all());
+                    $handler->revertStock($order);
                     event(new OrderCancelled($order));
                 } else if ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
@@ -68,7 +69,9 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->transactionDenied());
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
+                $handler->revertStock($order);
                 event(new TransactionDenied($order));
+                event(new OrderCancelled($order));
                 break;
             case 'pending':
                 $updater->update($order, $this->status->transactionPending());
@@ -79,7 +82,9 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->paymentExpired());
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
+                $handler->revertStock($order);
                 event(new PaymentExpired($order));
+                event(new OrderCancelled($order));
                 break;
         }
     }

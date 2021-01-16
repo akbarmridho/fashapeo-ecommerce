@@ -67,6 +67,17 @@ class UpdateOrder {
         ])->save();
     }
 
+    public function revertStock(Order $order)
+    {
+        $items = $order->items;
+        foreach($items as $item)
+        {
+            $product = $item->product;
+            $product->stock = $product->stock + $item->quantity;
+            $product->save();
+        }
+    }
+
     private function serializeCost($courier, $cost)
     {
         $data = $cost[0]['costs'];

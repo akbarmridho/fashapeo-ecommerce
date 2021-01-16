@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Product extends Model
 {
@@ -17,24 +18,24 @@ class Product extends Model
         'active',
     ];
 
-    public function masterProduct ()
+    public function masterProduct()
     {
         return $this->hasOne(MasterProduct::class);
     }
 
-    public function details ()
+    public function details()
     {
         return $this->hasMany(ProductDetail::class);
     }
 
-    public function image ()
+    public function image()
     {
         return $this->morphTo(Image::class, 'imageable');
     }
 
-    public function discount ()
+    public function discount()
     {
-        return $this->hasMany(ProductDiscount::class);
+        return $this->hasOne(ProductDiscount::class);
     }
 
     public function getProductNameAttribute()
@@ -61,5 +62,18 @@ class Product extends Model
     public function getWeightAttribute()
     {
         return $this->masterProduct->weight;
+    }
+
+    public function getActiveDiscountAttribute()
+    {
+        if(! $this->discount && !$this->discount->valid_until) {
+            if($this->discount->valid_until->gt(Carbon::now())) {
+                return $this->discount->discount_value;
+            }
+        } else if(! $this->discount) {
+            return $this->discount->discount_value;
+        };
+
+        return null;
     }
 }

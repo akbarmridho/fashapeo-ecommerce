@@ -1,12 +1,24 @@
 <?php
 
-namespace App\Actions\Product;
+namespace App\Repository\Eloquent;
 
 use App\Models\Product;
 use App\Models\Customer;
 use App\models\Cart;
 
-class UpdateCart {
+class CartRepository {
+
+    public $cart;
+
+    public function __construct(Cart $cart)
+    {
+        $this->cart = $cart;
+    }
+
+    public function all()
+    {
+        return $this->cart->all();
+    }
 
     public function create (Product $product, Customer $customer, int $quantity)
     {

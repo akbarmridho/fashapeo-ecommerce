@@ -17,7 +17,6 @@ class ProductDiscount extends Model
 
     private $fillable = [
         'product_id',
-        'discount_percentage',
         'discount_value',
         'valid_until',
     ];
