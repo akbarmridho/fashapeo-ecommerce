@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Vendor\FilepondController;
+use App\Http\Controllers\Admin\UpdateProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api', function () {
-    Route::post('/process', [ImageController::class, 'upload'])->name('image.upload');
-    Route::delete('/process', [ImageController::class, 'delete'])->name('image.delete');
+    Route::post('/process', [FilepondController::class, 'upload'])->name('image.upload');
+    Route::delete('/process', [FilepondController::class, 'delete'])->name('image.delete');
 });
+
+Route::get('api/master-products/{id}/images', [UpdateProductController::class, 'masterImages']);
+
+Route::get('api/products/{id}/images', [UpdateProductController::class, 'productImage']);

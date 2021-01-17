@@ -2,8 +2,6 @@
 
 namespace App\Actions\Address;
 
-use App\Rules\CityCode;
-
 trait AddressValidationRules {
 
     public function addressValidation()
@@ -13,7 +11,7 @@ trait AddressValidationRules {
             'name' => 'required|string|max:100',
             'city' => 'required|string|max:100',
             'province' => 'required|string|max:100',
-            'vendor_id' => ['required', 'integer', new CityCode],
+            'vendor_id' => 'required|integer',
             'district' => 'required|string|max:75',
             'postal_code' => 'required|digits:5',
             'delivery_address' => 'required|string|max:200',

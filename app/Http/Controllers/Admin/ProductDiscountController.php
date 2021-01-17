@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductDiscount;
 use App\Actions\Product\UpdateDiscount;
 
 class ProductDiscountController extends Controller
@@ -14,9 +15,18 @@ class ProductDiscountController extends Controller
         // return all product with discount option
     }
 
-    public function product()
+    public function show()
     {
         // return master product with variations and discount option. 
+    }
+
+    public function delete(ProductDiscount $discount)
+    {
+        $discount->delete();
+
+        session()->flash('status', 'Discount Deleted');
+
+        return back();
     }
 
     public function update(Request $request, UpdateDiscount $creator)

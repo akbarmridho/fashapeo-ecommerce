@@ -22,7 +22,7 @@ class CreateNewProduct {
      */
     public function create (array $input)
     {
-        Validator::make($input, $this->masterProductValidation())->validate();
+        Validator::make($input, $this->createProductValidation())->validate();
 
         $masterProduct = $this->createMasterProduct($input);
 

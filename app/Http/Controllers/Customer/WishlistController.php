@@ -16,7 +16,7 @@ class WishlistController extends Controller
         $this->wishlist = $wishlist;
     }
 
-    public function create(Product $product)
+    public function store(Product $product)
     {
         $customer = Auth::guard('customer')->user();
 
@@ -36,7 +36,7 @@ class WishlistController extends Controller
         return response()->json(['message' => 'Product removed from your wishlist'], 200);
     }
 
-    public function show()
+    public function index()
     {
         //
     }

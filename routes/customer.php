@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RajaongkirController;
+use App\Http\Controllers\Customer\AddressController;
+use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\Customer\OrderController;
+use App\Http\Controllers\Customer\WishlistController;
 
 Route::name('customer.')->group(function () {
 
@@ -9,6 +13,57 @@ Route::name('customer.')->group(function () {
         return view('customer.pages.my-account.dashboard');
     })->name('dashboard');
 
+    Route::get('/cart', [CartController::class, 'show'])
+        ->name('carts');
+
+    Route::post('/cart/{id}/increment', [CartController::class, 'increment'])
+        ->name('carts.increment');
+
+    Route::post('/cart/{id}/decrement', [CartController::class, 'decrement'])
+        ->name('carts.decrement');
+
+    Route::delete('/cart/{id}', [CartController::class, 'delete'])
+        ->name('carts.delete');
+
+    Route::get('/wishlists', [WishlistController::class, 'index'])
+        ->name('wishlists');
+
+    Route::post('/products/{product:slug}/wishlist', [WishlistController::class, 'store'])
+        ->name('wishlists.store');
+
+    Route::delete('/wishlists/{id}', [WishlistController::class, 'delete'])
+        ->name('wishlists.delete');
+
+    Route::prefix('my-account')->group(function () {
+
+        Route::get('address', [AddressController::class, 'index'])
+            ->name('address');
+
+        Route::get('address/{id}', [AddressController::class, 'edit'])
+            ->name('address.show');
+
+        Route::get('address/create', [AddressController::class, 'create'])
+            ->name('address.create');
+
+        Route::post('address/create', [AddressController::class, 'store']);
+
+        Route::put('address/{id}', [AddressController::class, 'update'])
+            ->name('address.update');
+
+        Route::delete('address/{id}', [AddressController::class, 'delete']);
+
+        Route::post('address/{id}/main', [AddressController::class, 'setMain'])
+            ->name('address.main');
+
+        Route::get('orders', [OrderController::class, 'index'])
+            ->name('orders');
+
+        Route::get('orders/{order:order_number}', [OrderController::class, 'show'])
+            ->name('orders.show');
+
+        Route::post('orders/order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
+            ->name('orders.complete');
+    });
 });
 
 // Route::get('/cart', function () {

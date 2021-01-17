@@ -28,7 +28,7 @@ class UpdateAddress
         ]);
     }
 
-    public function update(Address $address, array $input, bool $main = false)
+    public function update(Address $address, array $input)
     {
         Validator::make($input, $this->addressValidation())->validate();
 
@@ -42,7 +42,6 @@ class UpdateAddress
             'postal_code' => $input['postal_code'],
             'delivery_address' => $input['delivery_address'],
             'phone' => $input['phone'],
-            'is_main' => $main,
         ])->save();
     }
 }

@@ -23,10 +23,11 @@ trait ProductImage
 
         foreach($serialized['images'] as $index => $image)
         {
-            $filepond->move($image['id'], $image['filename'], config('image.product_img_path'));
+            $imagePath = config('image.product_img_path');
+            $filepond->move($image['id'], $image['filename'], $imagePath);
             
             $product->images()->create([
-                'url' => $image['filename'],
+                'url' => $imagePath . DIRECTORY_SEPARATOR . $image['filename'],
                 'order' => (int) $index,
             ]);
         }
@@ -37,12 +38,13 @@ trait ProductImage
     public function productImage(Product $product, $image)
     {
         $filepond = new Filepond;
+        $imagePath = config('image.product_img_path');
         $image = json_decode($image);
-        $filepond->move($image['id'], $image['filename'], config('image.product_img_path'));
+        $filepond->move($image['id'], $image['filename'], $imagePath);
         $filepond->deleteTemporaryPath($image['id']);
 
         $product->image->updateOrCreate([
-            'url' => $image['filename'],
+            'url' => $imagePath . DIRECTORY_SEPARATOR . $image['filename'],
         ]);
     }
 }

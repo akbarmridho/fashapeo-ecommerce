@@ -5,11 +5,15 @@ namespace App\Providers;
 use Illuminate\Auth\Events\Registered;
 use App\Events\OrderCancelled;
 use App\Events\OrderCreated;
+use App\Events\OrderCompleted;
+use App\Events\OrderShipped;
 use App\Events\PaymentConfirmed;
 use App\Events\PaymentExpired;
 use App\Events\TransactionDenied;
 use App\Listeners\OrderCancelledNotification;
 use App\Listeners\OrderCreatedNotification;
+use App\Listeners\OrderCompletedNotification;
+use App\Listeners\OrderShippedNotification;
 use App\Listeners\PaymentConfirmedNotification;
 use App\Listeners\PaymentExpiredNotification;
 use App\Listeners\TransactionDeniedNotification;
@@ -34,6 +38,12 @@ class EventServiceProvider extends ServiceProvider
         OrderCancelled::class => [
             OrderCreatedNotification::class,
         ],
+        OrderCompleted::class => [
+            OrderCompletedNotification::class,
+        ],
+        OrderShipped::class => [
+            OrderShippedNotification::class,
+        ],
         PaymentConfirmed::class => [
             PaymentConfirmedNotification::class,
         ],
@@ -42,7 +52,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         TransactionDenied::class => [
             TransactionDeniedNotification::class,
-        ]
+        ],
     ];
 
     /**
