@@ -3,9 +3,10 @@
 namespace App\Repository\Eloquent;
 
 use App\Models\Status;
+use App\Repository\StatusRepositoryInterface;
 
-class StatusRepository {
-
+class StatusRepository implements StatusRepositoryInterface
+{
     private $status;
 
     public function __construct(Status $status)

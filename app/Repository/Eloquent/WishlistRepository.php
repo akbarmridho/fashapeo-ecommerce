@@ -5,8 +5,9 @@ namespace App\Repository\Eloquent;
 use App\Models\MasterProduct;
 use App\Models\Customer;
 use App\models\Wishlist;
+use App\Repository\WishlistRepositoryInterface;
 
-class WishlistRepository
+class WishlistRepository implements WishlistRepositoryInterface
 {
     public $wishlist;
 

@@ -3,16 +3,16 @@
 namespace App\Actions\Product;
 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use App\Models\MasterProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\VariantOption;
 use App\Models\Variant;
-use Illuminate\Support\Str;
 
 class CreateNewProduct {
 
-    use ProductValidationRules, UsedVariant;
+    use ProductValidationRules, UsedVariant, ProductImage;
 
     /**
      * Validate and create a new product and its related models
@@ -28,6 +28,8 @@ class CreateNewProduct {
 
         $usedVariants = $this->retreiveUsedVariant($input['usedVariant']);
 
+        $this->mainImages($masterProduct, $input['images']);
+
         foreach($input['variants'] as $variant) {
 
             $product = $this->createProduct($variant, $masterProduct);
@@ -35,6 +37,8 @@ class CreateNewProduct {
             if(! $usedVariants) {
                 return $masterProduct;
             }
+
+            $this->productImage($product, $variant['image']);
             
             foreach($usedVariants as $usedVariant) {
                 $option = $this->createVariantOption(
@@ -46,8 +50,7 @@ class CreateNewProduct {
                     $usedVariant['id'], 
                     $option->id);
             }
-
-        } 
+        }
 
         return $masterProduct;
     }

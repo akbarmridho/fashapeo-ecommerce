@@ -17,7 +17,7 @@ class Midtrans
 
     public function __construct()
     {
-        MidtransConfig::$serverkey = env('MIDTRANS_SERVER_KEY');
+        MidtransConfig::$serverkey = config('vendor.midtrans_server');
         MidtransConfig::$isProduction = config('app.debug');
         MidtransConfig::$isSanitized = true;
         MidtransConfig::$is3ds = true;

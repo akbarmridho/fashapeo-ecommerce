@@ -31,7 +31,7 @@ trait ProductValidationRules {
                 'nullable',
                 new VariantsIsValid,
             ],
-            'variants.*.price' => 'required|integer',
+            'variants.*.price' => 'required|integer|gt:100',
             'variants.*.stock' => [
                 'required',
                 'integer',

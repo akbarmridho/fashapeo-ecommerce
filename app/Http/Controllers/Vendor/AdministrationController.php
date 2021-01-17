@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Vendor;
 
 use App\Repository\DeliveryRepositoryInterface;
 use Illuminate\Http\Request;

@@ -5,8 +5,10 @@ namespace App\Repository\Eloquent;
 use App\Models\Product;
 use App\Models\Customer;
 use App\models\Cart;
+use App\Repository\CartRepositoryInterface;
 
-class CartRepository {
+class CartRepository implements CartRepositoryInterface
+{
 
     public $cart;
 
