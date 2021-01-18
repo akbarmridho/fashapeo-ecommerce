@@ -24,7 +24,7 @@ class StatusRepository implements StatusRepositoryInterface
         return $this->find(101);
     }
 
-    public function orderPendingPayment(): Status
+    public function orderPending(): Status
     {
         return $this->find(102);
     }

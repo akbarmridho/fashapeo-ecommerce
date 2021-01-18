@@ -26,8 +26,15 @@ class Shipment extends Model
         'phone'
     ];
 
-    public function courier ()
+    protected $touches = ['order'];
+
+    public function courier()
     {
         return $this->hasOne(Courier::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

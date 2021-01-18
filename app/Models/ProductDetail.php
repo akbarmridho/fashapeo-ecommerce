@@ -17,17 +17,17 @@ class ProductDetail extends Model
 
     public $timestamps = false;
 
-    public function variant ()
+    public function variant()
     {
         return $this->hasOne(Variant::class);
     }
 
-    public function variantOption ()
+    public function variantOption()
     {
         return $this->hasOne(Variant::class);
     }
 
-    public function getVariantNameAttribute ()
+    public function getVariantNameAttribute()
     {
         return $this->variant->name . $this->variantOption->name;
     }

@@ -18,6 +18,8 @@ class Product extends Model
         'active',
     ];
 
+    protected $touches = ['masterProduct'];
+
     public function masterProduct()
     {
         return $this->hasOne(MasterProduct::class);

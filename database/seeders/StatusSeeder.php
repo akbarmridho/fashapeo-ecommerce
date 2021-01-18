@@ -14,7 +14,7 @@ class StatusSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
+        $data = [ 
             ['name' => 'Order Created',
              'type' => 'order',
              'code' => 101,

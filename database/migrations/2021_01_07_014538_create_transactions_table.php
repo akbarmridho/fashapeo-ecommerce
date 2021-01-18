@@ -19,7 +19,6 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('order_id')->constrained()->nullOnDelete();
             $table->string('transaction_number')->nullable();
             $table->string('payment_method')->nullable();
-            $table->string('token')->nullable();
             $table->decimal('total', $precision = 18, $scale = 0);
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();

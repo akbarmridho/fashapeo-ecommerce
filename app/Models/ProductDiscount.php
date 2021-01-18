@@ -20,4 +20,11 @@ class ProductDiscount extends Model
         'discount_value',
         'valid_until',
     ];
+
+    protected $touches = ['product'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

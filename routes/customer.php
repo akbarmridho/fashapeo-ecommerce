@@ -45,21 +45,23 @@ Route::name('customer.')->group(function () {
         Route::get('address', [AddressController::class, 'index'])
             ->name('address');
 
-        Route::get('address/{id}', [AddressController::class, 'edit'])
-            ->name('address.show');
-
         Route::get('address/create', [AddressController::class, 'create'])
             ->name('address.create');
 
         Route::post('address/create', [AddressController::class, 'store']);
 
-        Route::put('address/{id}', [AddressController::class, 'update'])
+        Route::middleware('can:update,address')->group(function () {
+            Route::get('address/{address}', [AddressController::class, 'edit'])
+            ->name('address.show');
+            
+            Route::put('address/{address}', [AddressController::class, 'update'])
             ->name('address.update');
-
-        Route::delete('address/{id}', [AddressController::class, 'delete']);
-
-        Route::post('address/{id}/main', [AddressController::class, 'setMain'])
+            
+            Route::delete('address/{address}', [AddressController::class, 'delete']);
+            
+            Route::post('address/{address}/main', [AddressController::class, 'setMain'])
             ->name('address.main');
+        });
 
         Route::get('orders', [OrderController::class, 'index'])
             ->name('orders');
@@ -69,29 +71,33 @@ Route::name('customer.')->group(function () {
 
         Route::post('orders/order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
             ->name('orders.complete');
-    });
+    }); 
 
     Route::prefix('order')->group(function () {
         Route::post('/', [CreatedOrderController::class, 'create'])
             ->name('order.create');
 
-        Route::get('/{order:order_number}/shipment', [CreatedShipmentController::class, 'show'])
+        Route::middleware(['order.check:shipment', 'can:show,order'])->group(function () {
+            Route::get('/{order:order_number}/shipment', [CreatedShipmentController::class, 'show'])
             ->name('order.shipment');
-
-        Route::put('/{order:order_number}/shipment', [CreatedShipmentController::class, 'update'])
+            
+            Route::put('/{order:order_number}/shipment', [CreatedShipmentController::class, 'update'])
             ->name('order.shipment.update');
-
-        Route::post('/{order:order_number}/shipment', [CreatedShipmentController::class, 'finalize'])
+            
+            Route::post('/{order:order_number}/shipment', [CreatedShipmentController::class, 'finalize'])
             ->name('order.shipment.finalize');
-
-        Route::get('/{order:order_number}/shipment/cost', [ShipmentOptionController::class, 'show'])
+            
+            Route::get('/{order:order_number}/shipment/cost', [ShipmentOptionController::class, 'show'])
             ->name('order.shipment.cost');
+        });
 
-        Route::get('/{order:order_number}/transaction', [CreatedTransactionController::class, 'show'])
+        Route::middleware(['order.check.transaction', 'can:show,order'])->group(function () {
+            Route::get('/{order:order_number}/transaction', [CreatedTransactionController::class, 'show'])
             ->name('order.transaction');
-
-        Route::get('/{order:order_number}/transaction/token', [CreatedTransactionController::class, 'token'])
+            
+            Route::get('/{order:order_number}/transaction/token', [CreatedTransactionController::class, 'token'])
             ->name('order.transaction.token');
+        });
 
         Route::get('/finish', [OrderRedirectController::class, 'finish']);
 
@@ -99,13 +105,13 @@ Route::name('customer.')->group(function () {
 
         Route::get('/error', [OrderRedirectController::class, 'error']);
         
-        Route::get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
+        Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
             ->name('order.success');
 
-        Route::get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
+        Route::middleware(['order.check:failed', 'can:show,order'])->get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
             ->name('order.failed');
 
-        Route::get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
+        Route::middleware(['order.check:pending', 'can:show,order'])->get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
             ->name('order.pending');
     });
 });

@@ -25,18 +25,7 @@ class Midtrans
     
     public function token(Order $order)
     {
-        $transaction = $order->transaction;
-
-        if(! $transaction->token) {
-
-            $newToken = Snap::getSnapToken(Invoice::create($order));
-            $transaction->token = $newToken;
-            $transaction->save();
-
-            return $newToken;
-        }
-
-        return $transaction->token;
+        return Snap::getSnapToken(Invoice::create($order));
     }
 
     public function notification($request)

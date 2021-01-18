@@ -21,12 +21,18 @@ class Transaction extends Model
         'total',
         'transaction_number',
         'payment_method',
-        'token',
         'completed_at',
     ];
 
-    public function status ()
+    protected $touches = ['order'];
+
+    public function status()
     {
         return $this->hasOne(Status::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

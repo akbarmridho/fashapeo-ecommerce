@@ -36,11 +36,11 @@ class Order extends Model
     public function activities () 
     {
         return $this->hasMany(OrderActivity::class);
-    }
+    } 
 
-    public function status () 
+    public function status() 
     {
-        return $this->hasOne(Status::class);
+        return $this->hasManyThrough(Status::class, OrderActivity::class);
     }
 
     public function transaction ()
@@ -62,5 +62,10 @@ class Order extends Model
         }
 
         return array_sum($subtotal);
+    }
+
+    public function getRecentStatusAttribute()
+    {
+        $this->status()->latest()->first();
     }
 }

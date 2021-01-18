@@ -10,7 +10,7 @@ interface StatusRepositoryInterface {
 
     public function orderCreated(): Status;
 
-    public function orderPendingPayment(): Status;
+    public function orderPending(): Status;
 
     public function orderProcessed(): Status;
 

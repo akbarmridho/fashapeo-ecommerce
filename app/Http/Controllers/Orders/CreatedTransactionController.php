@@ -75,7 +75,6 @@ class CreatedTransactionController extends Controller
                 break;
             case 'pending':
                 $updater->update($order, $this->status->transactionPending());
-                $updater->update($order, $this->status->orderPendingPayment());
                 $handler->updateTransaction($order, $request->all());
                 break;
             case 'expire':

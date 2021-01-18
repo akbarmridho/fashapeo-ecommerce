@@ -14,8 +14,15 @@ class OrderActivity extends Model
         'status_id',
     ];
 
-    public function status ()
+    protected $touches = ['order'];
+
+    public function status()
     {
         return $this->hasOne(Status::class);
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }
