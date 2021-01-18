@@ -10,7 +10,7 @@ class OrderItem extends Model
 {
     use HasFactory, CalculatePrice;
 
-    private $fillable = [
+    protected $fillable = [
         'order_id',
         'product_id',
         'product_discount_id',

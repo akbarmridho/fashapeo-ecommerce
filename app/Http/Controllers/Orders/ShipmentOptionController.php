@@ -8,7 +8,7 @@ use App\Repository\DeliveryRepositoryInterface;
 
 class ShipmentOptionController extends Controller
 {
-    private $delivery;
+    public $delivery;
 
     public function __construct(DeliveryRepositoryInterface $delivery)
     {

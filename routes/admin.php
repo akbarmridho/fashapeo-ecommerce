@@ -37,7 +37,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('variants/{id}', [VariantController::class, 'show'])
             ->name('variants.show');
 
-        Route::post('variants'. [VariantController::class, 'create'])
+        Route::post('variants', [VariantController::class, 'create'])
             ->name('variants.create');
 
         Route::put('variants/{id}', [VariantController::class, 'update'])
@@ -49,7 +49,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('products', [ProductController::class, 'index'])
             ->name('products');
 
-        Route::get('products/{id}'. [UpdateProductController::class, 'show'])
+        Route::get('products/{id}', [UpdateProductController::class, 'show'])
             ->name('products.show');
 
         Route::get('products/create', [CreatedProductController::class, 'create'])

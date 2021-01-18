@@ -6,7 +6,7 @@ use App\Models\Status;
 
 interface StatusRepositoryInterface {
 
-    public function find(): Status;
+    public function find(int $code): Status;
 
     public function orderCreated(): Status;
 

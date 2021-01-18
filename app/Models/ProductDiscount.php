@@ -15,7 +15,7 @@ class ProductDiscount extends Model
         'valid_until',
     ];
 
-    private $fillable = [
+    protected $fillable = [
         'product_id',
         'discount_value',
         'valid_until',

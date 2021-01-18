@@ -9,7 +9,7 @@ class ProductDetail extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'product_id',
         'variant_id',
         'variant_option_id',

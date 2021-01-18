@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Repository\DeliveryRepositoryInterface;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class AdministrationController extends Controller

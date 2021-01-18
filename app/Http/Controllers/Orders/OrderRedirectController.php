@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 
-class OrderRedirectController extends Controllers
+class OrderRedirectController extends Controller
 {
     public function finish(Request $request)
     {

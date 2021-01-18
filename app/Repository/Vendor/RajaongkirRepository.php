@@ -3,8 +3,9 @@
 namespace App\Repository\Vendor;
 
 use Illuminate\Support\Facades\Http;
+use App\Repository\DeliveryRepositoryInterface;
 
-class RajaongkirRepository
+class RajaongkirRepository implements DeliveryRepositoryInterface
 {
     private $apiKey;
     private $http;
@@ -64,7 +65,7 @@ class RajaongkirRepository
         return $response;
     }
 
-    public function address(int $cityId)
+    public function address(int $cityId): array
     {
         $data = $this->http->get($apiUrl, ['id' => $cityId]);
 

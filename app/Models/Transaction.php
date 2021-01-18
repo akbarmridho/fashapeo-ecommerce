@@ -15,7 +15,7 @@ class Transaction extends Model
         'completed_at',
     ];
 
-    private $fillable = [
+    protected $fillable = [
         'order_id',
         'status_id',
         'total',

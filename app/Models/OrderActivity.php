@@ -9,7 +9,7 @@ class OrderActivity extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'order_id',
         'status_id',
     ];

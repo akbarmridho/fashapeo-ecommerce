@@ -15,7 +15,7 @@ use App\Repository\Eloquent\BaseRepository;
 use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\StatusRepository;
 use App\Repository\Eloquent\CartRepository;
-use App\Repository\Eloquent\WishlsitRepository;
+use App\Repository\Eloquent\WishlistRepository;
 use App\Repository\Vendor\RajaongkirRepository;
 
 class RepositoryServiceProvider extends ServiceProvider

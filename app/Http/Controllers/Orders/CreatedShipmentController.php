@@ -10,6 +10,7 @@ use App\Models\Address;
 use App\Actions\Order\UpdateStatus;
 use App\Actions\Order\UpdateOrder;
 use App\Repository\StatusRepositoryInterface;
+use App\Repository\DeliveryRepositoryInterface;
 use App\Http\Controllers\Controller;
 
 class CreatedShipmentController extends Controller

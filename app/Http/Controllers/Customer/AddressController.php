@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repository\DeliveryRepositoryInterface as Administration;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
-use App\Actions\updateAddress;
+use App\Actions\Address\UpdateAddress;
 
 class AddressController extends Controller
 {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Orders;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 
-class CreatedOrderStatus extends Controllers
+class CreatedOrderStatus extends Controller
 {
     public function success(Order $order)
     {

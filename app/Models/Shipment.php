@@ -9,7 +9,7 @@ class Shipment extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'courier_id',
         'origin_id',
         'destination_id',

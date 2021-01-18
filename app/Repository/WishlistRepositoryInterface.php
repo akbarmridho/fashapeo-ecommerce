@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\MasterProduct;
 use App\Models\Customer;
-use App\models\Wishlist;
+use App\Models\Wishlist;
 
 interface WishlistRepositoryInterface
 {

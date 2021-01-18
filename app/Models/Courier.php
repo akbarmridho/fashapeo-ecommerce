@@ -8,7 +8,7 @@ class Courier extends Model
 {
     public $timestamps = false;
 
-    private $fillable = [
+    protected $fillable = [
         'name',
         'code'
     ];

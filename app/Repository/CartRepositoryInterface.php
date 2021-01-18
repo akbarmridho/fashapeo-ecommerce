@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\Product;
 use App\Models\Customer;
-use App\models\Cart;
+use App\Models\Cart;
 
 interface CartRepositoryInterface
 {

@@ -9,7 +9,7 @@ class Variant extends Model
 {
     use HasFactory;
 
-    private $fillable = [
+    protected $fillable = [
         'name',
     ];
 

@@ -4,7 +4,7 @@ namespace App\Repository\Eloquent;
 
 use App\Models\MasterProduct;
 use App\Models\Customer;
-use App\models\Wishlist;
+use App\Models\Wishlist;
 use App\Repository\WishlistRepositoryInterface;
 
 class WishlistRepository implements WishlistRepositoryInterface
@@ -16,7 +16,7 @@ class WishlistRepository implements WishlistRepositoryInterface
         $this->wishlist = $wishlist;
     }
 
-    public function create(MasterProduct $product, Customer $customer)
+    public function create(MasterProduct $product, Customer $customer): Wishlist
     {
         return Wishlist::create([
             'used_id' => $customer->id,
@@ -24,7 +24,7 @@ class WishlistRepository implements WishlistRepositoryInterface
         ]);
     }
 
-    public function delete(Wishlist $wishlist)
+    public function delete(Wishlist $wishlist): Wishlist
     {
         return $wishlist->delete();
     }

@@ -6,6 +6,12 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\WishlistController;
+use App\Http\Controllers\Orders\CreatedOrderController;
+use App\Http\Controllers\Orders\CreatedOrderStatus;
+use App\Http\Controllers\Orders\CreatedShipmentController;
+use App\Http\Controllers\Orders\CreatedTransactionController;
+use App\Http\Controllers\Orders\OrderRedirectController;
+use App\Http\Controllers\Orders\ShipmentOptionController;
 
 Route::name('customer.')->group(function () {
 
@@ -63,6 +69,44 @@ Route::name('customer.')->group(function () {
 
         Route::post('orders/order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
             ->name('orders.complete');
+    });
+
+    Route::prefix('order')->group(function () {
+        Route::post('/', [CreatedOrderController::class, 'create'])
+            ->name('order.create');
+
+        Route::get('/{order:order_number}/shipment', [CreatedShipmentController::class, 'show'])
+            ->name('order.shipment');
+
+        Route::put('/{order:order_number}/shipment', [CreatedShipmentController::class, 'update'])
+            ->name('order.shipment.update');
+
+        Route::post('/{order:order_number}/shipment', [CreatedShipmentController::class, 'finalize'])
+            ->name('order.shipment.finalize');
+
+        Route::get('/{order:order_number}/shipment/cost', [ShipmentOptionController::class, 'show'])
+            ->name('order.shipment.cost');
+
+        Route::get('/{order:order_number}/transaction', [CreatedTransactionController::class, 'show'])
+            ->name('order.transaction');
+
+        Route::get('/{order:order_number}/transaction/token', [CreatedTransactionController::class, 'token'])
+            ->name('order.transaction.token');
+
+        Route::get('/finish', [OrderRedirectController::class, 'finish']);
+
+        Route::get('/unfinish', [OrderRedirectController::class, 'unfinish']);
+
+        Route::get('/error', [OrderRedirectController::class, 'error']);
+        
+        Route::get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
+            ->name('order.success');
+
+        Route::get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
+            ->name('order.failed');
+
+        Route::get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
+            ->name('order.pending');
     });
 });
 
