@@ -8,22 +8,18 @@ use App\Actions\Category\UpdateCategory;
 use App\Repository\CategoryRepositoryInterface;
 use Illuminate\Support\Collection;
 
-class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
+class CategoryRepository implements CategoryRepositoryInterface
 {
-
-    public $creator;
-    public $handler;
+    public $category;
 
    /**
     * CategoryRepostiory constructor.
     *
     * @param Category $model
     */
-   public function __construct(Category $model, CreateNewCategory $creator, UpdateCategory $handler)
+   public function __construct(Category $category)
    {
-       parent::__construct($model);
-       $this->creator = $creator;
-       $this->handler = $handler;
+       $this->category = $category;
    }
 
    /**
@@ -57,7 +53,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     */
     public function create(array $input) 
     {
-       return $this->creator->create($input);
+        return (new CreateNewCategory)->create($input);
     }
 
    /*
@@ -65,7 +61,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     */
     public function update(array $input, $key) 
     {
-        return $this->handler->update($input, $this->find($key));
+        return (new UpdateCategory)->update($input, $this->find($key));
     }
 
    /*
