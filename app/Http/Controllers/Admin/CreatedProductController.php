@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actions\Product\CreateNewProduct;
+use Illuminate\Support\Facades\DB;
 
 class CreatedProductController extends Controller
 {
@@ -15,9 +16,17 @@ class CreatedProductController extends Controller
 
     public function store(CreateNewProduct $creator, Request $request)
     {
-        $product = $creator->create($request->all());
+        DB::beginTransaction();
+        try {
+            $product = $creator->create($request->all());
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return response()->json(['message' => 'Cannot create product'], 500);
+        }
 
-        session()->flash('status', 'Product uploaded');
+        DB::commit();
+
+        session()->flash('status', 'Product created');
 
         return redirect()->route('admin.products');
     }

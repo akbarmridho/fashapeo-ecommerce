@@ -26,19 +26,23 @@ class CreateNewProduct {
 
         $masterProduct = $this->createMasterProduct($input);
 
-        $usedVariants = $this->retreiveUsedVariant($input['usedVariant']);
+        $usedVariants = $this->retreiveUsedVariant($input['used_variant']);
 
         $this->mainImages($masterProduct, $input['images']);
+
+        if(! $usedVariants) {
+            $product = $this->createProduct($input['variants'][0], $masterProduct);
+
+            return $masterProduct;
+        }
 
         foreach($input['variants'] as $variant) {
 
             $product = $this->createProduct($variant, $masterProduct);
 
-            if(! $usedVariants) {
-                return $masterProduct;
-            }
-
-            $this->productImage($product, $variant['image']);
+            if(array_key_exists('image', $variant)) {
+                $this->productImage($product, $variant['image']);
+            }    
             
             foreach($usedVariants as $usedVariant) {
                 $option = $this->createVariantOption(
@@ -66,7 +70,7 @@ class CreateNewProduct {
         return MasterProduct::create([
                 'name' => Str::title($input['name']),
                 'description' => $input['description'],
-                'category_id' => $input['category_id'],
+                'category_id' => $input['category'],
                 'slug' => Str::slug($input['name'], '-'),
                 'weight' => $input['weight'],
                 'width' => $input['dimensions']['width'],

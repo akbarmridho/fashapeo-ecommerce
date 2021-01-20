@@ -26,4 +26,9 @@ class OrderPolicy
     {
         return $order->customer()->is($user);
     }
+
+    public function markCompleted(User $user, Order $order)
+    {
+        return $order->customer()->is($user) && $order->recent_status()->is($this->status->orderShipped());
+    }
 }

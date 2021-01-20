@@ -58,7 +58,6 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'admin_subdomain' => env('APP_ADMIN_SUBDOMAIN', 'admin'),
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
@@ -71,6 +70,8 @@ return [
     */
 
     'timezone' => 'UTC',
+
+    'site-timezone' => 'Asia/Jakarta',
 
     /*
     |--------------------------------------------------------------------------

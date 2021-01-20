@@ -43,12 +43,12 @@ class Order extends Model
         return $this->hasManyThrough(Status::class, OrderActivity::class);
     }
 
-    public function transaction ()
+    public function transaction()
     {
         return $this->hasOne(Transaction::class);
     }
 
-    public function shipment ()
+    public function shipment()
     {
         return $this->hasOne(Shipment::class);
     }

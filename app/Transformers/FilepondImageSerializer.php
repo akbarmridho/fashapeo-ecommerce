@@ -10,9 +10,14 @@ class FilepondImageSerializer
 
         foreach($images as $image)
         {
-            $data = \json_decode($image);
-            $results['images'][] = $data;
-            $results['ids'][] = $data['id'];
+            if(! $data = \json_decode($image)) {
+                $results['images'][] = array_merge($data, ['isNew' => false]);
+                $results['ids'][] = $data['id'];
+            } else {
+                $results['images'][] = ['id' => (int) $image,
+                                        'isNew' => false];
+                $results['old'][] = (int) $image;
+            }
         }
 
         return $result;

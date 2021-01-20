@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Orders;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Transaction;
 use App\Events\PaymentConfirmed;
 use App\Events\OrderCancelled;
 use App\Events\PaymentExpired;
@@ -49,6 +50,7 @@ class CreatedTransactionController extends Controller
                     $updater->update($order, $this->status->transactionSuccess());
                     $updater->update($order, $this->status->orderProcessed());
                     $handler->updateTransaction($order, $request->all());
+                    $this->setDateCompletion($order->transaction);
                     event(new PaymentConfirmed($order));
                 } else if ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
@@ -60,6 +62,7 @@ class CreatedTransactionController extends Controller
                     $updater->update($order, $this->status->orderCancelled());
                     $handler->updateTransaction($order, $request->all());
                     $handler->revertStock($order);
+                    $this->setDateCompletion($order->transaction);
                     event(new OrderCancelled($order));
                 } else if ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
@@ -70,6 +73,7 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
                 $handler->revertStock($order);
+                $this->setDateCompletion($order->transaction);
                 event(new TransactionDenied($order));
                 event(new OrderCancelled($order));
                 break;
@@ -82,9 +86,15 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
                 $handler->revertStock($order);
+                $this->setDateCompletion($order->transaction);
                 event(new PaymentExpired($order));
                 event(new OrderCancelled($order));
                 break;
         }
+    }
+
+    private function setDateCompletion(Transaction $transaction)
+    {
+        $transaction->fill(['completed_at' => now()])->save();
     }
 }

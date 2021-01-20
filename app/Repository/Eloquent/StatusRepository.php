@@ -64,6 +64,11 @@ class StatusRepository implements StatusRepositoryInterface
         return $this->find(303);
     }
 
+    public function orderExpired(): Status
+    {
+        return $this->find(304);
+    }
+
     public function transactionCreated(): Status
     {
         return $this->find(501);

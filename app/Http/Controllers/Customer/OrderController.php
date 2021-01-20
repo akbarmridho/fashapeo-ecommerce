@@ -30,10 +30,13 @@ class OrderController extends Controller
 
     public function markAsCompleted(Order $order, UpdateStatus $updater)
     {
-        // validasi bahwa order sudah terkirim
+        $this->authorize('markCompleted', $order);
 
         $updater->update($order, $this->status->orderArrived());
         $updater->update($order, $this->status->orderCompleted());
+        $order->fill(
+            ['completed_at' => now()]
+        )->save();
         event(new OrderCompleted($order));
 
         return back();

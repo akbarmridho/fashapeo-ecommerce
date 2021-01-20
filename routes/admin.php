@@ -49,8 +49,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('products', [ProductController::class, 'index'])
             ->name('products');
 
-        Route::get('products/{id}', [UpdateProductController::class, 'show'])
+        Route::get('products/{product}', [UpdateProductController::class, 'show'])
             ->name('products.show');
+
+        Route::get('products/{product}/master', [UpdateProductController::class, 'masterImages']);
+
+        Route::get('products/{product}/variant', [UpdateProductController::class, 'productImage']);
 
         Route::get('products/create', [CreatedProductController::class, 'create'])
             ->name('products.create');

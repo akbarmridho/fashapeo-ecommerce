@@ -66,7 +66,10 @@ trait ProductValidationRules {
                 'required',
                 'string',
             ],
-            //new created variants
+            'new_variants' => [
+                'array',
+                'sometimes',
+            ],
             'variants.*.price' => 'required|integer|gt:100',
             'variants.*.stock' => [
                 'required',

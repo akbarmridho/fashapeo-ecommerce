@@ -16,6 +16,8 @@ interface StatusRepositoryInterface {
 
     public function orderCompleted(): Status;
 
+    public function orderExpired(): Status;
+
     public function customerOrderCancelled(): Status;
 
     public function orderCancelled(): Status;
