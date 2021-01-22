@@ -9,7 +9,7 @@ use App\Models\MasterProduct;
 
 class ProductImageDelete
 {
-    public function deleteMainImages(MasterProduct $master)
+    public function delete(MasterProduct $master)
     {
         foreach($master->images as $image) {
             $this->imageDelete($image);
@@ -20,7 +20,7 @@ class ProductImageDelete
         }
     }
 
-    private function deleteProductImage(Image $image)
+    private function imageDelete(Image $image)
     {
         Storage::disk('public')->delete($image->url);
         $image->delete();

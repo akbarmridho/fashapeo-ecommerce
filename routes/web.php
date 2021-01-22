@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('main.pages.home');
 })->name('home');
 
+Route::get('/product/{product:slug}/', ['']);
+
 // Route::get('/category', function () {
 //     return view('customer.pages.category');
 // });

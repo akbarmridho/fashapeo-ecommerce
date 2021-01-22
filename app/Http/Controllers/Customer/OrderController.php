@@ -34,6 +34,7 @@ class OrderController extends Controller
 
         $updater->update($order, $this->status->orderArrived());
         $updater->update($order, $this->status->orderCompleted());
+        // update sold count pada master produk
         $order->fill(
             ['completed_at' => now()]
         )->save();

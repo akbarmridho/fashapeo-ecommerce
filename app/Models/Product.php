@@ -18,6 +18,12 @@ class Product extends Model
         'active',
     ];
 
+    protected $with = [
+        'details',
+        'image',
+        'discount',
+    ];
+
     protected $touches = ['masterProduct'];
 
     public function masterProduct()
@@ -40,6 +46,11 @@ class Product extends Model
         return $this->hasOne(ProductDiscount::class);
     }
 
+    public function items()
+    {
+        return $this->belongsToMany(ProductDiscount::class);
+    }
+
     public function getProductNameAttribute()
     {
         return $this->masterProduct->name;
@@ -48,6 +59,7 @@ class Product extends Model
     public function getVariantNameAttribute()
     {
         $details = $this->details;
+
         if($details->isEmpty()) {
             return '';
         }
@@ -78,4 +90,12 @@ class Product extends Model
 
         return null;
     }
+
+    // public function getSoldAttribute()
+    // {
+    //     return $this->without(['image', 'disocunt', 'details'])
+    //                 ->items()
+    //                 ->with([''])
+    //                 ->count();
+    // }
 }

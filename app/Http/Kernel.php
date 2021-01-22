@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\CreatedOrderStatusCheck::class,
+        \App\Http\Middleware\LastVisitedCookie::class,
     ];
 
     /**
@@ -64,5 +65,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'order.check' => \App\Http\App\Http\Middleware\CreatedOrderStatusCheck::class,
+        'last.visited' => \App\Http\App\Http\Middleware\LastVisitedCookie::class,
     ];
 }

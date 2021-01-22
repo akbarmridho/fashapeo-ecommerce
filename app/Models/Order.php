@@ -23,17 +23,17 @@ class Order extends Model
         'completed_at',
     ];
 
-    public function customer ()
+    public function customer()
     {
         return $this->hasOne(Customer::class);
     }
 
-    public function items ()
+    public function items()
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function activities () 
+    public function activities() 
     {
         return $this->hasMany(OrderActivity::class);
     } 
@@ -51,6 +51,16 @@ class Order extends Model
     public function shipment()
     {
         return $this->hasOne(Shipment::class);
+    }
+
+    public function scopeWithRelationship($query)
+    {
+        return $query->with([
+            'shipment',
+            'transaction',
+            'activities.status',
+            'items',
+        ]);
     }
 
     public function getWeightAttribute()

@@ -26,7 +26,8 @@ class CreatedOrderStatusCheck
      */
     public function handle(Request $request, Closure $next, $current)
     {
-        $order = Order::where('order_number', $request->route('order'))->firstOrFail();
+        // $order = Order::where('order_number', $request->route('order'))->firstOrFail();
+        $order = Order::findOrFail($request->route('order'));
         if(! $orderStatus = $order->recent_status) {
             throw new CannotValidateStatus();
         }

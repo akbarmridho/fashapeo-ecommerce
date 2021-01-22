@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Actions\Product\CreateNewProduct;
+use App\Actions\Product\ProductImageDelete;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class CreatedProductController extends Controller
 {
@@ -26,6 +28,8 @@ class CreatedProductController extends Controller
 
         DB::commit();
 
+        Cache::tags('products')->flush();
+
         session()->flash('status', 'Product created');
 
         return redirect()->route('admin.products');
@@ -35,12 +39,14 @@ class CreatedProductController extends Controller
     {
         $product->delete();
 
+        Cache::tags('products')->flush();
+
         session()->flash('status', 'Product Archived');
 
         return back();
     }
 
-    public function delete(MasterProduct $product, Image $handler)
+    public function delete(MasterProduct $product, ProductImageDelete $handler)
     {
         $handler->delete($product);
         $product->forceDelete();

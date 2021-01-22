@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class ProductDiscount extends Model
 {
@@ -26,5 +27,10 @@ class ProductDiscount extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereDate('valid_until', '<', Carbon::now())->orWhereNull('valid_until');
     }
 }

@@ -6,13 +6,13 @@ use App\Models\Category;
 
 interface ProductRepositoryInterface {
 
-    public function all();
+    public function search($query);
 
-    public function category(Category $category);
+    public function category(Category $category, $page);
 
-    public function bestSeller();
+    public function bestSeller($page);
 
-    public function newArrival();
+    public function newArrival($page);
 
     public function recentViewed();
 }

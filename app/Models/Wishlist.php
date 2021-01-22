@@ -14,11 +14,13 @@ class Wishlist extends Model
         'master_product_id'
     ];
 
+    protected $with = ['product'];
+
     public function customer() {
         return $this->hasOne(Customer::class);
     }
 
-    public function products() {
-        return $this->hasMany(MasterProduct::class);
+    public function product() {
+        return $this->hasOne(MasterProduct::class);
     }
 }

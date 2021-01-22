@@ -19,23 +19,28 @@ class Category extends Model
         'parent_id'
     ];
 
-    public function products() {
+    public function products()
+    {
         return $this->hasMany(MasterProduct::class);
     }
  
-    public function children() {
+    public function children()
+    {
         return $this->hasMany(Category::class, 'parent_id', 'id');
     }
 
-    public function parent() {
+    public function parent()
+    {
         return $this->hasOne(Category::class, 'id', 'parent_id');
     }
 
-    public function scopeParents($query) {
+    public function scopeParents($query)
+    {
         return $query->where('parent_id', null);
     }
 
-    public function scopeChildren($query) {
+    public function scopeChildren($query)
+    {
         return $query->where('parent_id', '!=', null);
     }
 }

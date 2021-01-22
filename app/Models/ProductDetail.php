@@ -15,6 +15,11 @@ class ProductDetail extends Model
         'variant_option_id',
     ];
 
+    protected $with = [
+        'variant',
+        'variantOption',
+    ];
+
     public $timestamps = false;
 
     public function variant()
@@ -29,6 +34,6 @@ class ProductDetail extends Model
 
     public function getVariantNameAttribute()
     {
-        return $this->variant->name . $this->variantOption->name;
+        return $this->variant->name . ' ' . $this->variantOption->name;
     }
 }
