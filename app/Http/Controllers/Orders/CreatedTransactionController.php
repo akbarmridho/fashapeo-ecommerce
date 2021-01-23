@@ -62,8 +62,7 @@ class CreatedTransactionController extends Controller
                     $updater->update($order, $this->status->orderCancelled());
                     $handler->updateTransaction($order, $request->all());
                     $handler->revertStock($order);
-                    $this->setDateCompletion($order->transaction);
-                    event(new OrderCancelled($order));
+                    $this->cancelOrder($order);
                 } else if ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
                 }
@@ -73,9 +72,8 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
                 $handler->revertStock($order);
-                $this->setDateCompletion($order->transaction);
                 event(new TransactionDenied($order));
-                event(new OrderCancelled($order));
+                $this->cancelOrder($order);
                 break;
             case 'pending':
                 $updater->update($order, $this->status->transactionPending());
@@ -86,9 +84,8 @@ class CreatedTransactionController extends Controller
                 $updater->update($order, $this->status->orderCancelled());
                 $handler->updateTransaction($order, $request->all());
                 $handler->revertStock($order);
-                $this->setDateCompletion($order->transaction);
                 event(new PaymentExpired($order));
-                event(new OrderCancelled($order));
+                $this->cancelOrder($order);
                 break;
         }
     }
@@ -96,5 +93,20 @@ class CreatedTransactionController extends Controller
     private function setDateCompletion(Transaction $transaction)
     {
         $transaction->fill(['completed_at' => now()])->save();
+    }
+
+    private function updateFailedOrder(Order $order)
+    {
+        $order->fill([
+            'completed_at' => now(),
+            'is_success' => false,
+        ])->save();
+    }
+
+    private function cancelOrder($order)
+    {
+        $this->setDateCompletion($order->transaction);
+        $this->updateFailedOrder($order);
+        event(new OrderCancelled($order));
     }
 }

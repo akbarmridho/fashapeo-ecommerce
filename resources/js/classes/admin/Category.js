@@ -91,10 +91,6 @@ class Category {
     }
 
     clearDeleteListener() {
-        // this.confirmDeleteBtn.removeEventListener(
-        //     "click",
-        //     this.performDelete.bind(null, categoryId)
-        // );
         this.confirmDeleteBtn = this.confirmDeleteBtn.cloneNode(true);
     }
 
@@ -105,4 +101,4 @@ class Category {
     }
 }
 
-new Category();
+module.exports = Category;

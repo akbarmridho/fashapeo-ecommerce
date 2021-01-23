@@ -1,9 +1,11 @@
+@import "~quill/dist/quill.core.css";
+
 #wrapper {
     display: flex;
     width: 100%;
 }
 
-#sidenav {
+#admin-sidenav {
     width: 250px;
     position: fixed;
     height: 100vh;
@@ -14,11 +16,11 @@
     -ms-overflow-style: none;
 }
 
-#sidenav.active {
+#admin-sidenav.active {
     margin-left: -250px;
 }
 
-#sidenav::-webkit-scrollbar {
+#admin-sidenav::-webkit-scrollbar {
     display: none;
     background: transparent;
 }
@@ -37,11 +39,11 @@
 }
 
 @media (max-width: 768px) {
-    #sidenav {
+    #admin-sidenav {
         margin-left: -250px;
     }
 
-    #sidenav.active {
+    #admin-sidenav.active {
         margin-left: 0;
     }
 

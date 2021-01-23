@@ -1,4 +1,9 @@
+@import "~mdb-ui-kit/css/mdb.min.css";
 @import "~flatpickr/dist/flatpickr.min.css";
+@import "~glightbox/dist/css/glightbox.min.css";
+@import "~filepond/dist/filepond.min.css";
+@import "~tail.select/css/default/tail.select-light.css";
+@import "~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 
 #sidenav {
     width: 250px;

@@ -132,4 +132,4 @@ class LocationSelection {
     }
 }
 
-new LocationSelection();
+module.exports = LocationSelection;

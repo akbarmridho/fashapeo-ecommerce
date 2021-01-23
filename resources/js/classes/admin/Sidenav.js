@@ -1,6 +1,6 @@
 class AdminSideNavigation {
     constructor() {
-        this.sidenav = document.getElementById("sidenav");
+        this.sidenav = document.getElementById("admin-sidenav");
         this.sidenavButton = document.getElementById("sidenavCollapse");
         this.content = document.getElementById("content");
         this.initializer();
@@ -24,4 +24,4 @@ class AdminSideNavigation {
     }
 }
 
-new AdminSideNavigation();
+module.exports = AdminSideNavigation;
