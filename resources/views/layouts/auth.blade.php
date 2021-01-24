@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('child-sheet')
-<link rel="stylesheet" href="{{ mix('css/app.css') }}">
-@endsection
-
 @section('child-layout')
 
 <div class="container">

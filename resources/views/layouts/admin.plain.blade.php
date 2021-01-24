@@ -10,19 +10,8 @@
 
 @section('child-layout')
 
-<div id="wrapper">
-
-    @include('admin.includes.sidebar')
-
-    <div id="content">
-
-        @include('admin.includes.navbar')
-
-        <div class="container-fluid p-5">
-            @yield('content')
-        </div>
-
-    </div>
+<div class="container">
+    @yield('content')
 </div>
 
 @endsection 

@@ -9,19 +9,39 @@
 
     <p class="text-center">Register:</p>
 
-    <div class="form-outline mb-4">
-        <input name="name" type="text" id="registerName" class="form-control
-            @error('name') 
+    <div class="row mb-4">
+        <div class="col">
+            <div class="form-outline">
+            <input name="first_name" type="text" id="registerFirstName" class="form-control
+                @error('first_name') 
+                is-invalid
+                @enderror
+                "
+                autocomplete="name" autofocus required/>
+            <label class="form-label" for="registerFirstName">First Name</label>
+                @error('first_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-outline">
+        <input name="last_name" type="text" id="registerLastName" class="form-control
+            @error('last_name') 
             is-invalid
             @enderror
             "
             autocomplete="name" autofocus required/>
-        <label class="form-label" for="registerName">Name</label>
-        @error('name')
+        <label class="form-label" for="registerLastName">Last Name</label>
+        @error('last_name')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
         </span>
         @enderror
+    </div>
+        </div>
     </div>
 
     <div class="form-outline mb-4">

@@ -16,6 +16,8 @@ class Wishlist extends Model
 
     protected $with = ['product'];
 
+    public $timestamps = false;
+
     public function customer() {
         return $this->hasOne(Customer::class);
     }

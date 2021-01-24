@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
-@section('child-sheet')
-<link rel="stylesheet" href="{{ asset('/css/app.css') }}" />
-@endsection
-
 @section('child-script')
-<script src="{{ asset('/js/index.js') }}" defer></script>
+<script src="{{ mix('/js/pages/main.js') }}" defer></script>
 @endsection
 
 

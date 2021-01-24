@@ -3,10 +3,6 @@
 @section('title')
 Products
 @endsection
-{{-- 
-@section('additional-script')
-<script src="{{ mix('/js/admin/categories.js') }}" defer></script>
-@endsection --}}
 
 @section('content')
 

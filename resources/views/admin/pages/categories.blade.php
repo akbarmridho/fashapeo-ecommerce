@@ -5,7 +5,7 @@ Categories
 @endsection
 
 @section('additional-script')
-<script src="{{ mix('/js/admin/categories.js') }}" defer></script>
+<script src="{{ mix('/js/pages/admin/categories.js') }}" defer></script>
 @endsection
 
 @section('content')

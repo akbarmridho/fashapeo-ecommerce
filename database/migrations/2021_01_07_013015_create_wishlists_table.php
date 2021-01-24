@@ -17,7 +17,6 @@ class CreateWishlistsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('master_product_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
         });
     }
 

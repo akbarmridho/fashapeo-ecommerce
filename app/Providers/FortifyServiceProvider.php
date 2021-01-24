@@ -6,13 +6,10 @@ use App\Actions\Auth\CreateNewUser;
 use App\Actions\Auth\ResetUserPassword;
 use App\Actions\Auth\UpdateUserPassword;
 use App\Actions\Auth\UpdateUserProfileInformation;
+use App\Actions\Auth\Authenticate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
-use App\Models\Customer;
-use App\Models\Admin;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -61,28 +58,7 @@ class FortifyServiceProvider extends ServiceProvider
         
         Fortify::verifyEmailView(fn () => view('auth.verify-email'));
 
-        Fortify::authenticateUsing(function (Request $request) {
-
-            $customer = Customer::where('email', $request->email)->firstOr(function () {
-                return false;
-            });
-
-            if ($customer &&
-                Hash::check($request->password, $customer->password)) {
-                return $customer;
-            }
-
-            $admin = Admin::where('email', $request->email)->firstOr(function () {
-                return false;
-            });
-
-            if ($admin &&
-                Hash::check($request->password, $admin->password)) {
-                return $admin;
-            }
-    
-        });
-
+        Fortify::authenticateUsing(new Authenticate);
     }
 
     private function isAdmin() {

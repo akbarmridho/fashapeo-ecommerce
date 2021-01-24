@@ -91,11 +91,12 @@ class Product extends Model
         return null;
     }
 
-    // public function getSoldAttribute()
-    // {
-    //     return $this->without(['image', 'disocunt', 'details'])
-    //                 ->items()
-    //                 ->with([''])
-    //                 ->count();
-    // }
+    public function getSoldAttribute()
+    {
+        return $this->without(['image', 'disocunt', 'details'])
+                    ->items()
+                    ->with(['product' => function ($query) {
+                        $query->where('is_success', true);
+                    }])->count();
+    }
 }
