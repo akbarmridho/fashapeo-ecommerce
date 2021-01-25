@@ -27,17 +27,17 @@ class CategoryRepository implements CategoryRepositoryInterface
     */
    public function all(): Collection
    {
-       return $this->model->all();    
+       return $this->category->all();    
    }
 
    public function children(): Collection
    {
-       return $this->model->children()->get();
+       return $this->category->children()->get();
    }
 
    public function parents(): Collection
    {
-       return $this->model->parents()->get();
+       return $this->category->parents()->withChildren()->get();
    }
 
    /*
@@ -45,7 +45,7 @@ class CategoryRepository implements CategoryRepositoryInterface
     */
     public function find($key): Category
     {
-        return $this->model->find($key);
+        return $this->category->find($key);
     }
 
    /*

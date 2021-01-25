@@ -1,8 +1,12 @@
 {
     "/js/admin.js": "/js/admin.js",
-    "/js/admin/categories.js": "/js/admin/categories.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/admin.css": "/css/admin.css",
-    "/js/datePicker.js": "/js/datePicker.js"
+    "/js/pages/admin/categories.js": "/js/pages/admin/categories.js",
+    "/js/pages/admin/createProduct.js": "/js/pages/admin/createProduct.js",
+    "/js/pages/admin/variations.js": "/js/pages/admin/variations.js",
+    "/js/pages/auth/register.js": "/js/pages/auth/register.js",
+    "/js/pages/main.js": "/js/pages/main.js",
+    "/js/pages/product.js": "/js/pages/product.js"
 }

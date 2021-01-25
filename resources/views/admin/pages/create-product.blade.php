@@ -1,7 +1,7 @@
-@extends('layouts.admin.plain')
+@extends('layouts.admin-plain')
 
 @section('title')
-Categories
+Create Product
 @endsection
 
 @section('additional-script')

@@ -13,7 +13,7 @@ class CreatedProductController extends Controller
 {
     public function create()
     {
-        //
+        return view('admin.pages.create-product');
     }
 
     public function store(CreateNewProduct $creator, Request $request)

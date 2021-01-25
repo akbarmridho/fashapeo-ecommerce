@@ -53,7 +53,7 @@
 
         <div class="col">
             <!-- Simple link -->
-            <a href="#!">Forgot password?</a>
+            <a href="{{ route('password.request') }}">Forgot password?</a>
         </div>
     </div>
 
@@ -64,6 +64,10 @@
 
     <!-- Register buttons -->
     <div class="text-center">
-        <p class="mb-1">Not a member? <a href="#!">Register</a></p>
+        @admin
+        <p class="mb-1">Not a member? <a href="{{ route('admin.register') }}">Register</a></p>
+        @else
+        <p class="mb-1">Not a member? <a href="{{ route('register') }}">Register</a></p>
+        @endadmin
     </div>
 </form>

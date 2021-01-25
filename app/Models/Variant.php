@@ -15,4 +15,9 @@ class Variant extends Model
 
     public $timestamps = false;
 
+    public function products()
+    {
+        return $this->hasMany(ProductDetail::class);
+    }
+
 }

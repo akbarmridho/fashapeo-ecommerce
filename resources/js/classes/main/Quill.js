@@ -1,5 +1,5 @@
-import Quill from "quill";
-import ImageUploader from "quill-image-uploader";
+const Quill = require("quill");
+const ImageUploader = require("quill-image-uploader");
 
 Quill.register("modules/imageUploader", ImageUploader);
 

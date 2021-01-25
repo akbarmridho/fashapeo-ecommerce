@@ -39,44 +39,7 @@
                 </a>
                 <!-- Dropdown menu -->
                 <div class="dropdown-menu" id="categoriesMenu">
-                  <div class="d-flex small">
-                    <div class="flex-fill px-3 my-3" style="min-width: 175px">
-                      <a href="" class="dropdown-item fw-bold">SHIRTS</a>
-                      <hr class="dropdown-divider" />
-                      <a href="" class="dropdown-item">Flannel Shirt</a>
-                      <a href="" class="dropdown-item">Plain Shirt</a>
-                      <a href="" class="dropdown-item">Polo Shirt</a>
-                      <a href="" class="dropdown-item">Overshirt</a>
-                    </div>
-                    <div class="flex-fill px-3 my-3" style="min-width: 175px">
-                      <a href="" class="dropdown-item fw-bold"
-                        >OUTWEAR/JACKETS</a
-                      >
-                      <hr class="dropdown-divider" />
-                      <a href="" class="dropdown-item">Bomber Jacket</a>
-                      <a href="" class="dropdown-item">Leather Jacket</a>
-                      <a href="" class="dropdown-item">Suede Jacket</a>
-                      <a href="" class="dropdown-item">Hoodie</a>
-                    </div>
-                    <div class="flex-fill px-3 my-3" style="min-width: 175px">
-                      <a href="" class="dropdown-item fw-bold"
-                        >TROUSERS & JEANS</a
-                      >
-                      <hr class="dropdown-divider" />
-                      <a href="" class="dropdown-item">Chinos</a>
-                      <a href="" class="dropdown-item">Denim</a>
-                      <a href="" class="dropdown-item">Ankle Pants</a>
-                      <a href="" class="dropdown-item">Cargo Pants</a>
-                      <a href="" class="dropdown-item">Short Pants</a>
-                    </div>
-                    <div class="flex-fill px-3 my-3" style="min-width: 175px">
-                      <a href="" class="dropdown-item fw-bold">SHOES</a>
-                      <hr class="dropdown-divider" />
-                      <a href="" class="dropdown-item">Sneakers</a>
-                      <a href="" class="dropdown-item">Boots</a>
-                      <a href="" class="dropdown-item">Loafer</a>
-                    </div>
-                  </div>
+                  <x-main.category-menu :categories="$categories"/>
                 </div>
               </li>
               <li class="nav-item mx-2">

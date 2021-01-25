@@ -39,17 +39,7 @@
               class="collapse list-group list-group-flush pe-4 small"
               id="testCollapse"
             >
-              <a class="list-group-item list-group-item-action" href="#"
-                >Action</a
-              >
-
-              <a class="list-group-item list-group-item-action" href="#"
-                >Another action</a
-              >
-
-              <a class="list-group-item list-group-item-action" href="#"
-                >Something else here</a
-              >
+              <x-main.category-menu-mobile :categories="$categories" />
             </div>
           </li>
           <li class="nav-item">

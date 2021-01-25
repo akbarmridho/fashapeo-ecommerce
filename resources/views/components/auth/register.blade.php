@@ -73,9 +73,9 @@
             "
             required >
             <option value="" selected>Enter your sex</option>
-            <option value="0">Unknown</option>
             <option value="1">Male</option>
             <option value="2">Female</option>
+            <option value="0">Unknown</option>
             <option value="9">Not applicable</option>
         </select>
         @error('sex')

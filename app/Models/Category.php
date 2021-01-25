@@ -43,4 +43,9 @@ class Category extends Model
     {
         return $query->where('parent_id', '!=', null);
     }
+
+    public function scopeWithChildren($query)
+    {
+        return $query->with('children');
+    }
 }

@@ -11,6 +11,10 @@ class AdminSideNavigation {
     }
 
     sidenavListener() {
+        if (this.sidenavButton === null) {
+            return;
+        }
+
         this.sidenavButton.addEventListener(
             "click",
             this.toggleActive.bind(this)

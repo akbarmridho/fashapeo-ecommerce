@@ -1,23 +1,23 @@
-class Category {
+class Variation {
     constructor() {
         this.table = document.querySelector("tbody");
         this.confirmDeleteBtn = document.getElementById("confirmDelete");
-        this.deleteCategoryModalElement = document.getElementById(
-            "deleteCategoryModal"
+        this.deleteVariationModalElement = document.getElementById(
+            "deleteVariationModal"
         );
-        this.editCategoryModalElement = document.getElementById(
-            "editCategoryModal"
+        this.editVariationModalElement = document.getElementById(
+            "editVariationModal"
         );
-        this.deleteCategoryModal = new window.mdb.Modal(
-            this.deleteCategoryModalElement
+        this.deleteVariationModal = new window.mdb.Modal(
+            this.deleteVariationModalElement
         );
-        this.editCategoryModal = new window.mdb.Modal(
-            this.editCategoryModalElement
+        this.editVariationModal = new window.mdb.Modal(
+            this.editVariationModalElement
         );
-        this.editCategoryModalContent = document.getElementById(
-            "editCategoryModalContent"
+        this.editVariationModalContent = document.getElementById(
+            "editVariationModalContent"
         );
-        this.oldEditCategoryModalContent = this.editCategoryModalContent.cloneNode(
+        this.oldEditVariationModalContent = this.editVariationModalContent.cloneNode(
             true
         );
         this.tableListener();
@@ -32,64 +32,64 @@ class Category {
                 return;
             }
 
-            if (actionButton.id === "deleteCategory") {
-                categoryId = actionButton.dataset.categoryId;
-                this.deleteListener(categoryId);
+            if (actionButton.id === "deleteVariation") {
+                variationId = actionButton.dataset.variationId;
+                this.deleteListener(variationId);
             }
 
-            if (actionButton.id === "editCategory") {
-                categoryId = actionButton.dataset.categoryId;
-                this.performEdit(categoryId);
+            if (actionButton.id === "editVariation") {
+                variationId = actionButton.dataset.variationId;
+                this.performEdit(variationId);
             }
         });
     }
 
     modalHideListener() {
-        this.editCategoryModalElement.addEventListener(
+        this.editVariationModalElement.addEventListener(
             "hide.mdb.modal",
             this.clearEditModal.bind(this)
         );
-        this.deleteCategoryModalElement.addEventListener(
+        this.deleteVariationModalElement.addEventListener(
             "hide.mdb.modal",
             this.clearDeleteListener.bind(this)
         );
     }
 
-    deleteListener(categoryId) {
+    deleteListener(variationId) {
         this.confirmDeleteBtn.addEventListener(
             "click",
-            this.performDelete.bind(this, categoryId)
+            this.performDelete.bind(this, variationId)
         );
     }
 
-    performDelete(categoryId) {
+    performDelete(variationId) {
         window.axios
-            .delete(`/admin/categories/${categoryId}`)
+            .delete(`/admin/variants/${variationId}`)
             .then(response => {
                 this.clearDeleteListener();
                 location.reload();
             })
             .catch(error => {
-                this.deleteCategoryModal.hide();
+                this.deleteVariationModal.hide();
                 alert("Something went wrong!");
             });
     }
 
-    performEdit(categoryId) {
+    performEdit(variationId) {
         window.axios
-            .get(`/admin/categories/${categoryId}`)
+            .get(`/admin/variants/${variationId}`)
             .then(response => {
-                this.editCategoryModalContent.innerHTML = response.data;
+                this.editVariationModalContent.innerHTML = response.data;
                 this.initializeInput();
             })
             .catch(error => {
-                this.editCategoryModalContent.innerHTML =
+                this.editVariationModalContent.innerHTML =
                     '<div class="text-center p-5><h3 class="text-danger">Something went wrong</h3></div>';
             });
     }
 
     initializeInput() {
-        this.editCategoryModalContent
+        this.editVariationModalContent
             .querySelectorAll(".form-outline")
             .forEach(formOutline => {
                 new mdb.Input(formOutline).init();
@@ -101,10 +101,10 @@ class Category {
     }
 
     clearEditModal() {
-        this.editCategoryModalContent = this.oldEditCategoryModalContent.cloneNode(
+        this.editVariationModalContent = this.oldEditVariationModalContent.cloneNode(
             true
         );
     }
 }
 
-module.exports = Category;
+module.exports = Variation;

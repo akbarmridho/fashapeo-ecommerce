@@ -5,7 +5,7 @@ Register
 @endsection
 
 @section('additional-script')
-<script src="{{ mix('js/datePicker.js') }}" defer></script>
+<script src="{{ mix('js/pages/auth/register.js') }}" defer></script>
 @endsection
 
 @section('content') 

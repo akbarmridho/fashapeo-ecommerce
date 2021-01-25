@@ -54,8 +54,11 @@
               <div class="dropdown-menu-dark">
                 <a class="list-group-item bg-dark dropdown-item" href="{{ route('admin.products') }}"
                   >View Products</a
-                >
-                <a class="list-group-item dropdown-item bg-dark" href="#"
+                > 
+                <a class="list-group-item bg-dark dropdown-item" href="{{ route('admin.variants') }}"
+                  >Variations</a
+                > 
+                <a class="list-group-item dropdown-item bg-dark" href="{{ route('admin.products.create') }}"
                   >Add Product</a
                 >
               </div>

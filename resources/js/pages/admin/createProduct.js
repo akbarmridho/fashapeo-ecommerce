@@ -1,16 +1,18 @@
 const { UploadMasterProductImage } = require("../../config/Filepond");
-// const FilePond = require("../../classes/main/FilePond");
 
 document.addEventListener("DOMContentLoaded", () => {
     const mainImage = document.getElementById("mainImage");
-    mainImageUpload = FilePond.create(mainImage, UploadMasterProductImage);
+    mainImageUpload = window.FilePond.create(
+        mainImage,
+        UploadMasterProductImage
+    );
 });
 
-tail.select("#category", {
+window.tail("#category", {
     search: true
 });
 
-const quill = new Quill("#editor", {
+const quill = new window.Quill("#editor", {
     theme: "snow"
 });
 

@@ -28,7 +28,7 @@ class ProductImage {
     }
 
     imageGallery(images) {
-        this.lightbox = GLightbox({ elements: images });
+        this.lightbox = window.GLightbox({ elements: images });
     }
 
     imageList() {

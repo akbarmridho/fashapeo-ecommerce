@@ -34,11 +34,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('variants', [VariantController::class, 'index'])
             ->name('variants');
 
-        Route::get('variants/{id}', [VariantController::class, 'show'])
-            ->name('variants.show');
+        Route::get('variants/{id}', [VariantController::class, 'edit'])
+            ->name('variants.edit');
 
-        Route::post('variants', [VariantController::class, 'create'])
-            ->name('variants.create');
+        Route::post('variants', [VariantController::class, 'store'])
+            ->name('variants.store');
 
         Route::put('variants/{id}', [VariantController::class, 'update'])
             ->name('variants.update');
@@ -49,23 +49,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('products', [ProductController::class, 'index'])
             ->name('products');
 
-        Route::get('products/{product}', [UpdateProductController::class, 'show'])
-            ->name('products.show');
-
-        Route::get('products/{product}/master', [UpdateProductController::class, 'masterImages']);
-
-        Route::get('products/{product}/variant', [UpdateProductController::class, 'productImage']);
-
         Route::get('products/create', [CreatedProductController::class, 'create'])
             ->name('products.create');
 
         Route::post('products/create', [CreatedProductController::class, 'store']);
-        
-        Route::put('products/{id}/archive', [CreatedProductController::class, 'archive']);
 
-        Route::put('products/{id}', [UpdateProductController::class, 'update']);
+        Route::get('products/edit/{product}', [UpdateProductController::class, 'show'])
+            ->name('products.edit');
         
-        Route::delete('products/{id}', [CreatedProductController::class, 'delete'])
+        Route::put('products/edit/{product}', [UpdateProductController::class, 'update']);
+
+        Route::get('products/edit/{product}/master', [UpdateProductController::class, 'masterImages']);
+
+        Route::get('products/edit/{product}/variant', [UpdateProductController::class, 'productImage']);
+        
+        Route::put('products/edit/{product}/archive', [CreatedProductController::class, 'archive']);
+        
+        Route::delete('products/edit/{product}', [CreatedProductController::class, 'delete'])
             ->name('products.delete');
 
         Route::get('discounts', [ProductDiscountController::class, 'index'])

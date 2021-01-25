@@ -54,7 +54,9 @@ class VariantInput {
     }
 
     initializeImageInput(input) {
-        FilePond.create(input.querySelector(".filepond", UploadProductImage));
+        window.FilePond.create(
+            input.querySelector(".filepond", UploadProductImage)
+        );
     }
 }
 

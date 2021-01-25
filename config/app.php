@@ -182,6 +182,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ViewServiceProvider::class,
 
     ],
 

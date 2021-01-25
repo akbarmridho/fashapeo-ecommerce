@@ -6,7 +6,7 @@ class HoverDropdown {
 
     initialize() {
         this.dropdownElementList.forEach(element => {
-            const dropdown = new mdb.Dropdown(element);
+            const dropdown = new window.mdb.Dropdown(element);
             element.parentElement.addEventListener(
                 "mouseenter",
                 dropdown.show.bind(dropdown)

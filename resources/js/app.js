@@ -1,8 +1,11 @@
 require("./bootstrap");
-let FilePond = require("./classes/main/FilePond");
-let lozad = require("lozad");
 
-import * as mdb from "mdb-ui-kit";
-import flatpickr from "flatpickr";
-import GLightbox from "glightbox";
-import * as tail from "tail.select";
+window.FilePond = require("./classes/main/FilePond");
+window.lozad = require("lozad");
+window.GLightbox = require("glightbox");
+window.mdb = require("mdb-ui-kit");
+window.tail = require("tail.select");
+
+import * as flatpickr from "flatpickr";
+
+// let Validate = require("validate.js");

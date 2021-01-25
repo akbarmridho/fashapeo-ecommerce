@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Support\Carbon;
-use App\Actions\Fortify\PasswordValidationRules;
 use Illuminate\Support\Str;
 
 class CreateNewAdmin implements CreatesNewUsers
@@ -25,7 +24,8 @@ class CreateNewAdmin implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -39,7 +39,8 @@ class CreateNewAdmin implements CreatesNewUsers
         ])->validate();
 
         return Admin::create([
-            'name' => Str::title($input['name']),
+            'first_name' => Str::title($input['first_name']),
+            'last_name' => Str::title($input['last_name']),
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'sex' => $input['sex'],

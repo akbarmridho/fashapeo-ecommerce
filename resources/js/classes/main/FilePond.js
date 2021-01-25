@@ -1,11 +1,11 @@
-import * as FilePond from "filepond";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilepondPluginFileRename from "filepond-plugin-file-rename";
-import FilePondPluginImageCrop from "filepond-plugin-image-crop";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import FilePondPluginFileValidateSize from "filepond-plugin-image-validate-size";
-import FilePondPluginImageResize from "filepond-plugin-image-resize";
-import FilePondPluginImageTransform from "filepond-plugin-image-transform";
+const FilePond = require("filepond");
+const FilePondPluginImageExifOrientation = require("filepond-plugin-image-exif-orientation");
+const FilepondPluginFileRename = require("filepond-plugin-file-rename");
+const FilePondPluginImageCrop = require("filepond-plugin-image-crop");
+const FilePondPluginImagePreview = require("filepond-plugin-image-preview");
+const FilePondPluginFileValidateSize = require("filepond-plugin-image-validate-size");
+const FilePondPluginImageResize = require("filepond-plugin-image-resize");
+const FilePondPluginImageTransform = require("filepond-plugin-image-transform");
 
 FilePond.registerPlugin(
     FilePondPluginImageExifOrientation,

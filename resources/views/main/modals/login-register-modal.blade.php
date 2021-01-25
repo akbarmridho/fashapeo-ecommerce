@@ -62,3 +62,4 @@
       </div>
     </div>
   </div>
+  <script src="{{ mix('/js/pages/auth/register.js')}}" defer></script>
