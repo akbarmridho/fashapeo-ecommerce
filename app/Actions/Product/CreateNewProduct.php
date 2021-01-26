@@ -10,7 +10,8 @@ use App\Models\ProductDetail;
 use App\Models\VariantOption;
 use App\Models\Variant;
 
-class CreateNewProduct {
+class CreateNewProduct
+{
 
     use ProductValidationRules, UsedVariant, ProductImage;
 

@@ -22,11 +22,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/api/image/upload', [ImageController::class, 'upload'])->name('image.upload');
-Route::post('/api/image/process', [FilepondController::class, 'upload'])->name('image.process');
-Route::delete('/api/image/delete', [FilepondController::class, 'delete'])->name('image.delete');
+Route::post('/image/upload', [ImageController::class, 'upload'])->name('image.upload');
+Route::post('/image/process', [FilepondController::class, 'upload'])->name('image.process');
+Route::delete('/image/delete', [FilepondController::class, 'delete'])->name('image.delete');
 
-Route::get('/api/provinces', [AdministrationController::class, 'provinces']);
-Route::get('/api/cities/{id}', [AdministrationController::class, 'cities']);
+Route::get('/provinces', [AdministrationController::class, 'provinces']);
+Route::get('/cities/{id}', [AdministrationController::class, 'cities']);
 
-Route::post('/api/payment/notification', [CreatedTransactionController::class, 'notification']);
+Route::post('/payment/notification', [CreatedTransactionController::class, 'notification']);

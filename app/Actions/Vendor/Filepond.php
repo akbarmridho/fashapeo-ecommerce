@@ -4,7 +4,7 @@ namespace App\Actions\Vendor;
 
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Str;
+use Illuminate\Support\Str;
 use App\Exceptions\InvalidPathException;
 
 class Filepond {
@@ -21,7 +21,7 @@ class Filepond {
         }
 
         $filepath = Crypt::decryptString($serverId);
-        if (! Str::startsWith($filepath, $this->getBasePath)) {
+        if (! Str::startsWith($filepath, $this->getBasePath())) {
             throw new InvalidPathException();
         }
 

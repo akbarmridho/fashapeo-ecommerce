@@ -4,9 +4,11 @@
     id="category"
     height="50px"
 >
-    <optgroup label="Shirts">
-        <option value="1">T-Shirt</option>
-        <option value="2">Option2</option>
-        <option value="3">Option3</option>
+    @foreach($categories as $parent)
+    <optgroup label="{{ $parent->name }}">
+        @foreach($parent->children as $child)
+        <option value="{{ $child->id }}">{{ $child->name }}</option>
+        @endforeach
     </optgroup>
+    @endforeach
 </select>

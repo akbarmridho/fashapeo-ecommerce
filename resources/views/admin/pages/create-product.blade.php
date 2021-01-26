@@ -15,7 +15,7 @@ Create Product
             <p>You can upload up to 5 images.</p>
             <input
               type="file"
-              name="mainImage"
+              name="images"
               id="mainImage"
               class="filepond"
             />
@@ -25,7 +25,7 @@ Create Product
             <h5>Product Title</h5>
             <div class="px-3 mb-5 w-75">
               <input
-                name="title"
+                name="name"
                 type="text"
                 id="form1"
                 class="form-control"
@@ -34,7 +34,7 @@ Create Product
             </div>
             <h5>Product Category</h5>
             <div class="px-3 mb-5">
-              <x-admin.category-selection />
+              <x-admin.category-selection :categories="$categories" />
             </div>
           </div>
           <div class="row my-4 shadow-1-strong p-4">
@@ -50,6 +50,7 @@ Create Product
             <div id="variantContent">
               <button
                 id="addVariant"
+                type="button"
                 class="btn btn-lg btn-success shadow-0 mb-5 w-100"
               >
                 ADD VARIANT
@@ -59,7 +60,7 @@ Create Product
           <div class="row mb-3 shadow-1-strong mb-4 p-4">
             <h3 class="mb-5">Product Setting</h3>
             <div id="productSetting">
-              <input type="hidden" name="usedVariant" value="" />
+              <input type="hidden" name="used_variant" value="" />
               <h5>Price</h5>
               <div class="input-group mb-5 w-50">
                 <span class="input-group-text" id="basic-addon1">Rp</span>
@@ -76,8 +77,8 @@ Create Product
                   name="variants[1][active]"
                   class="form-check-input"
                   type="checkbox"
+                  value="true"
                   id="flexSwitchCheckChecked"
-                  checked
                 />
                 <label class="form-check-label" for="flexSwitchCheckChecked"
                   >Product Inactive/Active</label
@@ -144,10 +145,11 @@ Create Product
             </div>
           </div>
           <div class="text-end">
-            <button class="btn btn-lg btn-light mx-3 mb-4">Cancel</button>
-            <button id="upload" class="btn btn-lg btn-success mb-4">
+            <button type="button" class="btn btn-lg btn-light mx-3 mb-4">Cancel</button>
+            <button type="button" id="upload" class="btn btn-lg btn-success mb-4">
               Upload
             </button>
           </div>
         </form>
+        @include('admin.includes.create-product-template')
 @endsection

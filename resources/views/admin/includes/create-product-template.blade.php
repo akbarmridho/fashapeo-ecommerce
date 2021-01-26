@@ -1,15 +1,16 @@
 <template id="multiVariant">
         <div class="mb-5">
           <select id="variantSelection" class="select-move" multiple>
-            <option data-description="size desc" value="1">Size</option>
-            <option data-description="color desc" value="2">Color</option>
-            <option data-description="storage desc" value="3">Storage</option>
+            @foreach($variants as $variant)
+            <option value="{{ $variant->id }}">{{ $variant->name }}</option>
+            @endforeach
           </select>
           <div id="variantContainer"></div>
 
           <button
             id="removeVariant"
             class="btn btn-lg btn-danger shadow-0 mt-5 w-100"
+            type="button"
           >
             REMOVE VARIANT
           </button>
@@ -37,7 +38,7 @@
       </template>
       <template id="variantsTable">
         <table class="table align-middle">
-          <input type="hidden" name="usedVariant" id="usedVariant" value="" />
+          <input type="hidden" name="used_variant" id="usedVariant" value="" />
           <thead>
             <tr>
               <th scope="col">Price</th>
@@ -90,7 +91,7 @@
                 class="form-check-input"
                 type="checkbox"
                 id="flexSwitchCheckChecked"
-                checked
+                value="true"
               />
             </div>
           </td>

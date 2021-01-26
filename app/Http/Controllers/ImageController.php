@@ -12,6 +12,6 @@ class ImageController extends Controller
     {
         $path = $request->file('image')->store(config('image.upload_img_path'), 'public');
 
-        return $path;
+        return Storage::url($path);
     }
 }

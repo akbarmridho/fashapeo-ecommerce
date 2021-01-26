@@ -1,4 +1,4 @@
-@import "~quill/dist/quill.snow.css";
+@import "~quill-image-uploader/src/quill.imageUploader.css";
 
 #wrapper {
     display: flex;
@@ -54,4 +54,19 @@
     #content.active {
         width: calc(100% - 250px);
     }
+}
+
+.ql-editor {
+    min-height: 400px;
+}
+
+#mainImage .filepond--item {
+    width: calc(20% - 0.5em);
+}
+
+.filepond--file-action-button {
+    cursor: pointer;
+}
+.filepond--panel-root {
+    background-color: rgb(231, 229, 229);
 }

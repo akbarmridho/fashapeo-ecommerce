@@ -3,17 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Actions\Product\CreateNewProduct;
 use App\Actions\Product\ProductImageDelete;
+use App\Repository\CategoryRepositoryInterface;
+use App\Models\Variant;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 class CreatedProductController extends Controller
 {
+    public $categories;
+
+    public function __construct(CategoryRepositoryInterface $categories)
+    {
+        $this->categories = $categories;
+    }
+
     public function create()
     {
-        return view('admin.pages.create-product');
+        $categories = $this->categories->parents();
+        $variants = Variant::all();
+
+        return view('admin.pages.create-product', compact('categories', 'variants'));
     }
 
     public function store(CreateNewProduct $creator, Request $request)

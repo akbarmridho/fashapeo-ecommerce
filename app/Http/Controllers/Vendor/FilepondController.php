@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vendor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use App\Actions\Vendor\Filepond;
 use App\Http\Controllers\Controller;
 
@@ -17,7 +18,15 @@ class FilepondController extends Controller
 
     public function upload(Request $request)
     {
-        $input = $request->file('image');
+        foreach(array_keys($request->all()) as $req)
+        {
+            if($request->hasFile($req)) {
+
+                $input = $request->file($req);
+                break;
+
+            }
+        }
 
         if($input === null) {
             return Response::make('image is required', 422, [
@@ -49,7 +58,7 @@ class FilepondController extends Controller
             ]);
         }
 
-        return Response::make('', 500, [
+        return Response::make('File not found', 500, [
             'Content-Type' => 'text/plain',
         ]);
     }

@@ -16,8 +16,8 @@ class VariantSelection {
     }
 
     initializeSelection() {
-        this.selection = tail
-            .select(".select-move", {
+        this.selection = window
+            .tail(".select-move", {
                 search: true,
                 hideSelected: false,
                 hideDisabled: true,

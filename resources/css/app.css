@@ -4,6 +4,7 @@
 @import "~filepond/dist/filepond.min.css";
 @import "~tail.select/css/default/tail.select-light.css";
 @import "~filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+@import "~quill/dist/quill.snow.css";
 
 #sidenav {
     width: 250px;

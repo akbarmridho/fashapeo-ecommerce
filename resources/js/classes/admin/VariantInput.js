@@ -1,3 +1,4 @@
+// const FilePond = require("../../classes/main/FilePond");
 const { UploadProductImage } = require("../../config/Filepond");
 
 class VariantInput {
@@ -55,7 +56,8 @@ class VariantInput {
 
     initializeImageInput(input) {
         window.FilePond.create(
-            input.querySelector(".filepond", UploadProductImage)
+            input.querySelector(".filepond"),
+            UploadProductImage
         );
     }
 }
