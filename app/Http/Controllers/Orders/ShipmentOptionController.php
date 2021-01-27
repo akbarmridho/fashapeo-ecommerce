@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Orders;
 
 use App\Http\Controllers\Controller;
-use App\Requests\ShipmentCostRequest;
+use App\Http\Requests\ShipmentCostRequest;
+use App\Models\Order;
 use App\Repository\DeliveryRepositoryInterface;
 
 class ShipmentOptionController extends Controller

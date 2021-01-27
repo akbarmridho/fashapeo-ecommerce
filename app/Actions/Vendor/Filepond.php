@@ -38,8 +38,8 @@ class Filepond {
         $baseOldPath = $this->getPathFromServerId($id);
         $basePath = Storage::disk('public')->path($path);
         
-        $oldPath = $baseOldPath . DIRECTORY_SEPARATOR . $images;
-        $finalPath = $basePath . DIRECTORY_SEPARATOR . $images;
+        $oldPath = $baseOldPath . DIRECTORY_SEPARATOR . $image;
+        $finalPath = $basePath . DIRECTORY_SEPARATOR . $image;
         Storage::move($oldPath, $finalPath);
     }
 

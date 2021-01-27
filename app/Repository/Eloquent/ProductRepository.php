@@ -5,7 +5,7 @@ namespace App\Repository\Eloquent;
 use App\Repository\ProductRepositoryInterface;
 use App\Models\Category;
 use App\Models\MasterProduct;
-use Illuminate\Support\Cookie;
+use Illuminate\Support\Facades\Cookie;
 
 class ProductRepository implements ProductRepositoryInterface {
 
@@ -27,9 +27,9 @@ class ProductRepository implements ProductRepositoryInterface {
         return $category->products()->withRelationship()->paginate($this->paginate);
     }
 
-    public function bestSeller($page)
+    public function bestSeller()
     {
-        return $this->master->withRelationship()->bestSeller()->paginate($this->paginate);
+        return $this->master->withRelationship()->all()->sortByDesc('sold')->take(8);
     }
 
     public function newArrival($page)

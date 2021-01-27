@@ -5,20 +5,21 @@ namespace App\Repository\Cache;
 use App\Repository\StatusRepositoryInterface;
 use App\Repository\Eloquent\StatusRepository as EloquentStatusRepository;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Status;
 
 class StatusRepository implements StatusRepositoryInterface
 {
     private $parent;
     private $time = 60*60*24*30;
 
-    public function __construct()
+    public function __construct(EloquentStatusRepository $parent)
     {
-        $this->parent = new EloquentStatusRepository;
+        $this->parent = $parent;
     }
 
     public function find(int $code): Status
     {
-        return Cache::remember('status.find:' . $code, $this->time, function() {
+        return Cache::remember('status.find:' . $code, $this->time, function($code) {
             return $this->parent->find($code);
         });
     }

@@ -5,6 +5,7 @@ namespace App\Actions\Product;
 use App\Models\Product;
 use App\Rules\NotParentCategory;
 use App\Rules\VariantsIsValid;
+use Illuminate\Validation\Rule;
 
 trait ProductValidationRules {
     

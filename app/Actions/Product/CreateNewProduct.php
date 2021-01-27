@@ -12,7 +12,6 @@ use App\Models\Variant;
 
 class CreateNewProduct
 {
-
     use ProductValidationRules, UsedVariant, ProductImage;
 
     /**

@@ -25,8 +25,8 @@ class CartRepository implements CartRepositoryInterface
     public function create (Product $product, Customer $customer, int $quantity): Cart
     {
         return Cart::create([
-            'used_id' => $customer_id,
-            'product_id' => $product_id,
+            'user_id' => $customer->id,
+            'product_id' => $product->id,
             'quantity' => $quantity,
         ]);
     }

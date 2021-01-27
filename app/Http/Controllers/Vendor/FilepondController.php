@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 
 class FilepondController extends Controller
 {
+    public $filepond;
+
     public function __construct(Filepond $filepond)
     {
         $this->filepond = $filepond;

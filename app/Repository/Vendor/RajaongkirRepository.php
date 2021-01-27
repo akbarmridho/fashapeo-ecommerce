@@ -35,7 +35,7 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
         $apiUrl = 'https://api.rajaongkir.com/starter/city';
 
         if($provinceid) {
-            $response = $this->http->get($apiUrl, ['province' => $id]);
+            $response = $this->http->get($apiUrl, ['province' => $provinceId]);
         } else {
             $response = $this->http->get($apiUrl);
         }
@@ -51,7 +51,7 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/cost';
 
-        $response = $this->http->post($apiurl, [
+        $response = $this->http->post($apiUrl, [
             'origin' => $origin,
             'destination' => $destination,
             'weight' => $weight,
@@ -67,6 +67,8 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
 
     public function address(int $cityId): array
     {
+        $apiUrl = 'https://api.rajaongkir.com/starter/city';
+
         $data = $this->http->get($apiUrl, ['id' => $cityId]);
 
         if (! $data->successful()) {

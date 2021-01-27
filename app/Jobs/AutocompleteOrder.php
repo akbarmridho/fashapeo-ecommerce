@@ -10,7 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
 use App\Models\Order;
-use App\Repository\StatusRepository;
+use App\Repository\StatusRepositoryInterface as StatusRepository;
 use App\Actions\Order\UpdateStatus;
 use App\Events\OrderCompleted;
 

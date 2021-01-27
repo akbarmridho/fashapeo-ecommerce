@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Actions\Product\UpdateProduct;
-use App\Actions\Product\ProductImageDelete as Image;
 use App\Models\MasterProduct;
 
 class UpdateProductController extends Controller

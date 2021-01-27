@@ -2,7 +2,7 @@
 
 namespace App\Actions\Address;
 
-use App\Modals\Address;
+use App\Models\Address;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 

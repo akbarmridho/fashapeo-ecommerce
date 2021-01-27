@@ -69,4 +69,21 @@ trait ProductImage
 
         Image::destroy($images->pluck('id')->all());
     }
+
+    public function deleteAllImage(MasterProduct $master)
+    {
+        foreach($master->images as $image) {
+            $this->deleteImage($image);
+        }
+
+        foreach($master->products as $product) {
+            $this->deleteImage($product->image);
+        }
+    }
+
+    private function deleteImage(Image $image)
+    {
+        Storage::disk('public')->delete($image->url);
+        $image->delete();
+    }
 }

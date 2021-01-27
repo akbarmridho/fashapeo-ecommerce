@@ -3,8 +3,9 @@
 namespace App\Policies;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use App\Repostiory\StatusRepositoryInterface as Status;
+use App\Repository\StatusRepositoryInterface as Status;
 
 class OrderPolicy
 {

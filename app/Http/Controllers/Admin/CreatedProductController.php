@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Actions\Product\CreateNewProduct;
-use App\Actions\Product\ProductImageDelete;
+use App\Actions\Product\ProductImage;
 use App\Repository\CategoryRepositoryInterface;
 use App\Models\Variant;
 use Illuminate\Http\Request;
@@ -58,9 +58,9 @@ class CreatedProductController extends Controller
         return back();
     }
 
-    public function delete(MasterProduct $product, ProductImageDelete $handler)
+    public function delete(MasterProduct $product, ProductImage $handler)
     {
-        $handler->delete($product);
+        $handler->deleteAllImage($product);
         $product->forceDelete();
 
         session()->flash('status', 'Product Deleted');

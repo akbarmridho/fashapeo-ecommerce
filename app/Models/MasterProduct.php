@@ -37,11 +37,6 @@ class MasterProduct extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function scopeBestSeller($query)
-    {
-        return $query->orderByDesc('sold');
-    }
-
     public function scopeNewArrival($query)
     {
         return $query->orderByDesc('created_at');
@@ -60,10 +55,11 @@ class MasterProduct extends Model
         return $this->images()->where('order', 1)->first();
     }
 
-    // public function getSoldAttribute()
-    // {
-    //     return $this->
-    // }
+    public function getSoldAttribute()
+    {
+        $products = collect($this->products->append('sold')->toArray());
+        return $products->pluck('sold')->sum();
+    }
 
     public function getMinPriceAttribute()
     {
@@ -85,7 +81,7 @@ class MasterProduct extends Model
         $products = $this->products()->without(['details', 'image'])->get();
 
         $transformed = $products->map(function ($item, $key) {
-            $disocunt = $item->active_discount ?: 0;
+            $discount = $item->active_discount ?: 0;
             return [
                 'initial_price' => $item->price,
                 'discount_value' => $discount,

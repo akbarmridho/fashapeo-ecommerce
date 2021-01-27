@@ -15,7 +15,7 @@ use App\Exceptions\CannotValidateProductId;
 
 class UpdateProduct {
 
-    use ProductImage, ProductValidationRules, UsedVariant, ProductImageDelete;
+    use ProductImage, ProductValidationRules, UsedVariant;
 
     public function update(MasterProduct $master, $input)
     {
@@ -68,7 +68,7 @@ class UpdateProduct {
 
     public function updateMaster(MasterProduct $product, $input)
     {
-        return $master->fill([
+        return $product->fill([
             'name' => Str::title($input['name']),
             'description' => $input['description'],
             'category_id' => $input['category'],
@@ -113,7 +113,7 @@ class UpdateProduct {
     public function deleteVariants(Collection $products)
     {
         foreach($products as $product) {
-            $this->deleteProductImage($product->image);
+            $this->deleteImage($product->image);
         }
 
         Product::destroy($products->pluck('id')->all());

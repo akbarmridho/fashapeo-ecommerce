@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\MasterProduct as Product;
+use Illuminate\Http\Request;
 use App\Repository\WishlistRepositoryInterface as Wishlist;
 
 class WishlistController extends Controller

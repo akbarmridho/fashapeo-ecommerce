@@ -62,7 +62,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'order.check' => \App\Http\App\Http\Middleware\CreatedOrderStatusCheck::class,
-        'last.visited' => \App\Http\App\Http\Middleware\LastVisitedCookie::class,
+        'order.check' => \App\Http\Middleware\CreatedOrderStatusCheck::class,
+        'last.visited' => \App\Http\Middleware\LastVisitedCookie::class,
+        'optimizeImages' => \Spatie\LaravelImageOptimizer\Middlewares\OptimizeImages::class,
     ];
 }

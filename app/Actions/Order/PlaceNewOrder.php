@@ -7,6 +7,7 @@ use App\Models\OrderItem;
 use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\Shipment;
+use App\Models\Address;
 use App\Actions\Calculations\CreateOrderNumber;
 use App\Actions\Address\ActiveOriginAddress;
 
@@ -30,7 +31,7 @@ class PlaceNewOrder {
     public function createOrder(Customer $customer, string $orderNumber)
     {
         return Order::create([
-            'order_number' => $orderNumer,
+            'order_number' => $orderNumber,
             'user_id' => $customer->id,
             'customer_name' => $customer->name,
         ]);

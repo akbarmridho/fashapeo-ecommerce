@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Orders;
 
-use App\Requests\UpdateShipmentRequest;
-use App\Requests\FinalizeShipmentRequest;
+use App\Http\Requests\UpdateShipmentRequest;
+use App\Http\Requests\FinalizeShipmentRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Address;
@@ -66,7 +66,7 @@ class CreatedShipmentController extends Controller
             'service' => $request->service,
         ];
 
-        $updater->setShipmentOption($shipment, $courier, $service);
+        $updater->setShipmentOption($shipment, $courier, $cost);
         $updater->createTransaction($order);
         $statusUpdater->update($order, $this->status->shipmentCreated());
 

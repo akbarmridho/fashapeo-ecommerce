@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repository\DeliveryRepositoryInterface as Administration;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Actions\Address\UpdateAddress;
 
 class AddressController extends Controller
@@ -45,7 +46,7 @@ class AddressController extends Controller
         $data = $request->all();
         array_merge($data, $this->administration->address($request->city ?: $request->vendor_id));
 
-        $address = $creator->create($address, $main);
+        $address = $creator->create($data, $main);
 
         $customer->addresses()->save($address);
 

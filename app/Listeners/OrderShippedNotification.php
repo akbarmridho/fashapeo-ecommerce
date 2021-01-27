@@ -21,10 +21,10 @@ class OrderShippedNotification
     /**
      * Handle the event.
      *
-     * @param  OrderCompleted  $event
+     * @param  OrderShipped  $event
      * @return void
      */
-    public function handle(OrderCompleted $event)
+    public function handle(OrderShipped $event)
     {
         //
     }

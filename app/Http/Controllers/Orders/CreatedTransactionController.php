@@ -17,6 +17,8 @@ use App\Repository\StatusRepositoryInterface;
 
 class CreatedTransactionController extends Controller
 {
+    public $status;
+
     public function __construct(StatusRepositoryInterface $status)
     {
         $this->status = $status;

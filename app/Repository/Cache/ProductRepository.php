@@ -6,15 +6,16 @@ use App\Repository\ProductRepositoryInterface;
 use App\Repository\Eloquent\ProductRepository as EloquentProductRepository;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
+use App\Models\MasterProduct;
 
 class ProductRepository implements ProductRepositoryInterface
 {
     private $parent;
     private $time = 60*60*24*30;
 
-    public function __construct()
+    public function __construct(EloquentProductRepository $parent)
     {
-        $this->parent = new EloquentStatusRepository;
+        $this->parent = $parent;
     }
 
     public function search($query)
@@ -24,21 +25,24 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function category(Category $category, $page)
     {
-        return Cache::tags(['products'])->remember('products.category:' . $category->id . ':page:' . (int) $page, $this->time, function() {
+        return Cache::tags(['products'])->remember('products.category:' . $category->id . ':page:' . (int) $page, $this->time, 
+        function($category, $page) {
             return $this->parent->category($category, $page);
         });
     }
 
-    public function bestSeller($page)
+    public function bestSeller()
     {
-        return Cache::tags(['products'])->remember('products.best_seller:page:' . (int) $page, $this->time, function() {
-            return $this->parent->bestSeller($page);
+        return Cache::tags(['products'])->remember('products.best_seller', $this->time,
+        function() {
+            return $this->parent->bestSeller();
         });
     }
 
     public function newArrival($page)
     {
-        return Cache::tags(['products'])->remember('products.new_arrival:page:' . (int) $page, $this->time, function() {
+        return Cache::tags(['products'])->remember('products.new_arrival:page:' . (int) $page, $this->time, 
+        function($page){
             return $this->parent->newArrival($page);
         });
     }

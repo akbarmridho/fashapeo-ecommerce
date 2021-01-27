@@ -27,8 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     protected $childTypes = [
-        'admin' => App\Models\Admin::class,
-        'customer' => App\Models\Customer::class,
+        'admin' => Admin::class,
+        'customer' => Customer::class,
     ];
 
     /**

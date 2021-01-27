@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Repository\StatusRepositoryInterface;
 use App\Actions\Order\UpdateStatus;
 use App\Events\OrderCompleted;

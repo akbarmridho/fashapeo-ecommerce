@@ -7,9 +7,10 @@ use App\Models\Category;
 
 class NotParentCategory implements Rule
 {
-
-    public function passes($attribute, Category $category)
+    public function passes($attribute, $value)
     {
+        $category = Category::find($value);
+
         if (! $category->children->first()) {
             return true;
         }

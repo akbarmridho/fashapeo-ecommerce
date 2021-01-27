@@ -10,7 +10,7 @@ interface ProductRepositoryInterface {
 
     public function category(Category $category, $page);
 
-    public function bestSeller($page);
+    public function bestSeller();
 
     public function newArrival($page);
 
