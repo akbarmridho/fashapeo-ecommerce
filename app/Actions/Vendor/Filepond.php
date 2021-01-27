@@ -33,24 +33,23 @@ class Filepond {
         return Storage::path(config('image.temp_img_path', 'temp_img'));
     }
 
-    public function move($id, $path, $image)
+    public function move($encryptedPath, $pathPrefix = null)
     {
-        $baseOldPath = $this->getPathFromServerId($id);
-        $basePath = Storage::disk('public')->path($path);
-        
-        $oldPath = $baseOldPath . DIRECTORY_SEPARATOR . $image;
-        $finalPath = $basePath . DIRECTORY_SEPARATOR . $image;
-        Storage::move($oldPath, $finalPath);
+        $oldPath = $this->getPathFromServerId($encryptedPath);
+        $targetPath = Storage::disk('public')->path($pathPrefix);
+        $imageName = \basename($oldPath);
+
+        $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
+        if(Storage::move($oldPath, $finalPath)) {
+            $this->deleteTemporaryPath(\dirname($oldPath));
+            return $finalPath;
+        }
     }
 
-    public function deleteTemporaryPath($ids)
+    public function deleteTemporaryPath($path)
     {
-        if(is_array($ids)) {
-            foreach($ids as $id){
-                Storage::deleteDirectory($this->getPathFromServerId($id));
-            }
-        } else {
-            Storage::deleteDirectory($this->getPathFromServerId($ids));
+        if(\is_dir($path)) {
+            Storage::deleteDirectory($path);
         }
     }
 }

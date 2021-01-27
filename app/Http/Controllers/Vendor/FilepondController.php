@@ -20,17 +20,9 @@ class FilepondController extends Controller
 
     public function upload(Request $request)
     {
-        foreach(array_keys($request->all()) as $req)
-        {
-            if($request->hasFile($req)) {
+        $input = $request->file();
 
-                $input = $request->file($req);
-                break;
-
-            }
-        }
-
-        if($input === null) {
+        if(empty($input)) {
             return Response::make('image is required', 422, [
                 'Content-Type' => 'text/plain'
             ]);
@@ -39,7 +31,7 @@ class FilepondController extends Controller
         $file = is_array($input) ? $input[0] : $input;
         $path = config('image.temp_img_path', 'tmp_img');
         
-        if (! $newFile =  $file->storeAs($path . DIRECTORY_SEPARATOR . Str::random(), $file->getClientOriginalName())) {
+        if (! $newFile =  $file->store($path . DIRECTORY_SEPARATOR . Str::random())) {
             return Response::make('Could not save file', 500, [
                 'Content-Type' => 'text/plain',
             ]);

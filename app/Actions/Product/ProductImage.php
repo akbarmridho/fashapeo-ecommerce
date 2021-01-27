@@ -17,47 +17,41 @@ trait ProductImage
         $serialized = Serializer::convert($images);
         $productImages = $product->images();
 
-        if(! empty($serialized['old'])) {
-            $filtered = $productImages->whereNotIn('order', $serialized['old'])->get();
+        if(array_key_exists('old', $serialized) && ! empty($serialized['old'])) {
+            $filtered = $productImages->whereNotIn('url', $serialized['old'])->get();
             $this->deleteImagesFromList($filtered);
         }
 
         foreach($serialized['images'] as $index => $image)
         {
             $imagePath = config('image.product_img_path');
-            if($image['isNew']) {
+            if($image['is_new']) {
 
-                $filepond->move($image['id'], $image['filename'], $imagePath);
+                $newPath = $filepond->move($image['content'], $imagePath);
                 $product->images()->create([
-                    'url' => $imagePath . DIRECTORY_SEPARATOR . $image['filename'],
+                    'url' => $newPath,
                     'order' => (int) $index,
                 ]);
 
             } else {
 
-                $image = $productImages->where('order', $image['id'])->firstOrFail();
+                $image = $productImages->where('url', $image['content'])->firstOrFail();
                 $image->fill(['order' => $index])->save();
 
             }
         }
-        
-        if (! empty($serialized['ids'])) {
-            $filepond->deleteTemporaryPath($serialized['ids']);
-        }
     }
 
-    public function productImage(Product $product, $image)
+    public function productImage(Product $product, string $image)
     {
         $filepond = new Filepond;
         $imagePath = config('image.product_img_path');
-        if(! $image = json_decode($image)) {
 
-            $filepond->move($image['id'], $image['filename'], $imagePath);
-            $filepond->deleteTemporaryPath($image['id']);
+        if(\is_dir($image)) {
+            $newPath = $filepond->move($image, $imagePath);
             $product->image->updateOrCreate([
-                'url' => $imagePath . DIRECTORY_SEPARATOR . $image['filename'],
+                'url' => $newPath,
             ]);
-            
         }
     }
 

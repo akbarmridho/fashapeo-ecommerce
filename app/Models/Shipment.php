@@ -22,7 +22,8 @@ class Shipment extends Model
         'destination_city',
         'destination_district',
         'destination_delivery',
-        'posatal_code',
+        'destination_name',
+        'postal_code',
         'phone'
     ];
 

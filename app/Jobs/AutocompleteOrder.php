@@ -42,7 +42,7 @@ class AutocompleteOrder implements ShouldQueue
         {
             if($order->updated_at->greaterThan(Carbon::now()->subDays(30))) {
 
-                if($order->recent_status()->is($this->status->orderShipped())) {
+                if($order->recentStatus()->is($this->status->orderShipped())) {
 
                     (new UpdateStatus)->update($order, $this->status->orderCompleted());
                     event(new OrderCompleted($order));
@@ -51,7 +51,7 @@ class AutocompleteOrder implements ShouldQueue
                     (new UpdateStatus)->update($order, $this->status->orderExpired());
                 }
 
-                $order->fill(['completed_at' -> Carbon::now()])->save();
+                $order->fill(['completed_at' => Carbon::now()])->save();
             } 
         }
     }

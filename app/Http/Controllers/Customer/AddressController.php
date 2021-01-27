@@ -44,7 +44,7 @@ class AddressController extends Controller
         }
 
         $data = $request->all();
-        array_merge($data, $this->administration->address($request->city ?: $request->vendor_id));
+        $data = array_merge($data, $this->administration->address($request->city ?: $request->vendor_id));
 
         $address = $creator->create($data, $main);
 

@@ -34,7 +34,7 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/city';
 
-        if($provinceid) {
+        if($provinceId) {
             $response = $this->http->get($apiUrl, ['province' => $provinceId]);
         } else {
             $response = $this->http->get($apiUrl);

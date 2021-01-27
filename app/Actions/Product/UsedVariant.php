@@ -11,7 +11,7 @@ trait UsedVariant {
      * '' or null
      * size:1,color:2
      * 
-     * @param $input
+     * @param string $input
      */
     public function retreiveUsedVariant($input)
     {

@@ -32,20 +32,22 @@ trait ProductValidationRules {
                 'nullable',
                 new VariantsIsValid,
             ],
-            'variants.*.price' => 'required|integer|gt:100',
-            'variants.*.stock' => [
-                'required',
-                'integer',
-                'gt:0',
-            ],
-            'variants.*.active' => 'required|boolean',
-            'variants.*.sku' => 'required|string|max:20',
             'weight' => [
                 'required',
                 'integer',
                 'lte:100000',
             ],
             'dimensions.*' => 'nullable|integer|lte:300',
+        ];
+    }
+
+    public function variantValidation()
+    {
+        return [
+            'price' => 'required|integer|gt:100',
+            'stock' => 'required|integer|gt:0',
+            'active' => 'sometimes|boolean',
+            'sku' => 'nullable|string|max:20',
         ];
     }
 
@@ -71,14 +73,6 @@ trait ProductValidationRules {
                 'array',
                 'sometimes',
             ],
-            'variants.*.price' => 'required|integer|gt:100',
-            'variants.*.stock' => [
-                'required',
-                'integer',
-                'gt:0',
-            ],
-            'variants.*.active' => 'required|boolean',
-            'variants.*.sku' => 'required|string|max:20',
             'weight' => [
                 'required',
                 'integer',

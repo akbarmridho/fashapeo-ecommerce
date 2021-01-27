@@ -4,6 +4,7 @@ namespace App\Actions\Product;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
+use App\Transformers\DateConverter;
 
 class UpdateDiscount
 {
@@ -12,8 +13,8 @@ class UpdateDiscount
         Validator::make($input, $this->validationRules($input))->validate();
 
         return $product->discount()->updateOrCreate([
-            'discount_value',
-            'valid_until',
+            'discount_value' => $input['discount_value'],
+            'valid_until' => DateConverter::parseToUTC($input['valid_until']),
         ]);
     }
 

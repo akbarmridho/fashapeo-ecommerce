@@ -9,5 +9,5 @@ use App\Models\Wishlist;
 interface WishlistRepositoryInterface
 {
     public function create(MasterProduct $product, Customer $customer): Wishlist;
-    public function delete(Wishlist $wishlist): Wishlist;
+    public function delete(Wishlist $wishlist);
 }

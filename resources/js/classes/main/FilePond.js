@@ -1,6 +1,6 @@
 const FilePond = require("filepond");
 const FilePondPluginImageExifOrientation = require("filepond-plugin-image-exif-orientation");
-const FilepondPluginFileRename = require("filepond-plugin-file-rename");
+// const FilepondPluginFileRename = require("filepond-plugin-file-rename");
 const FilePondPluginImageCrop = require("filepond-plugin-image-crop");
 const FilePondPluginImagePreview = require("filepond-plugin-image-preview");
 const FilePondPluginFileValidateSize = require("filepond-plugin-image-validate-size");
@@ -13,8 +13,8 @@ FilePond.registerPlugin(
     FilePondPluginImagePreview,
     FilePondPluginFileValidateSize,
     FilePondPluginImageResize,
-    FilePondPluginImageTransform,
-    FilepondPluginFileRename
+    FilePondPluginImageTransform
+    // FilepondPluginFileRename
 );
 
 module.exports = FilePond;

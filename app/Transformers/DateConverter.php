@@ -30,6 +30,10 @@ class DateConverter
 
     public static function parseToUTC(string $date)
     {
+        if(! $date) {
+            return null;
+        }
+        
         return Carbon::createFromFormat('Y-m-d H:i', $date, config('app.site-timezone', 'UTC'));
     }
 }

@@ -12,7 +12,7 @@ trait ProductItemTotalPrice {
             $price = $this->price;
         }
 
-        $this->total_price = ($price * $this->quantity);
+        $this->final_price = ($price * $this->quantity);
 
         $this->save();
     }

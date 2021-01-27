@@ -19,12 +19,12 @@ class WishlistRepository implements WishlistRepositoryInterface
     public function create(MasterProduct $product, Customer $customer): Wishlist
     {
         return Wishlist::create([
-            'used_id' => $customer->id,
+            'user_id' => $customer->id,
             'master_product_id' => $product->id,
         ]);
     }
 
-    public function delete(Wishlist $wishlist): Wishlist
+    public function delete(Wishlist $wishlist)
     {
         return $wishlist->delete();
     }

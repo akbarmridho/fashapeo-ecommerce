@@ -19,11 +19,13 @@ class UpdateOrder {
     public function createTransaction(Order $order)
     {
         $total = $this->calculateTotal($order);
-
-        return Transaction::create([
-            'order_id' => $order->id,
+        $transaction = Transaction::create([
             'total' => $total,
         ]);
+        $order->transaction()->associate($transaction);
+        $order->save();
+
+        return $transaction;
     }
 
     public function updateNote(OrderItem $orderItem, string $note)

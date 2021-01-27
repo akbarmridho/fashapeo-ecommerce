@@ -11,24 +11,12 @@ class FilepondImageSerializer
         foreach($images as $image)
         {
             if(is_dir($image)) {
-                $result['images'][] = [''];
-            }
-        }
-    }
-
-    public static function oldConvert(array $images)
-    {
-        $result = [];
-
-        foreach($images as $image)
-        {
-            if(! $data = \json_decode($image)) {
-                $results['images'][] = array_merge($data, ['isNew' => false]);
-                $results['ids'][] = $data['id'];
+                $result['images'][] = ['content' => $image, 'is_new' => true];
             } else {
-                $results['images'][] = ['id' => (int) $image,
-                                        'isNew' => false];
-                $results['old'][] = (int) $image;
+                // periksa input pada fetch method filepond
+                // image haruslah berisi relative path url pada model image
+                $result['images'][] = ['content' => \basename($image), 'is_new' => false];
+                $result['old'][] = $image;
             }
         }
 

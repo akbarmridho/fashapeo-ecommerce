@@ -38,7 +38,7 @@ class ProductDiscountController extends Controller
             }
         }
 
-        session()->flash('status', 'Product discoutn created');
+        session()->flash('status', 'Product discount created');
 
         return back();
     }

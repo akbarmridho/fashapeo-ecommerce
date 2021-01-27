@@ -31,7 +31,7 @@ class CartRepository implements CartRepositoryInterface
         ]);
     }
 
-    public function delete (Cart $cart): Cart
+    public function delete (Cart $cart)
     {
         return $cart->delete();
     }

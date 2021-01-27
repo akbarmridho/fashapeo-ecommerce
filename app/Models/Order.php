@@ -63,6 +63,11 @@ class Order extends Model
         ]);
     }
 
+    public function scopeRecentStatus($query)
+    {
+        return $query->status()->latest();
+    }
+
     public function getWeightAttribute()
     {
         $subtotal = [];

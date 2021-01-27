@@ -23,8 +23,10 @@ class PlaceNewOrder {
             $this->createOrderItem($order, $cart);
         }
 
-        $this->createShipment($customer->active_address, $order, $order->weight);
-
+        $shipment = $this->createShipment($customer->active_address, $order, $order->weight);
+        $order->shipment()->associate($shipment);
+        $order->save();
+        $order->refresh();
         return $order;
     }
 
@@ -33,7 +35,6 @@ class PlaceNewOrder {
         return Order::create([
             'order_number' => $orderNumber,
             'user_id' => $customer->id,
-            'customer_name' => $customer->name,
         ]);
     }
 
@@ -72,6 +73,7 @@ class PlaceNewOrder {
             'destination_city' => $destination->city,
             'destination_district' => $destination->district,
             'destination_delivery' => $destination->delivery_address,
+            'destination_name' => $destination->name,
             'postal_code' => $destination->postal_code,
             'phone' => $destination->phone,
             'weight' => $weight,

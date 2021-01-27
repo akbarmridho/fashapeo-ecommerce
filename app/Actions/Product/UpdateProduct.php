@@ -25,14 +25,16 @@ class UpdateProduct {
 
         if(! $usedVariants = $this->retreiveUsedVariant($input['used_variant'])) {
 
-            foreach($input['variants'] as $variant) {
+            foreach($input['variants'] as $key => $variant) {
+                Validator::make($variant, $this->variantValidation())->validate();
                 $this->updateProduct($variant);
             }
 
             if(array_key_exists('new_variants', $input)) {
 
-                foreach($input['new_variants'] as $variant) {
+                foreach($input['new_variants'] as $key => $variant) {
 
+                    Validator::make($variant, $this->variantValidation())->validate();
                     $product = $this->createProduct($variant, $master);
 
                     if(array_key_exists('image', $variant)) {
@@ -54,11 +56,11 @@ class UpdateProduct {
 
             }
 
-                $ids = Arr::pluck($input['variants'], 'id');
+                $ids = Arr::pluck(array_keys($input['variants']), 'id');
                 $this->deleteVariants($master->products()->whereNotIn('id', $ids)->get());
 
         } else {
-            $this->updateProduct($master->products()->first(), $input['variants'][0]);
+            $this->updateProduct($master->products()->first(), array_keys($input['variants']));
         }
 
         $this->mainImages($master, $input['images']);
@@ -80,18 +82,22 @@ class UpdateProduct {
         ])->save();
     }
 
-    public function updateProduct($input)
+    public function updateProduct(Product $product, array $input)
     {
         if(! array_key_exists('id', $input)) {
             throw new CannotValidateProductId;
         }
+
+        Validator::make($input, $this->variantValidation())->validate();
+
+        $active = array_key_exists('active', $input) ? $input['active'] : false;
 
         $product = Product::findOrFail($input['id']);
         $product->fill([
             'stock' => $input['stock'],
            'price' => $input['price'],
            'sku' => $input['sku'],
-           'active' => $input['active'],
+           'active' => $active,
         ])->save();
 
         if(array_key_exists('image', $input)) {
@@ -101,12 +107,14 @@ class UpdateProduct {
 
     public function createProduct(array $input, MasterProduct $master)
     {
+        $active = array_key_exists('active', $input) ? $input['active'] : false;
+
         return Product::create([
            'master_product_id' => $master->id,
            'stock' => $input['stock'],
            'price' => $input['price'],
            'sku' => $input['sku'],
-           'active' => $input['active'],
+           'active' => $active,
        ]);
     }
 

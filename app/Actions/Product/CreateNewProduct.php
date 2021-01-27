@@ -31,12 +31,18 @@ class CreateNewProduct
         $this->mainImages($masterProduct, $input['images']);
 
         if(! $usedVariants) {
-            $product = $this->createProduct($input['variants'][0], $masterProduct);
+            $variantInput = array_values($input['variants']);
+
+            Validator::make(array_values($variantInput), $this->variantValidation())->validate();
+
+            $product = $this->createProduct($variantInput, $masterProduct);
 
             return $masterProduct;
         }
 
-        foreach($input['variants'] as $variant) {
+        foreach($input['variants'] as $key => $variant) {
+
+            Validator::make($variant, $this->variantValidation())->validate();
 
             $product = $this->createProduct($variant, $masterProduct);
 
@@ -88,12 +94,14 @@ class CreateNewProduct
      */
     public function createProduct(array $input, MasterProduct $master)
     {
+       $active = array_key_exists('active', $input) ? $input['active'] : false;
+
        return Product::create([
            'master_product_id' => $master->id,
            'stock' => $input['stock'],
            'price' => $input['price'],
            'sku' => $input['sku'],
-           'active' => $input['active'],
+           'active' => $active,
        ]);
     }
 

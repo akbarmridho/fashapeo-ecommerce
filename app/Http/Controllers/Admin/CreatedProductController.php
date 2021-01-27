@@ -7,12 +7,15 @@ use App\Actions\Product\CreateNewProduct;
 use App\Actions\Product\ProductImage;
 use App\Repository\CategoryRepositoryInterface;
 use App\Models\Variant;
+use App\Models\MasterProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 class CreatedProductController extends Controller
 {
+    use ProductImage;
+
     public $categories;
 
     public function __construct(CategoryRepositoryInterface $categories)
@@ -58,11 +61,10 @@ class CreatedProductController extends Controller
         return back();
     }
 
-    public function delete(MasterProduct $product, ProductImage $handler)
+    public function delete(MasterProduct $product)
     {
-        $handler->deleteAllImage($product);
+        $this->deleteAllImage($product);
         $product->forceDelete();
-
         session()->flash('status', 'Product Deleted');
 
         return back();

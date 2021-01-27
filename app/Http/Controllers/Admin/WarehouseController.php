@@ -48,7 +48,7 @@ class WarehouseController extends Controller
         ]);
 
         $address = $request->address;
-        array_merge($address, $this->deliveries->address($address['city'] ?: $address['vendor_id']));
+        $address = array_merge($address, $this->deliveries->address($address['city'] ?: $address['vendor_id']));
 
         $address = $creator->create($address, true);
 

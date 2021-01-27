@@ -12,7 +12,7 @@ interface CartRepositoryInterface
     
     public function create(Product $product, Customer $customer, int $quantity): Cart;
 
-    public function delete(Cart $cart): Cart;
+    public function delete(Cart $cart);
 
     public function increment(Cart $cart): Cart;
 

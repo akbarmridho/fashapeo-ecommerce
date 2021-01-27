@@ -17,7 +17,7 @@ class CategoryComposer
     /**
      * Create a new profile composer.
      *
-     * @param  \App\Repository\CategoriRepositoryInterface  $categories
+     * @param  \App\Repository\CategoryRepositoryInterface  $categories
      * @return void
      */
     public function __construct(CategoryRepositoryInterface $categories)

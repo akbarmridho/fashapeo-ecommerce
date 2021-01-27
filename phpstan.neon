@@ -11,4 +11,3 @@ parameters:
 
     checkMissingIterableValueType: false
     checkModelProperties: true
-    databaseMigrationsPath: ../database/migrations
