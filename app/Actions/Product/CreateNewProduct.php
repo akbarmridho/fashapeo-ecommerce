@@ -31,9 +31,9 @@ class CreateNewProduct
         $this->mainImages($masterProduct, $input['images']);
 
         if(! $usedVariants) {
-            $variantInput = array_values($input['variants']);
+            $variantInput = $input['variants'][1];
 
-            Validator::make(array_values($variantInput), $this->variantValidation())->validate();
+            Validator::make($variantInput, $this->variantValidation())->validate();
 
             $product = $this->createProduct($variantInput, $masterProduct);
 
@@ -94,7 +94,7 @@ class CreateNewProduct
      */
     public function createProduct(array $input, MasterProduct $master)
     {
-       $active = array_key_exists('active', $input) ? $input['active'] : false;
+       $active = array_key_exists('active', $input) ? true : false;
 
        return Product::create([
            'master_product_id' => $master->id,

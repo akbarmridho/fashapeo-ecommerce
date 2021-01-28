@@ -60,7 +60,7 @@ class UpdateProduct {
                 $this->deleteVariants($master->products()->whereNotIn('id', $ids)->get());
 
         } else {
-            $this->updateProduct($master->products()->first(), array_keys($input['variants']));
+            $this->updateProduct($master->products()->first(), $input['variants'][1]);
         }
 
         $this->mainImages($master, $input['images']);
@@ -90,7 +90,7 @@ class UpdateProduct {
 
         Validator::make($input, $this->variantValidation())->validate();
 
-        $active = array_key_exists('active', $input) ? $input['active'] : false;
+        $active = array_key_exists('active', $input) ? true : false;
 
         $product = Product::findOrFail($input['id']);
         $product->fill([

@@ -46,7 +46,7 @@ trait ProductValidationRules {
         return [
             'price' => 'required|integer|gt:100',
             'stock' => 'required|integer|gt:0',
-            'active' => 'sometimes|boolean',
+            'active' => 'sometimes',
             'sku' => 'nullable|string|max:20',
         ];
     }

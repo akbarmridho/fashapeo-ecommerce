@@ -10,4 +10,4 @@ parameters:
     level: 5
 
     checkMissingIterableValueType: false
-    checkModelProperties: true
+    checkModelProperties: false

@@ -24,8 +24,6 @@ class Product extends Model
         'discount',
     ];
 
-    protected $touches = ['masterProduct'];
-
     public function masterProduct()
     {
         return $this->hasOne(MasterProduct::class);

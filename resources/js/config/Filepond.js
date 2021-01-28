@@ -1,6 +1,17 @@
 const UploadProductImage = {
     server: {
-        process: "/api/image/process",
+        process: {
+            url: "/api/image/process",
+            ondata: formData => {
+                let newData = new FormData();
+                for (let value of formData.values()) {
+                    if (value instanceof File) {
+                        newData.append("image", value);
+                    }
+                }
+                return newData;
+            }
+        },
         revert: "/api/image/delete",
         restore: null,
         load: null,
@@ -35,7 +46,18 @@ const UploadProductImage = {
 
 const UploadMasterProductImage = {
     server: {
-        process: "/api/image/process",
+        process: {
+            url: "/api/image/process",
+            ondata: formData => {
+                let newData = new FormData();
+                for (let value of formData.values()) {
+                    if (value instanceof File) {
+                        newData.append("image", value);
+                    }
+                }
+                return newData;
+            }
+        },
         revert: "/api/image/delete",
         restore: null,
         load: null,

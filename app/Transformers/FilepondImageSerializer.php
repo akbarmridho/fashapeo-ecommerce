@@ -2,6 +2,8 @@
 
 namespace App\Transformers;
 
+use Illuminate\Support\Str;
+
 class FilepondImageSerializer
 {
     public static function convert(array $images)
@@ -10,11 +12,9 @@ class FilepondImageSerializer
 
         foreach($images as $image)
         {
-            if(is_dir($image)) {
+            if(! Str::endsWith(\strtolower($image), ['jpg', 'jpeg', 'png', 'webp'])) {
                 $result['images'][] = ['content' => $image, 'is_new' => true];
             } else {
-                // periksa input pada fetch method filepond
-                // image haruslah berisi relative path url pada model image
                 $result['images'][] = ['content' => \basename($image), 'is_new' => false];
                 $result['old'][] = $image;
             }

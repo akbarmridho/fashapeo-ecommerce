@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Image;
 use App\Actions\Vendor\Filepond;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Collection;
 use App\Transformers\FilepondImageSerializer as Serializer;
 
 trait ProductImage
@@ -19,7 +20,7 @@ trait ProductImage
 
         if(array_key_exists('old', $serialized) && ! empty($serialized['old'])) {
             $filtered = $productImages->whereNotIn('url', $serialized['old'])->get();
-            $this->deleteImagesFromList($filtered);
+            $this->deleteImagesFromList($filtered, config('image.product_img_path'));
         }
 
         foreach($serialized['images'] as $index => $image)
@@ -55,29 +56,44 @@ trait ProductImage
         }
     }
 
-    public function deleteImagesFromList($images)
+    public function deleteImagesFromList(Collection $images, $pathPrefix = null)
     {
-        foreach($images as $image) {
-            Storage::disk('public')->delete($image->url);
+        if($images->isEmpty()) {
+            return;
         }
+
+        $nameList = $images->pluck('url');
+        $nameList->transform(function ($item, $key) use ($pathPrefix) {
+            if($pathPrefix === null) {
+                return \basename($item);
+            }
+
+            return $pathPrefix . DIRECTORY_SEPARATOR . \basename($item);
+        });
+
+        Storage::disk('public')->delete($nameList->all());
 
         Image::destroy($images->pluck('id')->all());
     }
 
     public function deleteAllImage(MasterProduct $master)
     {
-        foreach($master->images as $image) {
-            $this->deleteImage($image);
-        }
+        $this->deleteImagesFromList($master->images, config('image.product_img_path'));
 
         foreach($master->products as $product) {
-            $this->deleteImage($product->image);
+            $this->deleteImage($product->image, config('image.product_img_path'));
         }
     }
 
-    private function deleteImage(Image $image)
+    private function deleteImage(Image $image, $pathPrefix = null)
     {
-        Storage::disk('public')->delete($image->url);
+        if($pathPrefix === null) {
+            $path = \basename($image->url);
+        } else {
+            $path = $pathPrefix . DIRECTORY_SEPARATOR . \basename($image->url);
+        }
+
+        Storage::disk('public')->delete($path);
         $image->delete();
     }
 }

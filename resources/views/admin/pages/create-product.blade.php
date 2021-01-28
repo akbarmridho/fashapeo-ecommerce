@@ -15,9 +15,10 @@ Create Product
             <p>You can upload up to 5 images.</p>
             <input
               type="file"
-              name="images"
+              name="images[]"
               id="mainImage"
               class="filepond"
+              required
             />
           </div>
           <div class="row my-4 shadow-1-strong p-4">
@@ -30,6 +31,7 @@ Create Product
                 id="form1"
                 class="form-control"
                 placeholder="Enter product title"
+                required
               />
             </div>
             <h5>Product Category</h5>
@@ -69,6 +71,7 @@ Create Product
                   type="number"
                   class="form-control"
                   placeholder="Price"
+                  required
                 />
               </div>
               <h5>Status</h5>
@@ -92,6 +95,7 @@ Create Product
                   id="form1"
                   class="form-control"
                   placeholder="Product stock"
+                  required
                 />
               </div>
               <h5>SKU</h5>
@@ -115,6 +119,7 @@ Create Product
                 type="number"
                 class="form-control"
                 placeholder="Product weight"
+                required
               />
               <span class="input-group-text" id="basic-addon1">gr</span>
             </div>
@@ -122,21 +127,21 @@ Create Product
             <p class="small text-muted">Units in centimeter</p>
             <div class="input-group mb-5 w-50">
               <input
-                name="dimesions[length]"
+                name="dimensions[length]"
                 type="number"
                 aria-label="First name"
                 class="form-control"
               />
               <span class="input-group-text">L</span>
               <input
-                name="dimesions[width]"
+                name="dimensions[width]"
                 type="number"
                 aria-label="Last name"
                 class="form-control"
               />
               <span class="input-group-text">W</span>
               <input
-                name="dimesions[height]"
+                name="dimensions[height]"
                 type="number"
                 aria-label="Last name"
                 class="form-control"
@@ -146,10 +151,11 @@ Create Product
           </div>
           <div class="text-end">
             <button type="button" class="btn btn-lg btn-light mx-3 mb-4">Cancel</button>
-            <button type="button" id="upload" class="btn btn-lg btn-success mb-4">
+            <button type="button" id="upload" class="btn btn-lg btn-success mb-4" disabled>
               Upload
             </button>
           </div>
         </form>
         @include('admin.includes.create-product-template')
+        @include('admin.modals.upload-product-fail')
 @endsection

@@ -36,7 +36,7 @@ class MasterProduct extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
-
+    
     public function scopeNewArrival($query)
     {
         return $query->orderByDesc('created_at');

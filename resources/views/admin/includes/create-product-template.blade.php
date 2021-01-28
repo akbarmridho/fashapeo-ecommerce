@@ -58,7 +58,7 @@
             name="variants"
             class="form-control"
             value=""
-            disabled
+            readonly
           />
         </td>
       </template>
@@ -72,6 +72,7 @@
                 type="number"
                 class="form-control"
                 placeholder="Price"
+                required
               />
             </div>
           </td>
@@ -81,6 +82,7 @@
               name="variants[?][stock]"
               id="form1"
               class="form-control"
+              required
               placeholder="Product stock"
             />
           </td>

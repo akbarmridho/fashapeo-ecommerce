@@ -3,6 +3,7 @@
     class="select"
     id="category"
     height="50px"
+    required
 >
     @foreach($categories as $parent)
     <optgroup label="{{ $parent->name }}">

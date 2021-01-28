@@ -21,7 +21,10 @@ class Filepond {
         }
 
         $filepath = Crypt::decryptString($serverId);
-        if (! Str::startsWith($filepath, $this->getBasePath())) {
+        // if (! Str::startsWith($filepath, $this->getBasePath())) {
+        //     throw new InvalidPathException();
+        // }
+        if(! Str::startsWith($filepath, config('image.temp_img_path', 'temp_img'))) {
             throw new InvalidPathException();
         }
 
@@ -36,20 +39,39 @@ class Filepond {
     public function move($encryptedPath, $pathPrefix = null)
     {
         $oldPath = $this->getPathFromServerId($encryptedPath);
-        $targetPath = Storage::disk('public')->path($pathPrefix);
+        // $targetPath = Storage::disk('public')->path($pathPrefix);
+
+        $publicPrefix = 'public';
         $imageName = \basename($oldPath);
+
+        if($pathPrefix !== null) {
+            $targetPath = $publicPrefix . DIRECTORY_SEPARATOR . $pathPrefix;
+            $url = $pathPrefix . DIRECTORY_SEPARATOR . $imageName;
+        } else {
+            $targetPath = $publicPrefix;
+            $url = $imageName;
+        }
+
 
         $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
         if(Storage::move($oldPath, $finalPath)) {
             $this->deleteTemporaryPath(\dirname($oldPath));
-            return $finalPath;
+            return Storage::url($url);
         }
+    }
+
+    public function deleteFile($encryptedPath)
+    {
+        $path = $this->getPathFromServerId($encryptedPath);
+
+        $res1 = Storage::delete($path);
+        $res2 = $this->deleteTemporaryPath(\dirname($path));
+
+        return $res1 && $res2;
     }
 
     public function deleteTemporaryPath($path)
     {
-        if(\is_dir($path)) {
-            Storage::deleteDirectory($path);
-        }
+        return Storage::deleteDirectory($path);
     }
 }
