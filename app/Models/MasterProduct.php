@@ -9,7 +9,7 @@ use Laravel\Scout\Searchable;
 
 class MasterProduct extends Model
 {
-    use HasFactory, SoftDeletes, Searchable;
+    use HasFactory, SoftDeletes, Searchable, Traits\DateSerializer;
 
     protected $fillable = [
         'name',
@@ -63,17 +63,34 @@ class MasterProduct extends Model
 
     public function getMinPriceAttribute()
     {
-        return $this->products()->min('price');
+        return config('payment.currency_symbol') . $this->products()->min('price');
     }
 
     public function getMaxPriceAttribtue()
     {
-        return $this->products()->max('price');
+        return config('payment.currency_symbol') . $this->products()->max('price');
     }
 
     public function getPriceAttribute()
     {
         return $this->calculatePrice();
+    }
+
+    public function getStockAttribute()
+    {
+        return $this->products()->count('stock');
+    }
+
+    public function getSingleVariantAttribute()
+    {
+        return $this->products()->first();
+    }
+
+    public function getUsedVariantAttribute()
+    {
+        $product = $this->single_variant;
+
+        return $product->variant_id;
     }
 
     protected function calculatePrice()

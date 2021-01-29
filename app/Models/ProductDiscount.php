@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class ProductDiscount extends Model
 {
-    use HasFactory;
+    use HasFactory, Traits\DateTimeSerializer;
 
     protected $dates = [
         'created_at',

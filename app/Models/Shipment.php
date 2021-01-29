@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shipment extends Model
 {
-    use HasFactory;
+    use HasFactory, Traits\DateTimeSerializer;
 
     protected $fillable = [
         'courier_id',

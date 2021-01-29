@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderActivity extends Model
 {
-    use HasFactory;
+    use HasFactory, Traits\DateTimeSerializer;
 
     protected $fillable = [
         'order_id',

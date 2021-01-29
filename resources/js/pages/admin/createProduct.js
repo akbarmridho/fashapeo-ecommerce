@@ -21,6 +21,20 @@ class UploadProduct {
             this.handleUpload.bind(this)
         );
         this.form.addEventListener("change", this.validateInput.bind(this));
+        document.querySelectorAll(".filepond--root").forEach(element => {
+            element.addEventListener(
+                "FilePond:addfilestart",
+                this.disableUploadButton
+            );
+            element.addEventListener(
+                "FilePond:processfileprogress",
+                this.disableUploadButton
+            );
+            element.addEventListener(
+                "FilePond:updatefiles",
+                this.enableUploadButton
+            );
+        });
     }
 
     handleUpload() {
@@ -36,10 +50,10 @@ class UploadProduct {
         window.axios
             .post("", data)
             .then(response => {
-                // console.log(response);
+                this.unsetButtonLoadState();
             })
             .catch(error => {
-                console.log(error);
+                // console.log(error);
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();

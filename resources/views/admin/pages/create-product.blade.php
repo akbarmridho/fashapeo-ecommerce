@@ -150,7 +150,7 @@ Create Product
             </div>
           </div>
           <div class="text-end">
-            <button type="button" class="btn btn-lg btn-light mx-3 mb-4">Cancel</button>
+            <a href="{{ route('admin.products') }}" class="btn btn-lg btn-light mx-3 mb-4">Cancel</a>
             <button type="button" id="upload" class="btn btn-lg btn-success mb-4" disabled>
               Upload
             </button>

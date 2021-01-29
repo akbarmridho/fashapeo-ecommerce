@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, Traits\DateSerializer;
 
     protected $fillable = [
         'master_product_id',
@@ -69,6 +69,23 @@ class Product extends Model
         }
 
         return \implode(', ', $variants);
+    }
+
+    public function getVariantIdAttribute()
+    {
+        $details = $this->details;
+
+        if($details->isEmpty()) {
+            return '';
+        }
+
+        $variants = [];
+
+        foreach($details as $detail) {
+            $variants[] = \implode(':', [$detail->variant_name, $detail->variant_id]);
+        }
+
+        return \implode(',', $variants);
     }
 
     public function getWeightAttribute()

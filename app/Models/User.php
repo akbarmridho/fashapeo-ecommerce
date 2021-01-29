@@ -10,7 +10,7 @@ use Parental\HasChildren;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasChildren;
+    use HasFactory, Notifiable, HasChildren, Traits\DateSerializer;
     /**
      * The attributes that are mass assignable.
      *

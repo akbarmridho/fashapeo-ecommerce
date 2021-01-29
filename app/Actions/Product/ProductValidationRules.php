@@ -16,7 +16,7 @@ trait ProductValidationRules {
                 'required',
                 'string',
                 'max:255',
-                'unique:master_products,name',
+                // 'unique:master_products,name',
             ],
             'category' => [
                 'required',

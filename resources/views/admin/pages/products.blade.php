@@ -54,7 +54,7 @@ Products
                   </div>
                 </div> --}}
                 <div class="col-12 mt-3">
-                  <x-admin.products-table />
+                  <x-admin.products-table :products="$products"/>
                   <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
                       <li class="page-item disabled">
