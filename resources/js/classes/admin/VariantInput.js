@@ -1,4 +1,3 @@
-// const FilePond = require("../../classes/main/FilePond");
 const { UploadProductImage } = require("../../config/Filepond");
 
 class VariantInput {

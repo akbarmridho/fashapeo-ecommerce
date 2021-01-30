@@ -2,57 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Actions\Product\UpdateProduct;
 use App\Models\MasterProduct;
+use App\Repository\CategoryRepositoryInterface;
 
 class UpdateProductController extends Controller
 {
-    public function show()
+    public $categories;
+
+    public function __construct(CategoryRepositoryInterface $categories)
     {
-        //
+        $this->categories = $categories;
+    }
+
+    public function show(MasterProduct $master)
+    {
+        $product = $master->products()->first();
+        $categories = $this->categories->parents();
+
+        if ($product->number_of_variant === 0) {
+            return view('admin.pages.edit-single-variant-product', compact('categories', 'master'));
+        } else if ($product->number_of_variant > 0) {
+            $variants = $product->variants;
+            return view('admin.pages.edit-multi-variant-product', compact('categories', 'master', 'variants'));
+        }
     }
 
     public function update(MasterProduct $product, Request $request, UpdateProduct $updater)
     {
-        DB::beginTransaction();
-
-        try {
-            $updater->update($product, $request->all());
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            return response()->json(['message' => 'An error occured. Please check logs'], 500);
-        }
-
-        DB::commit();
-
+        $updater->update($product, $request->all());
         return response()->json(['message' => 'Product updated'], 200);
-    }
-    
-    /*
-     * retreived get parameter should
-     * refer to image order
-     */
-    public function masterImages(MasterProduct $master, Request $request)
-    {
-        $image = $master->images()->where('order', (int) $request->load)->first();
-        $path = Storage::disk('public')->path($image->url);
-
-        return response()->file($path);
-    }
-
-    /*
-     * retreived get parameter load should
-     * refer to product id
-     */
-    public function productImage(MasterProduct $master, Request $request)
-    {
-        $product = $master->products()->find((int) $request->load);
-        $path = Storage::disk('public')->path($product->image->url);
-
-        return response()->file($path);
     }
 }

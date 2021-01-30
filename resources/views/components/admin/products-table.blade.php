@@ -50,14 +50,22 @@
                     </button>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" href="#">View</a>
+                            <a class="dropdown-item" href="{{ route('admin.products.edit', ['product' => $product->id]) }}">View</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Archive</a>
+                            <form action="{{ route('admin.products.archive', ['product' => $product->id]) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="dropdown-item" type="submit">Archive</button>
+                            </form>
                         </li>
                         <li><hr class="dropdown-divider" /></li>
                         <li>
-                            <a class="dropdown-item" href="#">Delete</a>
+                            <form action="{{ route('admin.products.delete', ['product' => $product->id]) }}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="dropdown-item" type="submit">Delete</button>
+                            </form>
                         </li>
                     </ul>
                 </div>

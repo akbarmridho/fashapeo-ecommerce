@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Actions\Vendor\Filepond;
+use App\Models\Image;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FilepondController extends Controller
 {
@@ -44,7 +46,6 @@ class FilepondController extends Controller
 
     public function delete(Request $request)
     {
-
         if($this->filepond->deleteFile($request->getContent())) {
             return Response::make('', 200, [
                 'Content-Type' => 'text/plain',
@@ -53,6 +54,30 @@ class FilepondController extends Controller
 
         return Response::make('Something went wrong', 500, [
             'Content-Type' => 'text/plain',
+        ]);
+    }
+
+    public function load(Request $request)
+    {
+        if(! $request->has('load')) {
+            return Response::make('Load parameter is required', 422, [
+                'Content-Type' => 'text/plain'
+            ]);
+        }
+
+        try {
+            $image = Image::findOrFail((int) $request->load);
+        } catch (ModelNotFoundException $error) {
+            return Response::make('Image not found in database', 404, [
+                'Content-Type' => 'text/plain'
+            ]);
+        }
+
+        $path = Storage::disk('public')->path($image->url);
+
+        return response()->file($path, [
+            'Content-Disposition' => 'inline',
+            'filename' => basename($image->url),
         ]);
     }
 }

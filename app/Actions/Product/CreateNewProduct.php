@@ -20,7 +20,7 @@ class CreateNewProduct
      * @param  array  $input
      * @return \App\Models\MasterProduct
      */
-    public function create (array $input)
+    public function create(array $input)
     {
         Validator::make($input, $this->createProductValidation())->validate();
 
@@ -30,7 +30,7 @@ class CreateNewProduct
 
         $this->mainImages($masterProduct, $input['images']);
 
-        if(! $usedVariants) {
+        if (!$usedVariants) {
             $variantInput = $input['variants'][1];
 
             Validator::make($variantInput, $this->variantValidation())->validate();
@@ -40,25 +40,26 @@ class CreateNewProduct
             return $masterProduct;
         }
 
-        foreach($input['variants'] as $key => $variant) {
+        foreach ($input['variants'] as $key => $variant) {
 
             Validator::make($variant, $this->variantValidation())->validate();
 
             $product = $this->createProduct($variant, $masterProduct);
 
-            if(array_key_exists('image', $variant)) {
+            if (array_key_exists('image', $variant)) {
                 $this->productImage($product, $variant['image']);
-            }    
-            
-            foreach($usedVariants as $usedVariant) {
+            }
+
+            foreach ($usedVariants as $usedVariant) {
                 $option = $this->createVariantOption(
                     $variant[$usedVariant['name']]
                 );
 
                 $productDetail = $this->createproductDetail(
                     $product->id,
-                    $usedVariant['id'], 
-                    $option->id);
+                    $usedVariant['id'],
+                    $option->id
+                );
             }
         }
 
@@ -74,15 +75,15 @@ class CreateNewProduct
     public function createMasterProduct(array $input)
     {
         return MasterProduct::create([
-                'name' => Str::title($input['name']),
-                'description' => $input['description'],
-                'category_id' => $input['category'],
-                'slug' => Str::slug($input['name'], '-'),
-                'weight' => $input['weight'],
-                'width' => $input['dimensions']['width'],
-                'height' => $input['dimensions']['height'],
-                'length' => $input['dimensions']['length'],
-            ]);
+            'name' => Str::title($input['name']),
+            'description' => $input['description'],
+            'category_id' => $input['category'],
+            'slug' => Str::slug($input['name'], '-'),
+            'weight' => $input['weight'],
+            'width' => $input['dimensions']['width'],
+            'height' => $input['dimensions']['height'],
+            'length' => $input['dimensions']['length'],
+        ]);
     }
 
     /**
@@ -94,15 +95,15 @@ class CreateNewProduct
      */
     public function createProduct(array $input, MasterProduct $master)
     {
-       $active = array_key_exists('active', $input) ? true : false;
+        $active = array_key_exists('active', $input) ? true : false;
 
-       return Product::create([
-           'master_product_id' => $master->id,
-           'stock' => $input['stock'],
-           'price' => $input['price'],
-           'sku' => $input['sku'],
-           'active' => $active,
-       ]);
+        return Product::create([
+            'master_product_id' => $master->id,
+            'stock' => $input['stock'],
+            'price' => $input['price'],
+            'sku' => $input['sku'],
+            'active' => $active,
+        ]);
     }
 
     /**
@@ -130,9 +131,8 @@ class CreateNewProduct
     {
         return ProductDetail::create([
             'product_id' => $productId,
-            'variant_id'=> $variantId,
+            'variant_id' => $variantId,
             'variant_option_id' => $variantOptionId,
         ]);
     }
-
 }

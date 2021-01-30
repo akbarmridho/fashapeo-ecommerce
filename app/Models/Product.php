@@ -49,6 +49,11 @@ class Product extends Model
         return $this->belongsToMany(ProductDiscount::class);
     }
 
+    public function variants()
+    {
+        return $this->hasManyThrough(Variant::class, ProductDetail::class);
+    }
+
     public function getProductNameAttribute()
     {
         return $this->masterProduct->name;
@@ -58,13 +63,13 @@ class Product extends Model
     {
         $details = $this->details;
 
-        if($details->isEmpty()) {
-            return '';
+        if ($details->isEmpty()) {
+            return null;
         }
 
         $variants = [];
 
-        foreach($details as $detail) {
+        foreach ($details as $detail) {
             array_push($variants, $detail->variant_name);
         }
 
@@ -75,17 +80,22 @@ class Product extends Model
     {
         $details = $this->details;
 
-        if($details->isEmpty()) {
-            return '';
+        if ($details->isEmpty()) {
+            return null;
         }
 
         $variants = [];
 
-        foreach($details as $detail) {
+        foreach ($details as $detail) {
             $variants[] = \implode(':', [$detail->variant_name, $detail->variant_id]);
         }
 
         return \implode(',', $variants);
+    }
+
+    public function getNumberOfVariantAttribute()
+    {
+        return $this->details()->count();
     }
 
     public function getWeightAttribute()
@@ -95,11 +105,11 @@ class Product extends Model
 
     public function getActiveDiscountAttribute()
     {
-        if(! $this->discount && !$this->discount->valid_until) {
-            if($this->discount->valid_until->gt(Carbon::now())) {
+        if (!$this->discount && !$this->discount->valid_until) {
+            if ($this->discount->valid_until->gt(Carbon::now())) {
                 return $this->discount->discount_value;
             }
-        } else if(! $this->discount) {
+        } else if (!$this->discount) {
             return $this->discount->discount_value;
         };
 
@@ -109,9 +119,35 @@ class Product extends Model
     public function getSoldAttribute()
     {
         return $this->without(['image', 'disocunt', 'details'])
-                    ->items()
-                    ->with(['product' => function ($query) {
-                        $query->where('is_success', true);
-                    }])->count();
+            ->items()
+            ->with(['product' => function ($query) {
+                $query->where('is_success', true);
+            }])->count();
+    }
+
+    public function getImageFilepondJsonAttribute()
+    {
+        $image = $this->image;
+
+        if (!$image) {
+            return null;
+        }
+
+        $pathinfo = \pathinfo($image->url);
+
+        $result = [
+            [
+                'source' => $image->id,
+                'options' => [
+                    'type' => 'local',
+                    'file' => [
+                        'name' => $pathinfo['basename'],
+                        'type' => 'image/' . $pathinfo['extension'],
+                    ],
+                ]
+            ]
+        ];
+
+        return \json_encode($result);
     }
 }

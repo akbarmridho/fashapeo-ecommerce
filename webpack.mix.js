@@ -30,6 +30,14 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/pages/product.js", "public/js/pages")
     .js("resources/js/pages/auth/register.js", "public/js/pages/auth")
     .js("resources/js/pages/admin/categories.js", "public/js/pages/admin")
+    .js(
+        "resources/js/pages/admin/editSingleVariantProduct.js",
+        "public/js/pages/admin"
+    )
+    .js(
+        "resources/js/pages/admin/editMultiVariantProduct.js",
+        "public/js/pages/admin"
+    )
     .js("resources/js/pages/admin/createProduct.js", "public/js/pages/admin")
     .js("resources/js/pages/admin/variations.js", "public/js/pages/admin")
     .postCss("resources/css/app.css", "public/css")

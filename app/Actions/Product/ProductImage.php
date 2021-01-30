@@ -18,27 +18,24 @@ trait ProductImage
         $serialized = Serializer::convert($images);
         $productImages = $product->images();
 
-        if(array_key_exists('old', $serialized) && ! empty($serialized['old'])) {
+        if (array_key_exists('old', $serialized) && !empty($serialized['old'])) {
             $filtered = $productImages->whereNotIn('url', $serialized['old'])->get();
             $this->deleteImagesFromList($filtered, config('image.product_img_path'));
         }
 
-        foreach($serialized['images'] as $index => $image)
-        {
+        foreach ($serialized['images'] as $index => $image) {
             $imagePath = config('image.product_img_path');
-            if($image['is_new']) {
+            if ($image['is_new']) {
 
                 $newPath = $filepond->move($image['content'], $imagePath);
                 $product->images()->create([
                     'url' => $newPath,
                     'order' => (int) $index,
                 ]);
-
             } else {
 
                 $image = $productImages->where('url', $image['content'])->firstOrFail();
                 $image->fill(['order' => $index])->save();
-
             }
         }
     }
@@ -48,7 +45,7 @@ trait ProductImage
         $filepond = new Filepond;
         $imagePath = config('image.product_img_path');
 
-        if(\is_dir($image)) {
+        if (\is_dir($image)) {
             $newPath = $filepond->move($image, $imagePath);
             $product->image->updateOrCreate([
                 'url' => $newPath,
@@ -58,13 +55,13 @@ trait ProductImage
 
     public function deleteImagesFromList(Collection $images, $pathPrefix = null)
     {
-        if($images->isEmpty()) {
+        if ($images->isEmpty()) {
             return;
         }
 
         $nameList = $images->pluck('url');
         $nameList->transform(function ($item, $key) use ($pathPrefix) {
-            if($pathPrefix === null) {
+            if ($pathPrefix === null) {
                 return \basename($item);
             }
 
@@ -80,14 +77,14 @@ trait ProductImage
     {
         $this->deleteImagesFromList($master->images, config('image.product_img_path'));
 
-        foreach($master->products as $product) {
+        foreach ($master->products as $product) {
             $this->deleteImage($product->image, config('image.product_img_path'));
         }
     }
 
     private function deleteImage(Image $image, $pathPrefix = null)
     {
-        if($pathPrefix === null) {
+        if ($pathPrefix === null) {
             $path = \basename($image->url);
         } else {
             $path = $pathPrefix . DIRECTORY_SEPARATOR . \basename($image->url);

@@ -5,7 +5,7 @@ Edit Product
 @endsection
 
 @section('additional-script')
-<script src="{{ mix('/js/pages/admin/createProduct.js') }}" defer></script>
+<script src="{{ mix('/js/pages/admin/editMultiVariantProduct.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -19,6 +19,7 @@ Edit Product
               id="mainImage"
               class="filepond"
               required
+              data-images="{{ $master->images_filepond_json }}"
             />
           </div>
           <div class="row my-4 shadow-1-strong p-4">
@@ -70,7 +71,6 @@ Edit Product
             <h3 class="mb-5">Product Setting</h3>
             <input type="hidden" name="used_variant" value="{{ $master->used_variant }}" />
             <table class="table align-middle">
-              <input type="hidden" name="used_variant" id="usedVariant" value="" />
               <thead>
                 <tr>
                   <td scope="col">Variant</td>
@@ -83,7 +83,7 @@ Edit Product
               </thead>
               <tbody>
                 @foreach($master->products as $product)
-                <tr>  
+                <tr class="deletable-variant">  
                 <td>
                   {{ $product->variant_name }}
                   <button class="btn btn-sm btn-danger text-white shadow-0 px-2">
@@ -152,12 +152,13 @@ Edit Product
                     name="variants[{{ $product->id }}][image]"
                     id="variantImage"
                     class="filepond"
+                    data-images="{{ $product->image_filepond_json }}"
                   />
                 </td>
                 </tr>
                 @endforeach
                 <tr id="addVariantRow">
-                  <td colspan="6">
+                  <td colspan="6" class="p-3">
                     <button
                       id="addVariant"
                       type="button"

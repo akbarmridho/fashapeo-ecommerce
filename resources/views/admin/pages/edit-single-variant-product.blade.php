@@ -3,7 +3,7 @@
 Edit Product 
 @endsection
 @section('additional-script')
-<script src="{{ mix('/js/pages/admin/createProduct.js') }}" defer></script>
+<script src="{{ mix('/js/pages/admin/editSingleVariantProduct.js') }}" defer></script>
 @endsection @section('content')
 <form action="" onkeypress="return event.keyCode != '13'">
     <div class="row mt-5 shadow-1-strong mb-4 p-4">
@@ -15,6 +15,7 @@ Edit Product
             id="mainImage"
             class="filepond"
             required
+            data-images="{{ $master->images_filepond_json }}"
         />
     </div>
     <div class="row my-4 shadow-1-strong p-4">
@@ -27,7 +28,7 @@ Edit Product
                 id="form1"
                 class="form-control"
                 placeholder="Enter product title"
-                value="{{ $product->name }}"
+                value="{{ $master->name }}"
                 required
             />
         </div>
@@ -44,7 +45,7 @@ Edit Product
                 <optgroup label="{{ $parent->name }}">
                     @foreach($parent->children as $child)
                     <option value="{{ $child->id }}"
-                      @if($product->category_id === $child->id)
+                      @if($master->category_id === $child->id)
                       selected
                       @endif  
                     >{{ $child->name }}</option>
@@ -60,7 +61,7 @@ Edit Product
         <p class="small muted">
             You can put any description and image as you want
         </p>
-        <div id="editor" class="mb-5">{{ $product->description }}</div>
+        <div id="editor" class="mb-5">{{ $master->description }}</div>
     </div>
     <div class="row mb-3 shadow-1-strong mb-4 p-4">
         <h3 class="mb-5">Product Setting</h3>
@@ -74,7 +75,7 @@ Edit Product
                     type="number"
                     class="form-control"
                     placeholder="Price"
-                    value="{{ $products->single_variant->price }}"
+                    value="{{ $master->single_variant->price }}"
                     required
                 />
             </div>
@@ -86,7 +87,7 @@ Edit Product
                     type="checkbox"
                     value="true"
                     id="flexSwitchCheckChecked"
-                    @if($products->single_variant->active)
+                    @if($master->single_variant->active)
                     checked
                     @endif
                 />
@@ -102,7 +103,7 @@ Edit Product
                     id="form1"
                     class="form-control"
                     placeholder="Product stock"
-                    value="{{ $products->single_variant->stock }}"
+                    value="{{ $master->single_variant->stock }}"
                     required
                 />
             </div>
@@ -114,7 +115,7 @@ Edit Product
                     id="form1"
                     class="form-control"
                     placeholder="Product SKU"
-                    value="{{ $products->single_variant->sku }}"
+                    value="{{ $master->single_variant->sku }}"
                 />
             </div>
         </div>
@@ -128,7 +129,7 @@ Edit Product
                 type="number"
                 class="form-control"
                 placeholder="Product weight"
-                value="{{ $products->weight }}"
+                value="{{ $master->weight }}"
                 required
             />
             <span class="input-group-text" id="basic-addon1">gr</span>
@@ -140,21 +141,21 @@ Edit Product
                 name="dimensions[length]"
                 type="number"
                 class="form-control"
-                value="{{ $product->length }}"
+                value="{{ $master->length }}"
             />
             <span class="input-group-text">L</span>
             <input
                 name="dimensions[width]"
                 type="number"
                 class="form-control"
-                value="{{ $product->width }}"
+                value="{{ $master->width }}"
             />
             <span class="input-group-text">W</span>
             <input
                 name="dimensions[height]"
                 type="number"
                 class="form-control"
-                value="{{ $product->height }}"
+                value="{{ $master->height }}"
             />
             <span class="input-group-text">H</span>
         </div>

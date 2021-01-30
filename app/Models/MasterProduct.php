@@ -93,6 +93,37 @@ class MasterProduct extends Model
         return $product->variant_id;
     }
 
+    public function getImagesFilepondJsonAttribute()
+    {
+        $images = $this->images()->orderBy('order')->get();
+
+        if($images->isEmpty()) {
+            return null;
+        }
+
+        $filtered = $images->only(['id', 'url'])->all();
+
+        $result = [];
+
+        foreach($filtered as $image) {
+
+            $pathinfo = \pathinfo($image['url']);
+
+            $result[] = [
+                'source' => $image['id'],
+                'options' => [
+                    'type' => 'local',
+                    'file' => [
+                        'name' => $pathinfo['basename'],
+                        'type' => 'image/' . $pathinfo['extension'],
+                    ]
+                ]
+            ];
+        }
+
+        return \json_encode($result);
+    }
+
     protected function calculatePrice()
     {
         $products = $this->products()->without(['details', 'image'])->get();

@@ -14,7 +14,7 @@ const UploadProductImage = {
         },
         revert: "/api/image/delete",
         restore: null,
-        load: null,
+        load: "/api/image/load",
         fetch: null
     },
     maxFileSize: "3MB",
@@ -60,7 +60,7 @@ const UploadMasterProductImage = {
         },
         revert: "/api/image/delete",
         restore: null,
-        load: null,
+        load: "/api/image/load",
         fetch: null
     },
     allowReorder: true,
