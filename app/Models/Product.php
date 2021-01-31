@@ -46,7 +46,7 @@ class Product extends Model
 
     public function items()
     {
-        return $this->belongsToMany(ProductDiscount::class);
+        return $this->hasMany(OrderItem::class);
     }
 
     public function variants()
@@ -93,7 +93,7 @@ class Product extends Model
         return \implode(',', $variants);
     }
 
-    public function getNumberOfVariantAttribute()
+    public function getVariantCountAttribute()
     {
         return $this->details()->count();
     }
@@ -118,9 +118,8 @@ class Product extends Model
 
     public function getSoldAttribute()
     {
-        return $this->without(['image', 'disocunt', 'details'])
-            ->items()
-            ->with(['product' => function ($query) {
+        return $this->items()->without(['details', 'image', 'discount'])
+            ->with(['order' => function ($query) {
                 $query->where('is_success', true);
             }])->count();
     }

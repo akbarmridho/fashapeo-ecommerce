@@ -7,7 +7,8 @@ use App\Models\Category;
 use App\Models\MasterProduct;
 use Illuminate\Support\Facades\Cookie;
 
-class ProductRepository implements ProductRepositoryInterface {
+class ProductRepository implements ProductRepositoryInterface
+{
 
     public $paginate = 8;
     public $master;
@@ -17,12 +18,22 @@ class ProductRepository implements ProductRepositoryInterface {
         $this->master = $master;
     }
 
+    public function all($page = null)
+    {
+        return $this->master->paginate(10);
+    }
+
+    public function archived($page = null)
+    {
+        return $this->master->onlyTrashed()->get();
+    }
+
     public function search($query)
     {
         return $this->master->search($query)->paginate($this->paginate);
     }
 
-    public function category(Category $category, $page)
+    public function category(Category $category, $page = null)
     {
         return $category->products()->withRelationship()->paginate($this->paginate);
     }
@@ -32,7 +43,7 @@ class ProductRepository implements ProductRepositoryInterface {
         return $this->master->withRelationship()->all()->sortByDesc('sold')->take(8);
     }
 
-    public function newArrival($page)
+    public function newArrival($page = null)
     {
         return $this->master->withRelationship()->newArrival()->paginate($this->paginate);
     }

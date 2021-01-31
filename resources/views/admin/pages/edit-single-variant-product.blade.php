@@ -61,7 +61,7 @@ Edit Product
         <p class="small muted">
             You can put any description and image as you want
         </p>
-        <div id="editor" class="mb-5">{{ $master->description }}</div>
+        <div id="editor" class="mb-5">{!! $master->description !!}</div>
     </div>
     <div class="row mb-3 shadow-1-strong mb-4 p-4">
         <h3 class="mb-5">Product Setting</h3>

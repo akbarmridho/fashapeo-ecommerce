@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,12 +28,16 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('admin', function () {
             return $this->isAdmin();
         });
+
+        Paginator::defaultView('main.pagination.main');
+        Paginator::defaultSimpleView('main.pagination.main');
     }
 
-    private function isAdmin() {
+    private function isAdmin()
+    {
         $uris = explode('/', $this->app->request->getRequestUri());
 
-        if($uris[1] === 'admin')  {
+        if ($uris[1] === 'admin') {
             return true;
         }
 

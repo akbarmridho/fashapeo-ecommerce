@@ -8,11 +8,13 @@ use App\Repository\StatusRepositoryInterface;
 use App\Repository\DeliveryRepositoryInterface;
 use App\Repository\CartRepositoryInterface;
 use App\Repository\WishlistRepositoryInterface;
+use App\Repository\ProductRepositoryInterface;
 use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\StatusRepository;
 use App\Repository\Eloquent\CartRepository;
 use App\Repository\Eloquent\WishlistRepository;
 use App\Repository\Vendor\RajaongkirRepository;
+use App\Repository\Eloquent\ProductRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(DeliveryRepositoryInterface::class, RajaongkirRepository::class);
         $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
         $this->app->bind(WishlistRepositoryInterface::class, WishlistRepository::class);
+        $this->app->bind(ProductRepositoryInterface::class, ProductRepository::class);
     }
 
     /**

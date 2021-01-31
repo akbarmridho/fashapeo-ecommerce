@@ -5,6 +5,8 @@
     "/css/admin.css": "/css/admin.css",
     "/js/pages/admin/categories.js": "/js/pages/admin/categories.js",
     "/js/pages/admin/createProduct.js": "/js/pages/admin/createProduct.js",
+    "/js/pages/admin/editMultiVariantProduct.js": "/js/pages/admin/editMultiVariantProduct.js",
+    "/js/pages/admin/editSingleVariantProduct.js": "/js/pages/admin/editSingleVariantProduct.js",
     "/js/pages/admin/variations.js": "/js/pages/admin/variations.js",
     "/js/pages/auth/register.js": "/js/pages/auth/register.js",
     "/js/pages/main.js": "/js/pages/main.js",

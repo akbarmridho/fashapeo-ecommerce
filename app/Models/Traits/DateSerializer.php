@@ -1,7 +1,8 @@
 <?php
 
-namespace App\models\Traits;
+namespace App\Models\Traits;
 
+use Illuminate\Support\Carbon;
 use App\Transformers\DateConverter;
 
 trait DateSerializer

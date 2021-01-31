@@ -36,7 +36,7 @@ class MasterProduct extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
-    
+
     public function scopeNewArrival($query)
     {
         return $query->orderByDesc('created_at');
@@ -66,7 +66,7 @@ class MasterProduct extends Model
         return config('payment.currency_symbol') . $this->products()->min('price');
     }
 
-    public function getMaxPriceAttribtue()
+    public function getMaxPriceAttribute()
     {
         return config('payment.currency_symbol') . $this->products()->max('price');
     }
@@ -78,7 +78,7 @@ class MasterProduct extends Model
 
     public function getStockAttribute()
     {
-        return $this->products()->count('stock');
+        return $this->products()->sum('stock');
     }
 
     public function getSingleVariantAttribute()
@@ -97,28 +97,24 @@ class MasterProduct extends Model
     {
         $images = $this->images()->orderBy('order')->get();
 
-        if($images->isEmpty()) {
+        if ($images->isEmpty()) {
             return null;
         }
 
-        $filtered = $images->only(['id', 'url'])->all();
+        $serialized = $images->toArray();
 
         $result = [];
 
-        foreach($filtered as $image) {
+        foreach ($serialized as $image) {
 
             $pathinfo = \pathinfo($image['url']);
 
-            $result[] = [
+            array_push($result, [
                 'source' => $image['id'],
                 'options' => [
                     'type' => 'local',
-                    'file' => [
-                        'name' => $pathinfo['basename'],
-                        'type' => 'image/' . $pathinfo['extension'],
-                    ]
                 ]
-            ];
+            ]);
         }
 
         return \json_encode($result);
@@ -149,7 +145,7 @@ class MasterProduct extends Model
             'min_discounted_price' => $minModel['discount_value'],
             'max_discounted_price' => $maxModel['discount_value'],
             'min_final' => $minModel['final_price'],
-            'max_final' => $maxModel['final_price'], 
+            'max_final' => $maxModel['final_price'],
         ];
     }
 

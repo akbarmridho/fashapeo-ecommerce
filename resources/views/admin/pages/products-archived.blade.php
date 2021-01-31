@@ -12,10 +12,10 @@ Products
 
     <ul class="nav nav-tabs mb-3">
         <li class="nav-item">
-            <a class="nav-link active" href="{{ route('admin.products') }}">Active Products</a>
+            <a class="nav-link" href="{{ route('admin.products') }}">Active Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('admin.products.archived') }}">Archived Products</a>
+            <a class="nav-link active" href="{{ route('admin.products.archived') }}">Archived Products</a>
         </li>
     </ul>
 

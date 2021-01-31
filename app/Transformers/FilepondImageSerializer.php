@@ -2,7 +2,8 @@
 
 namespace App\Transformers;
 
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class FilepondImageSerializer
 {
@@ -10,12 +11,13 @@ class FilepondImageSerializer
     {
         $result = [];
 
-        foreach($images as $image)
-        {
-            if(! Str::endsWith(\strtolower($image), ['jpg', 'jpeg', 'png', 'webp'])) {
+        foreach ($images as $image) {
+
+            try {
+                Crypt::decryptString($image);
                 $result['images'][] = ['content' => $image, 'is_new' => true];
-            } else {
-                $result['images'][] = ['content' => \basename($image), 'is_new' => false];
+            } catch (DecryptException $exception) {
+                $result['images'][] = ['content' => $image, 'is_new' => false];
                 $result['old'][] = $image;
             }
         }

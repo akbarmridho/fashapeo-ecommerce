@@ -19,7 +19,7 @@ trait ProductImage
         $productImages = $product->images();
 
         if (array_key_exists('old', $serialized) && !empty($serialized['old'])) {
-            $filtered = $productImages->whereNotIn('url', $serialized['old'])->get();
+            $filtered = $productImages->whereNotIn('id', $serialized['old'])->get();
             $this->deleteImagesFromList($filtered, config('image.product_img_path'));
         }
 
@@ -34,7 +34,7 @@ trait ProductImage
                 ]);
             } else {
 
-                $image = $productImages->where('url', $image['content'])->firstOrFail();
+                $image = $productImages->findOrFail($image['content']);
                 $image->fill(['order' => $index])->save();
             }
         }
@@ -45,11 +45,13 @@ trait ProductImage
         $filepond = new Filepond;
         $imagePath = config('image.product_img_path');
 
-        if (\is_dir($image)) {
-            $newPath = $filepond->move($image, $imagePath);
-            $product->image->updateOrCreate([
-                'url' => $newPath,
-            ]);
+        $serialized = Serializer::convert([$image]);
+
+        foreach ($serialized as $img) {
+            if ($img['is_new']) {
+                $newPath = $filepond->move($img['content'], $imagePath);
+                $product->image->updateOrCreate(['url', $newPath]);
+            }
         }
     }
 

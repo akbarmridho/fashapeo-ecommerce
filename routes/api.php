@@ -25,7 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/image/upload', [ImageController::class, 'upload'])->name('image.upload');
 Route::post('/image/process', [FilepondController::class, 'upload'])->name('image.process');
 Route::delete('/image/delete', [FilepondController::class, 'delete'])->name('image.delete');
-Route::get('/image/load', [FilepondController::class, 'load'])->name('image.load');
+Route::get('/image', [FilepondController::class, 'load'])->name('image.load');
 
 Route::get('/provinces', [AdministrationController::class, 'provinces']);
 Route::get('/cities/{id}', [AdministrationController::class, 'cities']);

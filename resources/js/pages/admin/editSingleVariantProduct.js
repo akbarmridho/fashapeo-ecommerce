@@ -23,15 +23,15 @@ class UploadProduct {
         document.querySelectorAll(".filepond--root").forEach(element => {
             element.addEventListener(
                 "FilePond:addfilestart",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:processfileprogress",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:updatefiles",
-                this.enableUploadButton
+                this.enableUploadButton.bind(this)
             );
         });
     }
@@ -93,10 +93,12 @@ class UploadProduct {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    window.FilePond.create(
-        document.getElementById("mainImage"),
-        UploadMasterProductImage
+    const mainImage = document.getElementById("mainImage");
+    const initialFiles = JSON.parse(
+        mainImage.dataset.images.replace(`&quot;`, `"`)
     );
+    UploadMasterProductImage.files = initialFiles;
+    window.FilePond.create(mainImage, UploadMasterProductImage);
     window.tail("#category", {
         search: true
     });

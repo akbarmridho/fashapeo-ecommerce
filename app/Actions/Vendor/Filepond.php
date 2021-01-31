@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Exceptions\InvalidPathException;
 
-class Filepond {
+class Filepond
+{
 
     public function getServerIdFromPath($path)
     {
@@ -16,15 +17,13 @@ class Filepond {
 
     public function getPathFromServerId($serverId)
     {
-        if (! trim($serverId)) {
+        if (!trim($serverId)) {
             throw new InvalidPathException();
         }
 
         $filepath = Crypt::decryptString($serverId);
-        // if (! Str::startsWith($filepath, $this->getBasePath())) {
-        //     throw new InvalidPathException();
-        // }
-        if(! Str::startsWith($filepath, config('image.temp_img_path', 'temp_img'))) {
+
+        if (!Str::startsWith($filepath, config('image.temp_img_path', 'temp_img'))) {
             throw new InvalidPathException();
         }
 
@@ -39,12 +38,11 @@ class Filepond {
     public function move($encryptedPath, $pathPrefix = null)
     {
         $oldPath = $this->getPathFromServerId($encryptedPath);
-        // $targetPath = Storage::disk('public')->path($pathPrefix);
 
         $publicPrefix = 'public';
         $imageName = \basename($oldPath);
 
-        if($pathPrefix !== null) {
+        if ($pathPrefix !== null) {
             $targetPath = $publicPrefix . DIRECTORY_SEPARATOR . $pathPrefix;
             $url = $pathPrefix . DIRECTORY_SEPARATOR . $imageName;
         } else {
@@ -54,7 +52,7 @@ class Filepond {
 
 
         $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
-        if(Storage::move($oldPath, $finalPath)) {
+        if (Storage::move($oldPath, $finalPath)) {
             $this->deleteTemporaryPath(\dirname($oldPath));
             return Storage::url($url);
         }

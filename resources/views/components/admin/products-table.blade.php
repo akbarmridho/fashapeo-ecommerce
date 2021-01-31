@@ -1,7 +1,6 @@
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th scope="col">SKU</th>
             <th scope="col">Product Title</th>
             <th scope="col">Price Range</th>
             <th scope="col">Total Stock</th>
@@ -15,20 +14,19 @@
         @else
         @foreach($products as $product)
         <tr>
-            <td scope="row">{{ $product->sku }}</td>
             <td>
                 {{ $product->name }}
             </td>
             @if($product->max_price === $product->min_price)
             <td>{{ $product->max_price }}</td>
             @else
-            <td>{{ $product->min_price ' -- ' $product->max_price }}</td>
+            <td>{{ $product->min_price . ' -- ' . $product->max_price }}</td>
             @endif
             <td>{{ $product->stock }}</td>
             <td>
                 <ul class="list-unstyled mb-0">
                     <li><i class="far fa-clock pe-1"></i>{{ $product->created_at }}</li>
-                    <li><i class="fas fa-truck pe-1"></i>{{ $product->weight }}</li>
+                    <li><i class="fas fa-truck pe-1"></i>{{ $product->weight . 'gr'}}</li>
                     <li>
                         <i class="fas fa-shopping-basket pe-1"></i>Sold {{ $product->sold }}
                         times

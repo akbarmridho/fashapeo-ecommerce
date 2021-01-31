@@ -24,15 +24,15 @@ class UploadProduct {
         document.querySelectorAll(".filepond--root").forEach(element => {
             element.addEventListener(
                 "FilePond:addfilestart",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:processfileprogress",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:updatefiles",
-                this.enableUploadButton
+                this.enableUploadButton.bind(this)
             );
         });
     }

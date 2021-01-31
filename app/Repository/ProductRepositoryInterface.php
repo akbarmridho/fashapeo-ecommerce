@@ -4,7 +4,12 @@ namespace App\Repository;
 
 use App\Models\Category;
 
-interface ProductRepositoryInterface {
+interface ProductRepositoryInterface
+{
+
+    public function all($page);
+
+    public function archived($page);
 
     public function search($query);
 

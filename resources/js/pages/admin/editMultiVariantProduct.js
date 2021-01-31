@@ -27,15 +27,15 @@ class UploadProduct {
         document.querySelectorAll(".filepond--root").forEach(element => {
             element.addEventListener(
                 "FilePond:addfilestart",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:processfileprogress",
-                this.disableUploadButton
+                this.disableUploadButton.bind(this)
             );
             element.addEventListener(
                 "FilePond:updatefiles",
-                this.enableUploadButton
+                this.enableUploadButton.bind(this)
             );
         });
     }
@@ -117,18 +117,21 @@ class DeleteCurrentVariant {
 
 document.addEventListener("DOMContentLoaded", () => {
     const mainImage = document.getElementById("mainImage");
-    const initialFiles = JSON.parse(mainImage.dataset.files);
-    window.FilePond.create(
-        mainImage,
-        UploadMasterProductImage.concat(initialFiles)
+    const initialFiles = JSON.parse(
+        mainImage.dataset.images.replace(`&quot;`, `"`)
     );
+    UploadMasterProductImage.files = initialFiles;
+    window.FilePond.create(mainImage, UploadMasterProductImage);
 
     document
         .querySelector("table")
         .querySelector(".filepond")
         .forEach(element => {
-            let images = JSON.parse(element.dataset.images);
-            window.FilePond.create(element, UploadProductImage.concat(images));
+            let images = JSON.parse(
+                mainImage.dataset.images.replace(`&quot;`, `"`)
+            );
+            UploadProductImage.files = images;
+            window.FilePond.create(element, UploadProductImage);
         });
 
     window.tail("#category", {

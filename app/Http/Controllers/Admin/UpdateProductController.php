@@ -17,16 +17,16 @@ class UpdateProductController extends Controller
         $this->categories = $categories;
     }
 
-    public function show(MasterProduct $master)
+    public function show(MasterProduct $product)
     {
-        $product = $master->products()->first();
+        $firstVariant = $product->products()->first();
         $categories = $this->categories->parents();
 
-        if ($product->number_of_variant === 0) {
-            return view('admin.pages.edit-single-variant-product', compact('categories', 'master'));
-        } else if ($product->number_of_variant > 0) {
+        if ($firstVariant->variant_count === 0) {
+            return view('admin.pages.edit-single-variant-product', ['categories' => $categories, 'master' => $product]);
+        } else if ($product->variant_count > 0) {
             $variants = $product->variants;
-            return view('admin.pages.edit-multi-variant-product', compact('categories', 'master', 'variants'));
+            return view('admin.pages.edit-multi-variant-product', ['categories' => $categories, 'master' => $product, 'variants' => $variants]);
         }
     }
 

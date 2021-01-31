@@ -3,16 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Repository\ProductRepositoryInterface;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public $product;
+
+    public function __construct(ProductRepositoryInterface $product)
     {
-        return view('admin.pages.products');
+        $this->product = $product;
     }
 
-    public function archived()
+    public function index(Request $request)
     {
-        //
+        $products = $this->product->all($request->page);
+
+        return view('admin.pages.products', compact('products'));
+    }
+
+    public function archived(Request $request)
+    {
+        $products = $this->product->archived($request->page);
+
+        return view('admin.pages.products-archived', compact('products'));
     }
 }
