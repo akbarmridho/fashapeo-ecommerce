@@ -6,5 +6,8 @@ use App\Http\Controllers\Controller;
 
 class MainPageController extends Controller
 {
-    
+    public function home()
+    {
+        return view('main.pages.home');
+    }
 }

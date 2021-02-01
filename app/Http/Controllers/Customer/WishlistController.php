@@ -39,6 +39,6 @@ class WishlistController extends Controller
 
     public function index()
     {
-        //
+        return view('customer.pages.wishlist');
     }
 }

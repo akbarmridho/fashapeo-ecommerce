@@ -18,7 +18,7 @@ class CartController extends Controller
 
     public function show()
     {
-        // show all product in cart
+        return view('customer.pages.cart');
     }
 
     public function increment(Cart $cart)

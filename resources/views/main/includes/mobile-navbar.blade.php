@@ -19,7 +19,11 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link
+            @if(request()->routeIs('home'))
+            active
+            @endif
+            " aria-current="page" href="{{ route('home') }}">Home</a>
           </li>
           <!-- Navbar dropdown -->
           <li class="nav-item dropdown">
@@ -51,11 +55,23 @@
           <li class="nav-item">
             <a href="" class="nav-link">How to Order</a>
           </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">Logout</a>
+          
+          @auth('customer')
+          <li class="nav-item
+          @if(request()->routeIs('customer.dashboard'))
+          active
+          @endif
+          ">
+            <a href="{{ route('customer.dashboard') }}" class="nav-link">My Account</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">My Account</a>
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+              <button type="submit" class="nav-link border-0" style="background-color: white;">Logout</button>
+          <form>
           </li>
+          @else
+            <a href="{{ route('login') }}">Login</a>
+          @endauth
         </ul>
       </nav>

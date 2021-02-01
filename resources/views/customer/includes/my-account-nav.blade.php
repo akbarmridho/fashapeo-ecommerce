@@ -4,17 +4,40 @@
         <img src="/img/avatar.png" alt="" class="img-fluid rounded-circle">
     </div>
     <div class="col-8 d-flex align-items-center">
-        <p class="fw-bold h5">John Doe</p>
+        <p class="fw-bold h5">{{ $customer->name }}</p>
     </div>
 </div>
 <div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+  <a href="{{ route('customer.dashboard') }}" class="list-group-item list-group-item-action
+  @if(request()->routeIs('customer.dashboard'))
+  active
+  @endif
+  " aria-current="true">
     Dashboard
   </a>
-  <a href="#" class="list-group-item list-group-item-action">Notifications</a>
-  <a href="#" class="list-group-item list-group-item-action">Orders</a>
-  <a href="#" class="list-group-item list-group-item-action">Address</a>
-  <a href="#" class="list-group-item list-group-item-action">Edit Account</a>
-  <a href="#" class="list-group-item list-group-item-action">Logout</a>
+  <a href="{{ route('customer.notification') }}" class="list-group-item list-group-item-action
+  @if(request()->routeIs('customer.notification'))
+  active
+  @endif
+  ">Notifications</a>
+  <a href="{{ route('customer.orders') }}" class="list-group-item list-group-item-action
+  @if(request()->routeIs('customer.orders'))
+  active
+  @endif
+  ">Orders</a>
+  <a href="{{ route('customer.address') }}" class="list-group-item list-group-item-action
+  @if(request()->routeIs('customer.address.*'))
+  active
+  @endif
+  ">Address</a>
+  <a href="{{ route('customer.profile') }}" class="list-group-item list-group-item-action
+  @if(request()->routeIs('customer.profile'))
+  active
+  @endif
+  ">Edit Account</a>
+  <form action="{{ route('logout') }}" method="post">
+    @csrf
+    <button class="list-group-item list-group-item-action" type="submit">Logout</button>
+  </form>
 </div>
 </div>

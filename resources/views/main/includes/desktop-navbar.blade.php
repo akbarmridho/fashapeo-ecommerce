@@ -23,7 +23,11 @@
             <!-- Left links -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
               <li class="nav-item mx-2">
-                <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
+                <a class="nav-link
+                @if(request()->routeIs('home'))
+                active
+                @endif
+                " aria-current="page" href="{{ route('home') }}">Home</a>
               </li>
               <!-- Navbar dropdown -->
               <li class="nav-item dropdown mx-2">
@@ -84,18 +88,18 @@
                   data-mdb-target="#loginRegister"
                 >
                   <i class="fas fa-user"></i
-                  ><span class="badge bg-danger rounded-pill badge-notification"
-                    >1</span
                   >
                 </a>
               </li>
               @endauth
               <li class="nav-item mx-3">
-                <a href="#" class="nav-link"
+                <a href="{{ route('customer.carts') }}" class="nav-link"
                   ><i class="fas fa-shopping-cart"></i
-                  ><span class="badge bg-danger rounded-pill badge-notification"
+                  >
+                  {{-- <span class="badge bg-danger rounded-pill badge-notification"
                     >1</span
-                  ></a
+                  > --}}
+                  </a
                 >
               </li>
               <li class="nav-item dropdown mx-3">

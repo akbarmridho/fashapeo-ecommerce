@@ -20,7 +20,7 @@ class AddressController extends Controller
 
     public function index()
     {
-        //
+        return view('customer.pages.my-account.addresses');
     }
 
     public function edit(Address $address)
@@ -30,14 +30,14 @@ class AddressController extends Controller
 
     public function create()
     {
-        //
+        return view('customer.pages.my-account.add-address');
     }
 
     public function store(Request $request, UpdateAddress $creator)
     {
         $customer = Auth::guard('customer')->user();
 
-        if($customer->addresses->isEmpty()) {
+        if ($customer->addresses->isEmpty()) {
             $main = true;
         } else {
             $main = false;
@@ -75,7 +75,7 @@ class AddressController extends Controller
     {
         $customer = Auth::guard('customer')->user();
 
-        if(! $old = $customer->addresses()->active()->first()) {
+        if (!$old = $customer->addresses()->active()->first()) {
             $old->is_main = false;
             $old->save();
         }

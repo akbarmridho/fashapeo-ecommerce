@@ -25,10 +25,6 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            // 'username' => ['required',
-            //                 'string',
-            //                 'max:50',
-            //                 'unique:users,username',],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => 'string|max:255',
             'email' => [
@@ -45,7 +41,6 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return Customer::create([
-            // 'username' => strtolower($input['username']),
             'first_name' => Str::title($input['first_name']),
             'last_name' => Str::title($input['last_name']),
             'phone' => $input['phone'],

@@ -27,6 +27,8 @@ class CreatedTransactionController extends Controller
     public function show(Order $order)
     {
         session(['order_id' => $order->id]);
+
+        return view('customer.pages.orders.invoice');
     }
 
     public function token(Order $order, Midtrans $payment)
@@ -34,21 +36,21 @@ class CreatedTransactionController extends Controller
         return response()->json(['token' => $payment->token($order)], 200);
     }
 
-    public function notification(Request $request, 
-                                 Midtrans $payment, 
-                                 UpdateStatus $updater,
-                                 UpdateOrder $handler)
-    {
+    public function notification(
+        Request $request,
+        Midtrans $payment,
+        UpdateStatus $updater,
+        UpdateOrder $handler
+    ) {
         $payment->notification($request->all());
-        
+
         $status = $payment->notificaton->transaction_status;
         $fraud = $payment->notification->fraud_status;
         $order = Order::where('order_number', $payment->notification->order_id)->first();
-        
-        switch($status)
-        {
+
+        switch ($status) {
             case 'capture':
-                if($fraud === 'accept') {
+                if ($fraud === 'accept') {
                     $updater->update($order, $this->status->transactionSuccess());
                     $updater->update($order, $this->status->orderProcessed());
                     $handler->updateTransaction($order, $request->all());
@@ -59,7 +61,7 @@ class CreatedTransactionController extends Controller
                 }
                 break;
             case 'cancel':
-                if($fraud === 'accept') {
+                if ($fraud === 'accept') {
                     $updater->update($order, $this->status->transactionCancelled());
                     $updater->update($order, $this->status->orderCancelled());
                     $handler->updateTransaction($order, $request->all());

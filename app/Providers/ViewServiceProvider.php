@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\View\Composers\CategoryComposer;
+use App\View\Composers\CustomerComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,14 +26,13 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Using class based composers...
-        View::composer(['main.pages.*',
-                        'customer.pages.*'], 
-                        CategoryComposer::class);
-
-        // Using closure based composers...
-        // View::composer('dashboard', function ($view) {
-        //     //
-        // });
+        View::composer(
+            [
+                'main.pages.*',
+                'customer.pages.*'
+            ],
+            CategoryComposer::class
+        );
+        View::composer(['customer.pages.*'], CustomerComposer::class);
     }
 }

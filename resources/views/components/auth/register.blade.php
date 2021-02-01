@@ -65,6 +65,11 @@
         <label class="form-label" for="dateOfBirth">Date of Birth</label>
     </div>
 
+    <div class="form-outline mb-4">
+        <input name="phone" type="number" id="phone" class="form-control" minlength="9" maxlength="15"/>
+        <label class="form-label" for="phone">Phone Number</label>
+    </div>
+
     <div class="mb-4 w-50">
         <select name="sex" class="form-select 
             @error('email')

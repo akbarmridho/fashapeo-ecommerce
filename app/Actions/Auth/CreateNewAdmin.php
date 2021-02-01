@@ -35,6 +35,7 @@ class CreateNewAdmin implements CreatesNewUsers
             ],
             'password' => $this->passwordRules(),
             'sex' => 'required',
+            'phone' => 'nullable|starts_with:628,08|digits_between:9,15',
             'birthDate' => 'date',
         ])->validate();
 
@@ -42,6 +43,7 @@ class CreateNewAdmin implements CreatesNewUsers
             'first_name' => Str::title($input['first_name']),
             'last_name' => Str::title($input['last_name']),
             'email' => $input['email'],
+            'phone' => $input['phone'],
             'password' => Hash::make($input['password']),
             'sex' => $input['sex'],
             'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d'),

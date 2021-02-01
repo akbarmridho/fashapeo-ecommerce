@@ -15,10 +15,11 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) 
-        {
-            if(Auth::guest('admin') && Auth::guest('customer')) {
+        if (!$request->expectsJson()) {
+            if (config('fortify.guard') == 'admin' && Auth::guest('admin')) {
                 return route('admin.login');
+            } else if (Auth::guest('customer')) {
+                return route('login');
             }
 
             return route('login');

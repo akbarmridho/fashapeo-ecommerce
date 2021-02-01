@@ -19,16 +19,17 @@ class CreatedShipmentController extends Controller
     private $status;
     private $delivery;
 
-    public function __construct(StatusRepositoryInterface $statusRepository,
-                                DeliveryRepositoryInterface $delivery)
-    {
+    public function __construct(
+        StatusRepositoryInterface $statusRepository,
+        DeliveryRepositoryInterface $delivery
+    ) {
         $this->status = $statusRepository;
         $this->delivery = $delivery;
     }
 
     public function show(Order $order)
     {
-        //
+        return view('customer.pages.orders.shipment');
     }
 
     public function update(UpdateShipmentRequest $request, Order $order, UpdateOrder $updater)
@@ -39,14 +40,14 @@ class CreatedShipmentController extends Controller
         return response()->json(['message' => 'Shipment address updated']);
     }
 
-    public function finalize(FinalizeShipmentRequest $request,
-                             Order $order, 
-                             UpdateOrder $updater,
-                             UpdateStatus $statusUpdater)
-    {
-        foreach($request->products as $product)
-        {
-            if (! $note = $product['note']) {
+    public function finalize(
+        FinalizeShipmentRequest $request,
+        Order $order,
+        UpdateOrder $updater,
+        UpdateStatus $statusUpdater
+    ) {
+        foreach ($request->products as $product) {
+            if (!$note = $product['note']) {
                 $updater->updateNote(OrderItem::find($product), $note);
             }
         }

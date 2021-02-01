@@ -2,10 +2,7 @@ class LocationSelection {
     constructor() {
         this.provinceInput = document.getElementById("province");
         this.cityInput = document.getElementById("city");
-        window.addEventListener(
-            "DOMContentLoaded",
-            this.initializeProvince.bind(this)
-        );
+        this.initializeProvince();
         this.provinceInput.addEventListener(
             "change",
             this.initializeCity.bind(this)

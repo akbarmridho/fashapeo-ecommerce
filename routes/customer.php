@@ -15,9 +15,7 @@ use App\Http\Controllers\Orders\ShipmentOptionController;
 
 Route::name('customer.')->group(function () {
 
-    Route::get('/my-account', function () {
-        return view('customer.pages.my-account.dashboard');
-    })->name('dashboard');
+    Route::get('/my-account', [CustomerController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/cart', [CartController::class, 'show'])
         ->name('carts');
@@ -42,6 +40,12 @@ Route::name('customer.')->group(function () {
 
     Route::prefix('my-account')->group(function () {
 
+        Route::get('notifications', [CustomerController::class, 'notification'])
+            ->name('notification');
+
+        Route::get('edit-account', [CustomerController::class, 'profile'])
+            ->name('profile');
+
         Route::get('address', [AddressController::class, 'index'])
             ->name('address');
 
@@ -52,15 +56,15 @@ Route::name('customer.')->group(function () {
 
         Route::middleware('can:update,address')->group(function () {
             Route::get('address/{address}', [AddressController::class, 'edit'])
-            ->name('address.show');
-            
+                ->name('address.show');
+
             Route::put('address/{address}', [AddressController::class, 'update'])
-            ->name('address.update');
-            
+                ->name('address.update');
+
             Route::delete('address/{address}', [AddressController::class, 'delete']);
-            
+
             Route::post('address/{address}/main', [AddressController::class, 'setMain'])
-            ->name('address.main');
+                ->name('address.main');
         });
 
         Route::get('orders', [OrderController::class, 'index'])
@@ -71,7 +75,7 @@ Route::name('customer.')->group(function () {
 
         Route::post('orders/order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
             ->name('orders.complete');
-    }); 
+    });
 
     Route::prefix('order')->group(function () {
         Route::post('/', [CreatedOrderController::class, 'create'])
@@ -79,24 +83,24 @@ Route::name('customer.')->group(function () {
 
         Route::middleware(['order.check:shipment', 'can:show,order'])->group(function () {
             Route::get('/{order:order_number}/shipment', [CreatedShipmentController::class, 'show'])
-            ->name('order.shipment');
-            
+                ->name('order.shipment');
+
             Route::put('/{order:order_number}/shipment', [CreatedShipmentController::class, 'update'])
-            ->name('order.shipment.update');
-            
+                ->name('order.shipment.update');
+
             Route::post('/{order:order_number}/shipment', [CreatedShipmentController::class, 'finalize'])
-            ->name('order.shipment.finalize');
-            
+                ->name('order.shipment.finalize');
+
             Route::get('/{order:order_number}/shipment/cost', [ShipmentOptionController::class, 'show'])
-            ->name('order.shipment.cost');
+                ->name('order.shipment.cost');
         });
 
         Route::middleware(['order.check.transaction', 'can:show,order'])->group(function () {
             Route::get('/{order:order_number}/transaction', [CreatedTransactionController::class, 'show'])
-            ->name('order.transaction');
-            
+                ->name('order.transaction');
+
             Route::get('/{order:order_number}/transaction/token', [CreatedTransactionController::class, 'token'])
-            ->name('order.transaction.token');
+                ->name('order.transaction.token');
         });
 
         Route::get('/finish', [OrderRedirectController::class, 'finish']);
@@ -104,7 +108,7 @@ Route::name('customer.')->group(function () {
         Route::get('/unfinish', [OrderRedirectController::class, 'unfinish']);
 
         Route::get('/error', [OrderRedirectController::class, 'error']);
-        
+
         Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
             ->name('order.success');
 
@@ -115,57 +119,3 @@ Route::name('customer.')->group(function () {
             ->name('order.pending');
     });
 });
-
-// Route::get('/cart', function () {
-//     return view('customer.pages.cart');
-// });
-
-// Route::get('/wishlist', function () {
-//     return view('customer.pages.wishlist');
-// });
-
-
-
-// Route::get('/my-account/notifications', function () {
-//     return view('customer.pages.my-account.notifications');
-// });
-
-// Route::get('/my-account/orders', function () {
-//     return view('customer.pages.my-account.orders');
-// });
-
-// Route::get('/my-account/orders/details', function () {
-//     return view('customer.pages.my-account.order-details');
-// });
-
-// Route::get('/my-account/addresses', function () {
-//     return view('customer.pages.my-account.addresses');
-// });
-
-// Route::get('/my-account/addresses/add', function () {
-//     return view('customer.pages.my-account.add-address');
-// });
-
-// Route::get('/my-account/edit-account', function () {
-//     return view('customer.pages.my-account.edit-account');
-// });
-
-// Route::get('/orders/shipment', function () {
-//     return view('customer.pages.orders.shipment');
-// });
-
-// Route::get('/orders/invoice', function () {
-//     return view('customer.pages.orders.invoice');
-// });
-
-// Route::get('/orders/pending', function () {
-//     return view('customer.pages.orders.pending');
-// });
-
-// Route::get('/orders/success', function () {
-//     return view('customer.pages.orders.success');
-// });
-
-// Route::get('/orders/error', function () {
-//     return view('customer.pages.orders.error');
-// });

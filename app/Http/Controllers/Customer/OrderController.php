@@ -21,12 +21,12 @@ class OrderController extends Controller
 
     public function index()
     {
-        //
+        return view('customer.pages.my-account.orders');
     }
 
     public function show()
     {
-        //
+        return view('customer.pages.my-account.order-details');
     }
 
     public function markAsCompleted(Order $order, UpdateStatus $updater)
@@ -35,7 +35,6 @@ class OrderController extends Controller
 
         $updater->update($order, $this->status->orderArrived());
         $updater->update($order, $this->status->orderCompleted());
-        // update sold count pada master produk
         $order->fill([
             'completed_at' => now(),
             'is_success' => true,
