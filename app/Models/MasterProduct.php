@@ -57,8 +57,10 @@ class MasterProduct extends Model
 
     public function getSoldAttribute()
     {
-        $products = collect($this->products->append('sold')->toArray());
-        return $products->pluck('sold')->sum();
+        return $this->products()->join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.is_success', true)
+            ->count();
     }
 
     public function getMinPriceAttribute()
@@ -69,6 +71,18 @@ class MasterProduct extends Model
     public function getMaxPriceAttribute()
     {
         return config('payment.currency_symbol') . $this->products()->max('price');
+    }
+
+    public function getPriceRangeAttribute()
+    {
+        $min = $this->products()->min('price');
+        $max = $this->products()->max('price');
+        $symbol = config('payment.currency_symbol');
+        if ($min === $max) {
+            return $symbol . $min;
+        } else {
+            return $symbol . $min . ' -- ' . $symbol . $max;
+        }
     }
 
     public function getPriceAttribute()
@@ -106,8 +120,6 @@ class MasterProduct extends Model
         $result = [];
 
         foreach ($serialized as $image) {
-
-            $pathinfo = \pathinfo($image['url']);
 
             array_push($result, [
                 'source' => $image['id'],

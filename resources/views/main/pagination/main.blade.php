@@ -1,4 +1,4 @@
-@if($paginatior->hasPages())
+@if($paginator->hasPages())
 <nav aria-label="Page navigation example">
     <ul class="pagination">
         @if($paginator->onFirstPage())

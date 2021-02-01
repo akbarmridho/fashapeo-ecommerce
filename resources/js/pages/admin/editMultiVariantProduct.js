@@ -47,6 +47,7 @@ class UploadProduct {
             this.quill.getContents()["ops"]
         );
         data.append("description", converter.convert());
+        data.append("_method", "PUT");
 
         this.setButtonLoadState();
 
@@ -54,12 +55,13 @@ class UploadProduct {
             .post("", data)
             .then(response => {
                 this.unsetButtonLoadState();
+                window.location.href = "/admin/products";
             })
             .catch(error => {
-                // console.log(error);
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();
+                return error;
             });
     }
 
@@ -125,13 +127,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document
         .querySelector("table")
-        .querySelector(".filepond")
+        .querySelectorAll(".filepond")
         .forEach(element => {
-            let images = JSON.parse(
-                mainImage.dataset.images.replace(`&quot;`, `"`)
-            );
-            UploadProductImage.files = images;
-            window.FilePond.create(element, UploadProductImage);
+            let inputConfig;
+            if (element.dataset.images) {
+                let images = JSON.parse(
+                    element.dataset.images.replace(`&quot;`, `"`)
+                );
+                inputConfig = Object.assign({}, UploadProductImage, {
+                    files: images
+                });
+            } else {
+                inputConfig = Object.assign({}, UploadProductImage);
+            }
+            window.FilePond.create(element, inputConfig);
         });
 
     window.tail("#category", {

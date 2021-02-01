@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Actions\Product\UpdateProduct;
 use App\Models\MasterProduct;
 use App\Repository\CategoryRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class UpdateProductController extends Controller
 {
@@ -24,8 +25,8 @@ class UpdateProductController extends Controller
 
         if ($firstVariant->variant_count === 0) {
             return view('admin.pages.edit-single-variant-product', ['categories' => $categories, 'master' => $product]);
-        } else if ($product->variant_count > 0) {
-            $variants = $product->variants;
+        } else if ($firstVariant->variant_count > 0) {
+            $variants = $firstVariant->variants;
             return view('admin.pages.edit-multi-variant-product', ['categories' => $categories, 'master' => $product, 'variants' => $variants]);
         }
     }
@@ -33,6 +34,8 @@ class UpdateProductController extends Controller
     public function update(MasterProduct $product, Request $request, UpdateProduct $updater)
     {
         $updater->update($product, $request->all());
+        Cache::tags('products')->flush();
+        session()->flash('status', 'Product Updated');
         return response()->json(['message' => 'Product updated'], 200);
     }
 }

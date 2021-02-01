@@ -17,7 +17,7 @@ class FilepondImageSerializer
                 Crypt::decryptString($image);
                 $result['images'][] = ['content' => $image, 'is_new' => true];
             } catch (DecryptException $exception) {
-                $result['images'][] = ['content' => $image, 'is_new' => false];
+                $result['images'][] = ['content' => intval($image), 'is_new' => false];
                 $result['old'][] = $image;
             }
         }

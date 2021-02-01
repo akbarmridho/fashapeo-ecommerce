@@ -24,16 +24,21 @@ class ProductDetail extends Model
 
     public function variant()
     {
-        return $this->hasOne(Variant::class);
+        return $this->belongsTo(Variant::class);
     }
 
     public function variantOption()
     {
-        return $this->hasOne(Variant::class);
+        return $this->belongsTo(VariantOption::class);
     }
 
     public function getVariantNameAttribute()
     {
         return $this->variant->name . ' ' . $this->variantOption->name;
+    }
+
+    public function getVariantTypeAttribute()
+    {
+        return $this->variant->name;
     }
 }

@@ -17,7 +17,13 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = $this->product->all($request->page);
+        if ($request->has('page')) {
+            $page = $request->page;
+        } else {
+            $page = 1;
+        }
+
+        $products = $this->product->all($page);
 
         return view('admin.pages.products', compact('products'));
     }

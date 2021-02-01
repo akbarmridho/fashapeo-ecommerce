@@ -17,11 +17,7 @@
             <td>
                 {{ $product->name }}
             </td>
-            @if($product->max_price === $product->min_price)
-            <td>{{ $product->max_price }}</td>
-            @else
-            <td>{{ $product->min_price . ' -- ' . $product->max_price }}</td>
-            @endif
+            <td>{{ $product->price_range }}</td>
             <td>{{ $product->stock }}</td>
             <td>
                 <ul class="list-unstyled mb-0">
@@ -35,9 +31,7 @@
             </td>
             <td>
                 <div class="btn-group">
-                    <button class="btn btn-primary btn-sm" type="button">
-                        Actions
-                    </button>
+                    <a href="{{ route('admin.products.edit', ['product' => $product->id]) }}" class="btn btn-primary btn-sm" type="button">Edit</a>
                     <button
                         type="button"
                         class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
@@ -47,9 +41,15 @@
                         <span class="visually-hidden">Toggle Dropdown</span>
                     </button>
                     <ul class="dropdown-menu">
+                        @if($product->trashed())
                         <li>
-                            <a class="dropdown-item" href="{{ route('admin.products.edit', ['product' => $product->id]) }}">View</a>
+                            <form action="{{ route('admin.products.restore', ['product' => $product->id]) }}" method="POST">
+                                @csrf
+                                @method('put')
+                                <button class="dropdown-item" type="submit">Restore</button>
+                            </form>
                         </li>
+                        @else
                         <li>
                             <form action="{{ route('admin.products.archive', ['product' => $product->id]) }}" method="POST">
                                 @csrf
@@ -57,7 +57,7 @@
                                 <button class="dropdown-item" type="submit">Archive</button>
                             </form>
                         </li>
-                        <li><hr class="dropdown-divider" /></li>
+                        @endif
                         <li>
                             <form action="{{ route('admin.products.delete', ['product' => $product->id]) }}" method="POST">
                                 @csrf

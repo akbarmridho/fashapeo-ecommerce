@@ -7,9 +7,10 @@ use App\Rules\NotParentCategory;
 use App\Rules\VariantsIsValid;
 use Illuminate\Validation\Rule;
 
-trait ProductValidationRules {
-    
-    public function createProductValidation ()
+trait ProductValidationRules
+{
+
+    public function createProductValidation()
     {
         return [
             'name' => [
@@ -26,6 +27,10 @@ trait ProductValidationRules {
             'description' => [
                 'required',
                 'string',
+            ],
+            'images' => [
+                'required',
+                'array'
             ],
             'usedVariant' => [
                 'string',
@@ -44,6 +49,7 @@ trait ProductValidationRules {
     public function variantValidation()
     {
         return [
+            'id' => 'sometimes|integer',
             'price' => 'required|integer|gt:100',
             'stock' => 'required|integer|gt:0',
             'active' => 'sometimes',
@@ -68,6 +74,10 @@ trait ProductValidationRules {
             'description' => [
                 'required',
                 'string',
+            ],
+            'images' => [
+                'required',
+                'array'
             ],
             'new_variants' => [
                 'array',

@@ -51,9 +51,9 @@ class UploadProduct {
             .post("", data)
             .then(response => {
                 this.unsetButtonLoadState();
+                window.location.href = "/admin/products";
             })
             .catch(error => {
-                // console.log(error);
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();

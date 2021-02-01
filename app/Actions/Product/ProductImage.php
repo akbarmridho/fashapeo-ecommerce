@@ -33,8 +33,8 @@ trait ProductImage
                     'order' => (int) $index,
                 ]);
             } else {
+                $image = Image::findOrFail((int) $image['content']);
 
-                $image = $productImages->findOrFail($image['content']);
                 $image->fill(['order' => $index])->save();
             }
         }
@@ -47,10 +47,14 @@ trait ProductImage
 
         $serialized = Serializer::convert([$image]);
 
-        foreach ($serialized as $img) {
+        foreach ($serialized['images'] as $img) {
             if ($img['is_new']) {
                 $newPath = $filepond->move($img['content'], $imagePath);
-                $product->image->updateOrCreate(['url', $newPath]);
+                if ($product->image) {
+                    $product->image->fill(['url' => $newPath])->save();
+                } else {
+                    $product->image()->create(['url' => $newPath]);
+                }
             }
         }
     }

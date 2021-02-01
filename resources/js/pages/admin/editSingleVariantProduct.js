@@ -43,6 +43,7 @@ class UploadProduct {
             this.quill.getContents()["ops"]
         );
         data.append("description", converter.convert());
+        data.append("_method", "PUT");
 
         this.setButtonLoadState();
 
@@ -50,12 +51,13 @@ class UploadProduct {
             .post("", data)
             .then(response => {
                 this.unsetButtonLoadState();
+                window.location.href = "/admin/products";
             })
             .catch(error => {
-                // console.log(error);
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();
+                return error;
             });
     }
 

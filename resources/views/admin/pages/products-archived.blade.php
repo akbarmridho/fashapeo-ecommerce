@@ -7,7 +7,7 @@ Products
 @section('content')
 
 <div class="row mx-3">
-    <h3 class="fw-bold">Products</h3>
+    <h3 class="fw-bold">Archived Products</h3>
     <x-admin.session-alert />
 
     <ul class="nav nav-tabs mb-3">

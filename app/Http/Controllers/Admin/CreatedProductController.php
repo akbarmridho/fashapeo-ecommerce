@@ -45,6 +45,7 @@ class CreatedProductController extends Controller
         Cache::tags('products')->flush();
 
         session()->flash('status', 'Product created');
+        return response()->json(['message' => 'Product created'], 200);
     }
 
     public function archive(MasterProduct $product)
@@ -63,6 +64,15 @@ class CreatedProductController extends Controller
         $this->deleteAllImage($product);
         $product->forceDelete();
         session()->flash('status', 'Product Deleted');
+
+        return back();
+    }
+
+    public function restore($product)
+    {
+        $master = MasterProduct::withTrashed()->find(($product));
+        $master->restore();
+        session()->flash('status', 'Product restored');
 
         return back();
     }

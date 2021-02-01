@@ -5,8 +5,10 @@
             <input
                 type="text"
                 name="new_variants[?][{{ $variant->name }}]"
-                class="form-control"
+                class="form-control mb-2"
+                placeholder="{{ $variant->name }}"
                 value=""
+                required
             />
             @endforeach
             <button class="btn btn-sm btn-danger text-white shadow-0 px-2">
@@ -17,7 +19,7 @@
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon1">Rp</span>
                 <input
-                    name="variants[?][price]"
+                    name="new_variants[?][price]"
                     type="number"
                     class="form-control"
                     placeholder="Price"
@@ -28,7 +30,7 @@
         <td>
             <input
                 type="number"
-                name="variants[?][stock]"
+                name="new_variants[?][stock]"
                 id="form1"
                 class="form-control"
                 required
@@ -38,7 +40,7 @@
         <td>
             <div class="form-check form-switch">
                 <input
-                    name="variants[?][active]"
+                    name="new_variants[?][active]"
                     class="form-check-input"
                     type="checkbox"
                     value="true"
@@ -48,7 +50,7 @@
         <td>
             <input
                 type="text"
-                name="variants[?][sku]"
+                name="new_variants[?][sku]"
                 id="form1"
                 class="form-control"
                 placeholder="Product SKU"
@@ -57,7 +59,7 @@
         <td>
             <input
                 type="file"
-                name="variants[?][image]"
+                name="new_variants[?][image]"
                 id="variantImage"
                 class="filepond"
             />

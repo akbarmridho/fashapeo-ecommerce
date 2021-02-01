@@ -62,6 +62,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::put('products/edit/{product}', [UpdateProductController::class, 'update']);
 
+    Route::put('products/edit/{product}/restore', [CreatedProductController::class, 'restore'])
+        ->name('products.restore');
+
     Route::delete('products/edit/{product}/archive', [CreatedProductController::class, 'archive'])
         ->name('products.archive');
 

@@ -13,58 +13,63 @@ use App\Models\VariantOption;
 use App\Models\Variant;
 use App\Exceptions\CannotValidateProductId;
 
-class UpdateProduct {
+class UpdateProduct
+{
 
     use ProductImage, ProductValidationRules, UsedVariant;
 
     public function update(MasterProduct $master, $input)
     {
         Validator::make($input, $this->updateProductValidation($master))->validate();
-        
+
         $this->updateMaster($master, $input);
 
-        if(! $usedVariants = $this->retreiveUsedVariant($input['used_variant'])) {
+        if ($usedVariants = $this->retreiveUsedVariant($input['used_variant'])) {
 
-            foreach($input['variants'] as $key => $variant) {
+            foreach ($input['variants'] as $key => $variant) {
                 Validator::make($variant, $this->variantValidation())->validate();
-                $this->updateProduct($variant);
+
+                if (!isset($variant['id']) || !array_key_exists('id', $variant)) {
+                    throw new CannotValidateProductId;
+                }
+
+                $prod = Product::findOrFail($variant['id']);
+                $this->updateProduct($prod, $variant);
             }
 
-            if(array_key_exists('new_variants', $input)) {
+            $ids = Arr::pluck(array_values($input['variants']), 'id');
+            $this->deleteVariants($master->products()->without(['details', 'image', 'discount'])->whereNotIn('id', $ids)->get());
 
-                foreach($input['new_variants'] as $key => $variant) {
+            if (array_key_exists('new_variants', $input)) {
+
+                foreach ($input['new_variants'] as $key => $variant) {
 
                     Validator::make($variant, $this->variantValidation())->validate();
                     $product = $this->createProduct($variant, $master);
 
-                    if(array_key_exists('image', $variant)) {
+                    if (array_key_exists('image', $variant)) {
                         $this->productImage($product, $variant['image']);
-                    }    
-                    
-                    foreach($usedVariants as $usedVariant) {
+                    }
+
+                    foreach ($usedVariants as $usedVariant) {
                         $option = $this->createVariantOption(
                             $variant[$usedVariant['name']]
                         );
 
-                        $productDetail = $this->createproductDetail(
+                        $this->createProductDetail(
                             $product->id,
-                            $usedVariant['id'], 
-                            $option->id);
+                            $usedVariant['id'],
+                            $option->id
+                        );
                     }
-
                 }
-
             }
-
-                $ids = Arr::pluck(array_keys($input['variants']), 'id');
-                $this->deleteVariants($master->products()->whereNotIn('id', $ids)->get());
-
         } else {
             $this->updateProduct($master->products()->first(), $input['variants'][1]);
         }
 
         $this->mainImages($master, $input['images']);
-        
+
         return $master;
     }
 
@@ -84,44 +89,43 @@ class UpdateProduct {
 
     public function updateProduct(Product $product, array $input)
     {
-        if(! array_key_exists('id', $input)) {
-            throw new CannotValidateProductId;
-        }
-
         Validator::make($input, $this->variantValidation())->validate();
 
         $active = array_key_exists('active', $input) ? true : false;
 
-        $product = Product::findOrFail($input['id']);
         $product->fill([
             'stock' => $input['stock'],
-           'price' => $input['price'],
-           'sku' => $input['sku'],
-           'active' => $active,
+            'price' => $input['price'],
+            'sku' => $input['sku'],
+            'active' => $active,
         ])->save();
 
-        if(array_key_exists('image', $input)) {
+        if (array_key_exists('image', $input)) {
             $this->productImage($product, $input['image']);
+        } else if ($product->image) {
+            $this->deleteImage($product->image, config('image.product_img_path'));
         }
     }
 
     public function createProduct(array $input, MasterProduct $master)
     {
-        $active = array_key_exists('active', $input) ? $input['active'] : false;
+        $active = array_key_exists('active', $input) ? true : false;
 
         return Product::create([
-           'master_product_id' => $master->id,
-           'stock' => $input['stock'],
-           'price' => $input['price'],
-           'sku' => $input['sku'],
-           'active' => $active,
-       ]);
+            'master_product_id' => $master->id,
+            'stock' => $input['stock'],
+            'price' => $input['price'],
+            'sku' => $input['sku'],
+            'active' => $active,
+        ]);
     }
 
     public function deleteVariants(Collection $products)
     {
-        foreach($products as $product) {
-            $this->deleteImage($product->image);
+        foreach ($products as $product) {
+            if ($product->image) {
+                $this->deleteImage($product->image);
+            }
         }
 
         Product::destroy($products->pluck('id')->all());
@@ -152,7 +156,7 @@ class UpdateProduct {
     {
         return ProductDetail::create([
             'product_id' => $productId,
-            'variant_id'=> $variantId,
+            'variant_id' => $variantId,
             'variant_option_id' => $variantOptionId,
         ]);
     }

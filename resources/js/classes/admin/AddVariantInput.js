@@ -1,3 +1,5 @@
+const { UploadProductImage } = require("../../config/Filepond");
+
 class AddVariantInput {
     constructor() {
         this.copyTemplate();
@@ -44,7 +46,7 @@ class AddVariantInput {
     initializeImageInput(input) {
         window.FilePond.create(
             input.querySelector(".filepond"),
-            UploadProductImage
+            Object.assign({}, UploadProductImage)
         );
     }
 }

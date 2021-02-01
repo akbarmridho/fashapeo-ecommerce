@@ -20,12 +20,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function all($page = null)
     {
-        return $this->master->paginate(10);
+        return $this->master->orderByDesc('created_at')->paginate(10);
     }
 
     public function archived($page = null)
     {
-        return $this->master->onlyTrashed()->get();
+        return $this->master->onlyTrashed()->paginate(10);
     }
 
     public function search($query)

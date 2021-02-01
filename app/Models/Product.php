@@ -18,12 +18,6 @@ class Product extends Model
         'active',
     ];
 
-    protected $with = [
-        'details',
-        'image',
-        'discount',
-    ];
-
     public function masterProduct()
     {
         return $this->hasOne(MasterProduct::class);
@@ -36,7 +30,7 @@ class Product extends Model
 
     public function image()
     {
-        return $this->morphTo(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function discount()
@@ -51,7 +45,12 @@ class Product extends Model
 
     public function variants()
     {
-        return $this->hasManyThrough(Variant::class, ProductDetail::class);
+        return $this->details()->join('variants', 'product_details.variant_id', '=', 'variants.id');
+    }
+
+    public function withRelationship()
+    {
+        return $this->with(['details', 'images', 'discount']);
     }
 
     public function getProductNameAttribute()
@@ -87,7 +86,7 @@ class Product extends Model
         $variants = [];
 
         foreach ($details as $detail) {
-            $variants[] = \implode(':', [$detail->variant_name, $detail->variant_id]);
+            $variants[] = \implode(':', [$detail->variant_type, $detail->variant_id]);
         }
 
         return \implode(',', $variants);
@@ -118,10 +117,8 @@ class Product extends Model
 
     public function getSoldAttribute()
     {
-        return $this->items()->without(['details', 'image', 'discount'])
-            ->with(['order' => function ($query) {
-                $query->where('is_success', true);
-            }])->count();
+        return $this->items()->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->where('orders.is_success', true)->count();
     }
 
     public function getImageFilepondJsonAttribute()
@@ -132,17 +129,11 @@ class Product extends Model
             return null;
         }
 
-        $pathinfo = \pathinfo($image->url);
-
         $result = [
             [
                 'source' => $image->id,
                 'options' => [
                     'type' => 'local',
-                    'file' => [
-                        'name' => $pathinfo['basename'],
-                        'type' => 'image/' . $pathinfo['extension'],
-                    ],
                 ]
             ]
         ];
