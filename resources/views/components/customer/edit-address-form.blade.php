@@ -1,5 +1,6 @@
-<form action="" method="POST">
+<form action="{{ route('customer.address.update', ['address' => $address->id]) }}" method="POST">
     @csrf
+    @method('put')
     <div class="row mb-4">
         <div class="col">
             <div class="form-outline">
@@ -8,6 +9,7 @@
                     type="text"
                     id="label"
                     required
+                    value="{{ $address->label }}"
                     class="form-control
                     @error('label')
                     is-invalid
@@ -26,7 +28,9 @@
         </div>
         <div class="col">
             <div class="form-outline">
-                <input name="name" type="text" id="name" required class="form-control
+                <input name="name" type="text" id="name" 
+                value="{{ $address->name }}"
+                required class="form-control
                 @error('name')
                 is-invalid
                 @enderror
@@ -44,13 +48,13 @@
     </div>
 
     <div class="mb-4">
-        <select required class="form-select" name="province" id="province" disabled>
+        <select required class="form-select" name="province" id="province" data-selected="{{ $address->province }}" disabled>
             <option value="" disabled selected>Select province</option>
         </select>
     </div>
 
     <div class="mb-4">
-        <select required name="city" class="form-select" id="city" disabled>
+        <select required name="city" class="form-select" id="city" data-selected="{{ $address->city }}" disabled>
             <option value="" disabled selected>Select city</option>
         </select>
     </div>
@@ -62,7 +66,9 @@
         @error('district')
         is-invalid
         @enderror
-        " />
+        "
+        value="{{ $address->district }}"
+        />
         <label class="form-label" for="district">District</label>
         @error('district')
         <span class="invalid-feedback" role="alert">
@@ -76,6 +82,7 @@
             name="delivery_address"
             type="text"
             id="deliveryAddress"
+            value="{{ $address->delivery_address }}"
             class="form-control
             @error('delivery_address')
             is-invalid
@@ -100,6 +107,7 @@
                     class="form-control"
                     minlength="9"
                     maxlength="15"
+                    value="{{ $address->phone }}"
                 />
                 <label class="form-label" for="phonenumber">Phone</label>
                 @error('phone')
@@ -122,6 +130,7 @@
                     "
                     min="10000"
                     max="99999"
+                    value="{{ $address->postal_code }}"
                 />
                 <label class="form-label" for="postalcode">Postal Code</label>
                 @error('postal_code')
@@ -133,6 +142,6 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary mb-4 float-end">
-        Add Address
+        Update
     </button>
 </form>

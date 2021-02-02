@@ -6,14 +6,16 @@ use Illuminate\View\Component;
 
 class addressTable extends Component
 {
+    public $addresses;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($addresses)
     {
-        //
+        $this->addresses = $addresses;
     }
 
     /**

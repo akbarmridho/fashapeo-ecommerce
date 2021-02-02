@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-Add address
+Edit address
 @endsection
 
 @section('additional-script')
@@ -16,9 +16,9 @@ Add address
             @include('customer.includes.my-account-nav');
             </div>
             <div class="col-12 col-md-8 p-4 shadow-1">
-                <p class="h5">Add Address</p>
+                <p class="h5">Edit Address</p>
                 <div class="mt-4">
-                    <x-customer.address-form />
+                    <x-customer.edit-address-form :address="$address"/>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@
     "/js/pages/admin/editSingleVariantProduct.js": "/js/pages/admin/editSingleVariantProduct.js",
     "/js/pages/admin/variations.js": "/js/pages/admin/variations.js",
     "/js/pages/auth/register.js": "/js/pages/auth/register.js",
+    "/js/pages/customer/createAddress.js": "/js/pages/customer/createAddress.js",
     "/js/pages/main.js": "/js/pages/main.js",
     "/js/pages/product.js": "/js/pages/product.js"
 }

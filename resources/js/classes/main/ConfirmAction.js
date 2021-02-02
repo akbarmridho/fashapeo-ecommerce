@@ -2,39 +2,58 @@ class ConfirmAction {
     constructor() {
         this.links = document.querySelectorAll(".need-confirm");
         this.modalElement = document.getElementById("confirmModal");
+        this.initialize();
+    }
+
+    initialize() {
+        if (this.links.length == 0 || !this.modalElement) {
+            return;
+        }
         this.confirmModal = new window.mdb.Modal(this.modalElement);
+        this.initializeConfirmButton();
+        this.initializeListener();
     }
 
     initializeConfirmButton() {
-        this.modalElement
+        document
             .getElementById("confirmAction")
             .addEventListener("click", () => {
                 this.modalElement.dispatchEvent(
-                    new CustomEvent("confirmAction", { confirm: true })
+                    new CustomEvent("confirmAction", {
+                        detail: { confirm: true }
+                    })
                 );
             });
-        this.modalElement
+        document
             .getElementById("cancelAction")
             .addEventListener("click", () => {
                 this.modalElement.dispatchEvent(
-                    new CustomEvent("confirmAction", { confirm: false })
+                    new CustomEvent("confirmAction", {
+                        detail: { confirm: false }
+                    })
                 );
             });
     }
 
     initializeListener() {
         this.links.forEach(link => {
-            link.addEventListener("click", this.performConfirm.bind(this));
+            link.addEventListener(
+                "click",
+                this.performConfirm.bind(this, link)
+            );
         });
     }
 
-    performConfirm(event) {
+    async performConfirm(link, event) {
         this.confirmModal.show();
-        const confirm = new Promise(resolve => {
+        // let newEvent = new event.constructor(event.type, event);
+        event.preventDefault();
+        event.stopPropagation();
+        const confirm = await new Promise(resolve => {
             this.modalElement.addEventListener(
                 "confirmAction",
-                event => {
-                    if (event.confirm) {
+                ev => {
+                    if (ev.detail.confirm) {
                         resolve(true);
                     } else {
                         resolve(false);
@@ -52,14 +71,15 @@ class ConfirmAction {
                 { once: true }
             );
         });
-
-        confirm.then(value => {
-            if (value === false) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        });
+        if ((await confirm) === true) {
+            // link.removeEventListener(
+            //     "click",
+            //     this.performConfirm.bind(this, link)
+            // );
+            event.target.closest("form").submit();
+            // event.target.dispatchEvent(newEvent);
+        }
     }
 }
 
-module.exports = ConfirmAction;
+export { ConfirmAction };

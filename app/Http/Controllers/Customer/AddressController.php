@@ -3,29 +3,25 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Repository\DeliveryRepositoryInterface as Administration;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Actions\Address\UpdateAddress;
 
 class AddressController extends Controller
 {
-    public $administration;
-
-    public function __construct(Administration $administration)
-    {
-        $this->administration = $administration;
-    }
 
     public function index()
     {
-        return view('customer.pages.my-account.addresses');
+        $customer = Auth::guard('customer')->user();
+        $addresses = $customer->addresses;
+        return view('customer.pages.my-account.addresses', compact('addresses'));
     }
 
     public function edit(Address $address)
     {
-        //
+        return view('customer.pages.my-account.edit-address', compact('address'));
     }
 
     public function create()
@@ -36,21 +32,23 @@ class AddressController extends Controller
     public function store(Request $request, UpdateAddress $creator)
     {
         $customer = Auth::guard('customer')->user();
+        $addressCount = $customer->addresses()->count();
 
-        if ($customer->addresses->isEmpty()) {
+        if ($addressCount == 0) {
             $main = true;
+        } else if ($addressCount >= 5) {
+            session()->flash('error', 'Customer are not allowed to have more than 5 address');
+            return redirect()->route('customer.address');
         } else {
             $main = false;
         }
 
-        $data = $request->all();
-        $data = array_merge($data, $this->administration->address($request->city ?: $request->vendor_id));
-
-        $address = $creator->create($data, $main);
-
+        $address = $creator->create($request->all(), $main);
         $customer->addresses()->save($address);
 
         session()->flash('status', 'Address created');
+
+        return redirect()->route('customer.address');
     }
 
     public function delete(Address $address)
@@ -68,7 +66,7 @@ class AddressController extends Controller
 
         session()->flash('status', 'Address updated');
 
-        return back();
+        return redirect()->route('customer.address');
     }
 
     public function setMain(Address $address)
@@ -85,6 +83,6 @@ class AddressController extends Controller
 
         session()->flash('status', 'Main address updated');
 
-        return back();
+        return redirect()->route('customer.address');
     }
 }

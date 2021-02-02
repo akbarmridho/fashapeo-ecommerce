@@ -2,35 +2,60 @@ class LocationSelection {
     constructor() {
         this.provinceInput = document.getElementById("province");
         this.cityInput = document.getElementById("city");
+        this.vendorInput = document.getElementById("vendor");
         this.initializeProvince();
+        this.counter = 0;
+    }
+
+    initializeCityListener() {
         this.provinceInput.addEventListener(
             "change",
-            this.initializeCity.bind(this)
+            this.initializeCityHandler.bind(this)
         );
+        this.cityInput.addEventListener(
+            "change",
+            this.modifyVendorId.bind(this)
+        );
+    }
+
+    initializeCityHandler() {
+        this.initializeCity(this.provinceInput.selectedOptions.dataset.id);
     }
 
     async initializeProvince() {
         let provinceData = await this.fetchProvinceData();
 
-        if (provinceData === false) {
+        if ((provinceData === false) & (this.counter < 4)) {
             this.initializeProvince();
+            this.counter++;
             return;
         }
 
         this.addProvinceData(provinceData);
+        this.provinceInput.dispatchEvent(new Event("ProvinceLoaded"));
+        this.counter = 0;
+        this.initializeCityListener();
     }
 
-    async initializeCity() {
+    async initializeCity(provinceId) {
         this.disableCityInput();
 
-        let cityData = await this.fetchCityData();
+        let cityData = await this.fetchCityData(provinceId);
 
-        if (cityData === false) {
-            this.initializeCity();
+        if ((cityData === false) & (this.counter < 4)) {
+            await this.initializeCity();
+            this.counter++;
             return;
         }
 
-        this.addCityData(this.sortedCityData(cityData));
+        this.addCityData(cityData);
+        this.cityInput.dispatchEvent(new Event("CityLoaded"));
+        this.counter = 0;
+    }
+
+    modifyVendorId() {
+        let selectedOption = this.cityInput.selectedOptions[0];
+        this.vendorInput.value = selectedOption.dataset.id;
     }
 
     enableProvinceInput() {
@@ -46,30 +71,32 @@ class LocationSelection {
     }
 
     async fetchProvinceData() {
-        this.provinceData;
         try {
             const { data: response } = await window.axios.get("/api/provinces");
-            return response;
+            return response.results;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
 
-    async fetchCityData() {
+    async fetchCityData(provinceId) {
         try {
-            let provinceId = await this.provinceInput.value;
             const { data: response } = await window.axios.get(
-                `/api/cities/${provinceId}`
+                `/api/cities/?id=${provinceId}`
             );
-            return response;
+            return response.results;
         } catch (error) {
-            console.log(error);
             return false;
         }
     }
 
     addProvinceData(provinceData) {
+        if (this.provinceInput.dataset.selected) {
+            this.provinceInput.selectedOptions.forEach(element => {
+                element.selected = false;
+            });
+        }
+
         provinceData.forEach(province => {
             let option = this.createProvinceOptionElement(province);
             this.provinceInput.append(option);
@@ -91,42 +118,35 @@ class LocationSelection {
 
     createProvinceOptionElement(data) {
         let option = document.createElement("option");
-        option.value = data.province_id;
-        option.textContent = data.province;
+        option.value = data.name;
+        option.textContent = data.name;
+        option.dataset.id = data.id;
+        if (this.provinceInput.dataset.selected) {
+            if (option.value === this.provinceInput.dataset.selected) {
+                option.selected = true;
+                this.initializeCity(data.id);
+            }
+        }
         return option;
     }
 
     createCityOptionElement(data) {
         let option = document.createElement("option");
-        option.value = data.city_id;
-        option.textContent = data.type + " " + data.city_name;
+        option.value = data.name;
+        option.textContent = data.name;
+        option.dataset.id = data.id;
+        if (this.cityInput.dataset.selected) {
+            if (option.value === this.cityInput.dataset.selected) {
+                option.selected = true;
+                this.vendorInput.value = data.id;
+            }
+        }
         return option;
     }
 
     removeCityData() {
-        this.cityInput.innerHTML = `<option value="" disabled selected>Select city</option>`;
-    }
-
-    sortedCityData(cityData) {
-        cityData = cityData.sort(function(a, b) {
-            if (a.type < b.type) {
-                return 1;
-            }
-            return -1;
-        });
-
-        cityData = cityData.sort(function(a, b) {
-            if (a.type === b.type) {
-                if (a.city_name < b.city_name) {
-                    return -1;
-                }
-                return 1;
-            }
-            return 0;
-        });
-
-        return cityData;
+        this.cityInput.innerHTML = `<option value="" selected disabled>Select city</option>`;
     }
 }
 
-module.exports = LocationSelection;
+export { LocationSelection };

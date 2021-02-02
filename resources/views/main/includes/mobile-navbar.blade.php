@@ -68,7 +68,7 @@
           <form action="{{ route('logout') }}" method="POST">
             @csrf
               <button type="submit" class="nav-link border-0" style="background-color: white;">Logout</button>
-          <form>
+          </form>
           </li>
           @else
             <a href="{{ route('login') }}">Login</a>

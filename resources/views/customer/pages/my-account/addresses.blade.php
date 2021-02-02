@@ -16,8 +16,12 @@ My Account
                     <p class="h5">Addresses</p>
                     <a href="{{ route('customer.address.create') }}" class="btn btn-primary btn-floating"><i class="fas fa-plus"></i></a>
                 </div>
-                <x-customer.address-table />
+                <div class="my-2">
+                    <x-admin.session-alert />
+                </div>
+                <x-customer.address-table :addresses="$addresses" />
             </div>
+            @include('main.modals.confirm-action-modal')
         </div>
     </div>
 </main>

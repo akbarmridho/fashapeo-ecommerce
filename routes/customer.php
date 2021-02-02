@@ -55,15 +55,15 @@ Route::name('customer.')->group(function () {
         Route::post('address/create', [AddressController::class, 'store']);
 
         Route::middleware('can:update,address')->group(function () {
-            Route::get('address/{address}', [AddressController::class, 'edit'])
+            Route::get('address/edit/{address}', [AddressController::class, 'edit'])
                 ->name('address.show');
 
-            Route::put('address/{address}', [AddressController::class, 'update'])
+            Route::put('address/edit/{address}', [AddressController::class, 'update'])
                 ->name('address.update');
 
-            Route::delete('address/{address}', [AddressController::class, 'delete']);
+            Route::delete('address/edit/{address}', [AddressController::class, 'delete']);
 
-            Route::post('address/{address}/main', [AddressController::class, 'setMain'])
+            Route::post('address/edit/{address}/main', [AddressController::class, 'setMain'])
                 ->name('address.main');
         });
 

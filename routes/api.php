@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Vendor\FilepondController;
-use App\Http\Controllers\Vendor\AdministrationController;
+use App\Http\Controllers\FilepondController;
+use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\Orders\CreatedTransactionController;
 use App\Http\Controllers\ImageController;
 
@@ -28,6 +28,6 @@ Route::delete('/image/delete', [FilepondController::class, 'delete'])->name('ima
 Route::get('/image', [FilepondController::class, 'load'])->name('image.load');
 
 Route::get('/provinces', [AdministrationController::class, 'provinces']);
-Route::get('/cities/{id}', [AdministrationController::class, 'cities']);
+Route::get('/cities', [AdministrationController::class, 'cities']);
 
 Route::post('/payment/notification', [CreatedTransactionController::class, 'notification']);

@@ -4,50 +4,53 @@ namespace App\Repository\Vendor;
 
 use Illuminate\Support\Facades\Http;
 use App\Repository\DeliveryRepositoryInterface;
+use App\Transformers\RajaongkirTransformer as Transformer;
+use Illuminate\Support\Collection;
 
 class RajaongkirRepository implements DeliveryRepositoryInterface
 {
     private $apiKey;
     private $http;
 
-    function __construct() {
+    function __construct()
+    {
         $this->apiKey = env('RAJAONGKIR_API_KEY');
         $this->http = Http::retry(3, 500)->withHeaders([
             'key' => $this->apiKey,
         ]);
     }
 
-    public function provinces(bool $array = false)
+    public function provinces(): Collection
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/province';
 
         $response = $this->http->get($apiUrl);
 
-        if($array) {
-            return $this->arrayResponse($response);
+        if ($result = $this->arrayResponse($response)) {
+            return Transformer::transformProvinces($result);
         }
 
-        return $response;
+        return collect([]);
     }
 
-    public function cities($provinceId = null, bool $array = false)
+    public function cities($provinceId = null): Collection
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/city';
 
-        if($provinceId) {
+        if ($provinceId) {
             $response = $this->http->get($apiUrl, ['province' => $provinceId]);
         } else {
             $response = $this->http->get($apiUrl);
         }
 
-        if($array) {
-            return $this->arrayResponse($response);
+        if ($result = $this->arrayResponse($response)) {
+            return Transformer::transformCities($result);
         }
 
-        return $response;
+        return collect([]);
     }
 
-    public function cost(int $destination, int $origin, int $weight, string $courier, bool $array = false)
+    public function cost(int $destination, int $origin, int $weight, string $courier): Collection
     {
         $apiUrl = 'https://api.rajaongkir.com/starter/cost';
 
@@ -58,11 +61,11 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
             'courier' => $courier,
         ]);
 
-        if($array) {
-            return $this->arrayResponse($response);
+        if ($result = $this->arrayResponse($response)) {
+            return Transformer::transformCost($result);
         }
 
-        return $response;
+        return collect([]);
     }
 
     public function address(int $cityId): array
@@ -71,10 +74,10 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
 
         $data = $this->http->get($apiUrl, ['id' => $cityId]);
 
-        if (! $data->successful()) {
+        if (!$data->successful()) {
             return false;
         }
-        
+
         return [
             'city' => $data['type'] . ' ' . $data['city_name'],
             'province' => $data['province'],
@@ -84,8 +87,7 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
 
     private function arrayResponse($response)
     {
-        if($response->successful())
-        {
+        if ($response->successful()) {
             return $response['rajaongkir']['results'];
         }
 

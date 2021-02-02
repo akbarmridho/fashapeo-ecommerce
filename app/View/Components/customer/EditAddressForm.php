@@ -4,16 +4,18 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class paginator extends Component
+class EditAddressForm extends Component
 {
+    public $address;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($address)
     {
-        //
+        $this->address = $address;
     }
 
     /**
@@ -23,6 +25,6 @@ class paginator extends Component
      */
     public function render()
     {
-        return view('components.customer.paginator');
+        return view('components.customer.edit-address-form');
     }
 }

@@ -26,7 +26,7 @@
   @endif
   ">Orders</a>
   <a href="{{ route('customer.address') }}" class="list-group-item list-group-item-action
-  @if(request()->routeIs('customer.address.*'))
+  @if(request()->routeIs('customer.address.*') || request()->routeIs('customer.address') )
   active
   @endif
   ">Address</a>
