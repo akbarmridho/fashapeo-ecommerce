@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\AddressController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CustomerController;
@@ -12,9 +11,9 @@ use App\Http\Controllers\Orders\CreatedShipmentController;
 use App\Http\Controllers\Orders\CreatedTransactionController;
 use App\Http\Controllers\Orders\OrderRedirectController;
 use App\Http\Controllers\Orders\ShipmentOptionController;
+use Illuminate\Support\Facades\Route;
 
 Route::name('customer.')->group(function () {
-
     Route::get('/my-account', [CustomerController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/cart', [CartController::class, 'show'])
@@ -39,7 +38,6 @@ Route::name('customer.')->group(function () {
         ->name('wishlists.delete');
 
     Route::prefix('my-account')->group(function () {
-
         Route::get('notifications', [CustomerController::class, 'notification'])
             ->name('notification');
 

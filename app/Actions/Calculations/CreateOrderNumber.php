@@ -2,8 +2,8 @@
 
 namespace App\Actions\Calculations;
 
-use Illuminate\Support\Carbon;
 use App\Models\Order;
+use Illuminate\Support\Carbon;
 
 /*  Create order number with YYmmxxxx format
  *      YY   -> year number in 2 digit
@@ -13,28 +13,32 @@ use App\Models\Order;
  *                      Order number three
  *                      at February 2021
  */
-trait CreateOrderNumber {
-
-    public function generate() {
-        return (string) $this->getDate() . \sprintf('%04d', strval($this->getnumber()));
+trait CreateOrderNumber
+{
+    public function generate()
+    {
+        return (string) $this->getDate().\sprintf('%04d', strval($this->getnumber()));
     }
 
-    public function getDate() {
+    public function getDate()
+    {
         return (string) Carbon::now()->format('Ym');
     }
 
-    public function getMonth() {
+    public function getMonth()
+    {
         return (string) Carbon::today()->format('m');
     }
 
-    public function getNumber() {
+    public function getNumber()
+    {
         // First Model
-        if(! $latest = Order::latest()->first()) {
+        if (! $latest = Order::latest()->first()) {
             return 1;
         }
 
         // Check month number. Reset to one if different
-        if (substr($latest->order_number, 5, 2) === $this->getMonth()){
+        if (substr($latest->order_number, 5, 2) === $this->getMonth()) {
             return 1;
         }
 

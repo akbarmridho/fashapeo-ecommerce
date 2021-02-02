@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Address;
+use Illuminate\Contracts\Validation\Rule;
 
 class ValidateAddress implements Rule
 {

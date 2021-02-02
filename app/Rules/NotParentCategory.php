@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Category;
+use Illuminate\Contracts\Validation\Rule;
 
 class NotParentCategory implements Rule
 {

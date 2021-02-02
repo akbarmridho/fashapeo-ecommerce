@@ -26,7 +26,7 @@ class Address extends Model
 
     // protected $touches = ['addressable'];
 
-    public function addressable ()
+    public function addressable()
     {
         return $this->morphTo();
     }

@@ -4,22 +4,22 @@ namespace App\Actions\Category;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class CreateNewCategory {
-
-    public function create(array $input) {
-
+class CreateNewCategory
+{
+    public function create(array $input)
+    {
         Validator::make($input, [
-             'name' => [
-                'required', 
-                'string', 
+            'name' => [
+                'required',
+                'string',
                 'max:255',
                 Rule::unique(Category::class),
             ],
-             'description' => ['string', 'max:255', 'nullable'],
-             'parent' => 'integer|nullable',
+            'description' => ['string', 'max:255', 'nullable'],
+            'parent' => 'integer|nullable',
         ])->validate();
 
         $category = Category::create([
@@ -31,5 +31,4 @@ class CreateNewCategory {
 
         return $category;
     }
-
 }

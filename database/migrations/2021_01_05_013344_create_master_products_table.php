@@ -25,7 +25,7 @@ class CreateMasterProductsTable extends Migration
             $table->unsignedTinyInteger('height')->nullable();
             $table->unsignedTinyInteger('length')->nullable();
             $table->timestamps();
-            $table->softDeletes(); 
+            $table->softDeletes();
         });
     }
 

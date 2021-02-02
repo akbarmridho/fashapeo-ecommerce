@@ -3,11 +3,11 @@
 namespace App\Actions\Auth;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -42,7 +42,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'name' => Str::title($input['name']),
                 'email' => $input['email'],
                 'sex' => $input['sex'],
-                'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d')
+                'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d'),
             ])->save();
         }
     }

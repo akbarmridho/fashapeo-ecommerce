@@ -4,22 +4,22 @@ namespace App\Actions\Category;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class UpdateCategory {
-
-    public function update(array $input, Category $category) {
-
+class UpdateCategory
+{
+    public function update(array $input, Category $category)
+    {
         Validator::make($input, [
-             'name' => [
-                'required', 
-                'string', 
+            'name' => [
+                'required',
+                'string',
                 'max:255',
                 Rule::unique(Category::class)->ignore($category->id),
             ],
-             'description' => ['string', 'max:255', 'nullable'],
-             'parent' => 'integer|nullable',
+            'description' => ['string', 'max:255', 'nullable'],
+            'parent' => 'integer|nullable',
         ])->validate();
 
         $category->forceFill([
@@ -30,23 +30,16 @@ class UpdateCategory {
 
         $hasChild = $category->children->isNotEmpty();
 
-        if($input['parent'] !== null && ! $hasChild)
-        {
+        if ($input['parent'] !== null && ! $hasChild) {
             $category->parent_id = $input['parent'];
             $category->save();
-        } 
-        else if ($input['parent'] !== null && $hasChild)
-        {
+        } elseif ($input['parent'] !== null && $hasChild) {
             return false;
-        }
-        else 
-        {
+        } else {
             $category->parent_id = null;
             $category->save();
         }
 
-    
         return $category;
     }
-    
 }

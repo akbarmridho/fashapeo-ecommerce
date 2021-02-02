@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Repository\StatusRepositoryInterface as Status;
 use App\Exceptions\CannotValidateOrder;
 use App\Exceptions\CannotValidateStatus;
+use App\Models\Order;
+use App\Repository\StatusRepositoryInterface as Status;
+use Closure;
+use Illuminate\Http\Request;
 
 class CreatedOrderStatusCheck
 {
@@ -17,6 +17,7 @@ class CreatedOrderStatusCheck
     {
         $this->status = $status;
     }
+
     /**
      * Handle an incoming request.
      *
@@ -28,12 +29,11 @@ class CreatedOrderStatusCheck
     {
         // $order = Order::where('order_number', $request->route('order'))->firstOrFail();
         $order = Order::findOrFail($request->route('order'));
-        if(! $orderStatus = $order->recent_status) {
+        if (! $orderStatus = $order->recent_status) {
             throw new CannotValidateStatus();
         }
 
-        switch($current)
-        {
+        switch ($current) {
             case 'shipment':
                 $expectedStatus = $this->status->orderCreated();
                 break;
@@ -53,12 +53,11 @@ class CreatedOrderStatusCheck
                 throw new CannotValidateOrder();
         }
 
-        if($orderStatus->id === $expectedStatus->id) {
+        if ($orderStatus->id === $expectedStatus->id) {
             return $next($request);
         }
 
-        switch($orderStatus->id)
-        {
+        switch ($orderStatus->id) {
             case $this->status->orderCreated()->id:
                 $redirect = route('order.shipment', ['order', $order]);
                 break;

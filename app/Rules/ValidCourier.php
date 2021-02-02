@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Models\Courier;
+use Illuminate\Contracts\Validation\Rule;
 
 class ValidCourier implements Rule
 {
@@ -26,7 +26,7 @@ class ValidCourier implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(! Courier::where('code', $value)->first()) {
+        if (! Courier::where('code', $value)->first()) {
             return false;
         }
 

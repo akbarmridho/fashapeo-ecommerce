@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class CreateCategory extends Component
 {
-
     public $categories;
 
     /**

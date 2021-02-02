@@ -14,7 +14,7 @@ class CreateShipmentsTable extends Migration
     public function up()
     {
         Schema::create('shipments', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->foreignId('courier_id')->constrained()->nullOnDelete();
             $table->unsignedSmallInteger('destination_id');
             $table->unsignedSmallInteger('origin_id');

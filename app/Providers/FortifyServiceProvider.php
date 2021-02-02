@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Actions\Auth\Authenticate;
 use App\Actions\Auth\CreateNewUser;
 use App\Actions\Auth\ResetUserPassword;
 use App\Actions\Auth\UpdateUserPassword;
 use App\Actions\Auth\UpdateUserProfileInformation;
-use App\Actions\Auth\Authenticate;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -22,7 +22,7 @@ class FortifyServiceProvider extends ServiceProvider
     {
         if ($this->isAdmin()) {
             config(['fortify.guard' => 'admin']);
-        };
+        }
     }
 
     /**
@@ -40,31 +40,33 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::loginView(function () {
-            if($this->isAdmin()) {
+            if ($this->isAdmin()) {
                 return view('auth.admin-login');
             }
+
             return view('auth.customer-login');
         });
 
         Fortify::registerView(fn () => view('auth.register'));
-        
+
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.forgot-password');
-        }); 
+        });
 
         Fortify::resetPasswordView(function ($request) {
             return view('auth.reset-password', ['request' => $request]);
         });
-        
+
         Fortify::verifyEmailView(fn () => view('auth.verify-email'));
 
         Fortify::authenticateUsing(new Authenticate);
     }
 
-    private function isAdmin() {
+    private function isAdmin()
+    {
         $uris = explode('/', $this->app->request->getRequestUri());
 
-        if($uris[1] === 'admin')  {
+        if ($uris[1] === 'admin') {
             return true;
         }
 

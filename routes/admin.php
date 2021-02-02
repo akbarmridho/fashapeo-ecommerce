@@ -1,17 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CreatedProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDiscountController;
 use App\Http\Controllers\Admin\UpdateProductController;
-use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\VariantController;
+use App\Http\Controllers\Admin\WarehouseController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
-
     Route::get('/', function () {
         return view('admin.pages.welcome');
     })->name('dashboard');

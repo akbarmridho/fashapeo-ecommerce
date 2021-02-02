@@ -6,7 +6,6 @@ use App\Models\Category;
 
 interface ProductRepositoryInterface
 {
-
     public function all($page);
 
     public function archived($page);

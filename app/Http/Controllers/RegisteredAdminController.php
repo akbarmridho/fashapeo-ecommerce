@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Auth\CreateNewAdmin;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use App\Actions\Auth\CreateNewAdmin;
 use Laravel\Fortify\Contracts\RegisterViewResponse;
 
 class RegisteredAdminController extends Controller

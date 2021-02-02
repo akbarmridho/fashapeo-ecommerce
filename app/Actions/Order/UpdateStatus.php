@@ -2,12 +2,12 @@
 
 namespace App\Actions\Order;
 
-use App\Models\OrderActivity;
 use App\Models\Order;
+use App\Models\OrderActivity;
 use App\Models\Status;
 
-class UpdateStatus {
-    
+class UpdateStatus
+{
     public function update(Order $order, Status $status)
     {
         $this->createActivity($order, $status);

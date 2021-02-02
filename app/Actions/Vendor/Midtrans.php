@@ -2,11 +2,11 @@
 
 namespace App\Actions\Vendor;
 
-use App\Transformers\CreateInvoiceDetail as Invoice;
 use App\Models\Order;
-use Midtrans\Snap;
+use App\Transformers\CreateInvoiceDetail as Invoice;
 use Midtrans\Config as MidtransConfig;
 use Midtrans\Notification;
+use Midtrans\Snap;
 use Midtrans\Transaction;
 
 class Midtrans
@@ -21,7 +21,7 @@ class Midtrans
         MidtransConfig::$isSanitized = true;
         MidtransConfig::$is3ds = true;
     }
-    
+
     public function token(Order $order)
     {
         return Snap::getSnapToken(Invoice::create($order));

@@ -10,6 +10,6 @@ class Courier extends Model
 
     protected $fillable = [
         'name',
-        'code'
+        'code',
     ];
 }

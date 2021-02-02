@@ -104,13 +104,13 @@ class Product extends Model
 
     public function getActiveDiscountAttribute()
     {
-        if (!$this->discount && !$this->discount->valid_until) {
+        if (! $this->discount && ! $this->discount->valid_until) {
             if ($this->discount->valid_until->gt(Carbon::now())) {
                 return $this->discount->discount_value;
             }
-        } else if (!$this->discount) {
+        } elseif (! $this->discount) {
             return $this->discount->discount_value;
-        };
+        }
 
         return null;
     }
@@ -125,7 +125,7 @@ class Product extends Model
     {
         $image = $this->image;
 
-        if (!$image) {
+        if (! $image) {
             return null;
         }
 
@@ -134,8 +134,8 @@ class Product extends Model
                 'source' => $image->id,
                 'options' => [
                     'type' => 'local',
-                ]
-            ]
+                ],
+            ],
         ];
 
         return \json_encode($result);

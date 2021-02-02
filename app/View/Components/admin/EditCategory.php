@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class EditCategory extends Component
 {
-
     public $categories;
     public $editCategory;
 

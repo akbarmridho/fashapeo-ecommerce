@@ -11,18 +11,20 @@ class Wishlist extends Model
 
     protected $fillable = [
         'user_id',
-        'master_product_id'
+        'master_product_id',
     ];
 
     protected $with = ['product'];
 
     public $timestamps = false;
 
-    public function customer() {
+    public function customer()
+    {
         return $this->hasOne(Customer::class);
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->hasOne(MasterProduct::class);
     }
 }

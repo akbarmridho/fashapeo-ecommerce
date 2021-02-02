@@ -3,8 +3,8 @@
 namespace App\Actions\Product;
 
 use App\Models\Product;
-use Illuminate\Support\Facades\Validator;
 use App\Transformers\DateConverter;
+use Illuminate\Support\Facades\Validator;
 
 class UpdateDiscount
 {
@@ -21,7 +21,7 @@ class UpdateDiscount
     private function validationRules(array $input)
     {
         return [
-            'discount_value' => 'required|lte:' . (int) $input['price'],
+            'discount_value' => 'required|lte:'.(int) $input['price'],
             'valid_until' => 'nullable|date|after:now',
         ];
     }

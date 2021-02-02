@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Courier;
+use Illuminate\Database\Seeder;
 
 class CourierSeeder extends Seeder
 {
@@ -16,11 +16,11 @@ class CourierSeeder extends Seeder
     {
         $data = [
             ['name' => 'Jalur Nugraha Ekakurir (JNE)',
-            'code' => 'jne',],
+                'code' => 'jne', ],
             ['name' => 'POS Indonesia',
-            'code' => 'pos'],
+                'code' => 'pos', ],
             ['name' => 'TIKI',
-            'code' => 'tiki'],
+                'code' => 'tiki', ],
         ];
 
         Courier::insert($data);

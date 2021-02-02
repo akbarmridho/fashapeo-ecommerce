@@ -6,7 +6,6 @@ use Illuminate\View\Component;
 
 class productCardGroup extends Component
 {
-
     public $productsCardGroupTitle;
 
     /**

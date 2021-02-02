@@ -19,6 +19,7 @@ class DateConverter
     public static function getDiffForHuman(Carbon $timestamp)
     {
         $timestamp->setTimezone(config('app.site-timezone', 'UTC'));
+
         return $timestamp->diffForHumans();
     }
 
@@ -29,7 +30,7 @@ class DateConverter
 
     public static function parseToUTC(string $date)
     {
-        if (!$date) {
+        if (! $date) {
             return null;
         }
 

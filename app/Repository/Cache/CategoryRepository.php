@@ -2,16 +2,16 @@
 
 namespace App\Repository\Cache;
 
+use App\Models\Category;
 use App\Repository\CategoryRepositoryInterface;
 use App\Repository\Eloquent\CategoryRepository as EloquentCategoryRepository;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
-use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
     public $parent;
-    private $time = 60*60*24*30;
+    private $time = 60 * 60 * 24 * 30;
 
     public function __construct(EloquentCategoryRepository $parent)
     {

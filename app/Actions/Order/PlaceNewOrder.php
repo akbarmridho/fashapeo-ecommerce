@@ -2,24 +2,24 @@
 
 namespace App\Actions\Order;
 
-use App\Models\Order;
-use App\Models\OrderItem;
+use App\Actions\Address\ActiveOriginAddress;
+use App\Actions\Calculations\CreateOrderNumber;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Shipment;
-use App\Models\Address;
-use App\Actions\Calculations\CreateOrderNumber;
-use App\Actions\Address\ActiveOriginAddress;
 
-class PlaceNewOrder {
-
+class PlaceNewOrder
+{
     use CreateorderNumber, ActiveOriginAddress;
 
     public function place(Customer $customer)
     {
         $order = $this->createOrder($customer, $this->generate());
 
-        foreach($order->carts as $cart) {
+        foreach ($order->carts as $cart) {
             $this->createOrderItem($order, $cart);
         }
 
@@ -27,6 +27,7 @@ class PlaceNewOrder {
         $order->shipment()->associate($shipment);
         $order->save();
         $order->refresh();
+
         return $order;
     }
 
@@ -40,7 +41,6 @@ class PlaceNewOrder {
 
     public function createOrderItem(Order $order, Cart $cart)
     {
-
         $product = $cart->product;
         $product->stock = $product->stock - $cart->quantity;
         $product->save();

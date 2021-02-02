@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Main\MainPageController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +29,6 @@ Route::get('/product/{product:slug}/', ['']);
 // Route::get('/product', function () {
 //     return view('customer.pages.product');
 // });
-
-
 
 // Route::get('/contact', function () {
 //     return view('customer.pages.contact');

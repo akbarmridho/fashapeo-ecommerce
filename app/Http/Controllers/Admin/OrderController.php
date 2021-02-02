@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Repository\StatusRepositoryInterface;
 use App\Actions\Order\UpdateStatus;
 use App\Events\OrderShipped;
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Repository\StatusRepositoryInterface;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ValidateAddress;
+use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateShipmentRequest extends FormRequest
 {

@@ -2,18 +2,18 @@
 
 namespace App\Actions\Order;
 
-use App\Models\Order;
-use App\Models\Shipment;
-use App\Models\Address;
-use App\Models\OrderItem;
-use App\Models\Courier;
-use App\Models\Transaction;
 use App\Actions\Calculations\TransactionTotal;
+use App\Models\Address;
+use App\Models\Courier;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Shipment;
+use App\Models\Transaction;
 use App\Transformers\MidtransPaymentMethod as PaymentMethod;
 use Illuminate\Support\Carbon;
 
-class UpdateOrder {
-
+class UpdateOrder
+{
     use TransactionTotal;
 
     public function createTransaction(Order $order)
@@ -40,13 +40,13 @@ class UpdateOrder {
     {
         $shipment->fill(
             [
-            'destination_id' => $address->vendor_id,
-            'destination_province' => $address->province,
-            'destination_city' => $address->city,
-            'destination_district' => $address->district,
-            'destination_delivery' => $address->delivery_address,
-            'postal_code' => $address->postal_code,
-            'phone' => $address->phone,
+                'destination_id' => $address->vendor_id,
+                'destination_province' => $address->province,
+                'destination_city' => $address->city,
+                'destination_district' => $address->district,
+                'destination_delivery' => $address->delivery_address,
+                'postal_code' => $address->postal_code,
+                'phone' => $address->phone,
             ]
         )->save();
     }
@@ -75,8 +75,7 @@ class UpdateOrder {
     public function revertStock(Order $order)
     {
         $items = $order->items;
-        foreach($items as $item)
-        {
+        foreach ($items as $item) {
             $product = $item->product;
             $product->stock = $product->stock + $item->quantity;
             $product->save();
@@ -88,12 +87,12 @@ class UpdateOrder {
         $data = $cost[0]['costs'];
         $key = array_search($courier['service'], $data);
         $courier = Courier::where('code', $courier['code'])->first();
-        
-        return array(
+
+        return [
             'courier_id' => $courier->id,
             'service' => $courier['service'],
             'etd' => $data[$key]['cost']['etd'],
             'price' => $data[$key]['cost']['value'],
-        );
+        ];
     }
 }

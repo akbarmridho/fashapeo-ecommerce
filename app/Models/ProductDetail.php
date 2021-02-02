@@ -34,7 +34,7 @@ class ProductDetail extends Model
 
     public function getVariantNameAttribute()
     {
-        return $this->variant->name . ' ' . $this->variantOption->name;
+        return $this->variant->name.' '.$this->variantOption->name;
     }
 
     public function getVariantTypeAttribute()

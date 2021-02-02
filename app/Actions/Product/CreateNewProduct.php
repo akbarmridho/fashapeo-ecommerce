@@ -2,20 +2,20 @@
 
 namespace App\Actions\Product;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use App\Models\MasterProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\VariantOption;
 use App\Models\Variant;
+use App\Models\VariantOption;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class CreateNewProduct
 {
     use ProductValidationRules, UsedVariant, ProductImage;
 
     /**
-     * Validate and create a new product and its related models
+     * Validate and create a new product and its related models.
      *
      * @param  array  $input
      * @return \App\Models\MasterProduct
@@ -30,7 +30,7 @@ class CreateNewProduct
 
         $this->mainImages($masterProduct, $input['images']);
 
-        if (!$usedVariants) {
+        if (! $usedVariants) {
             $variantInput = $input['variants'][1];
 
             Validator::make($variantInput, $this->variantValidation())->validate();
@@ -41,7 +41,6 @@ class CreateNewProduct
         }
 
         foreach ($input['variants'] as $key => $variant) {
-
             Validator::make($variant, $this->variantValidation())->validate();
 
             $product = $this->createProduct($variant, $masterProduct);
@@ -67,7 +66,7 @@ class CreateNewProduct
     }
 
     /**
-     * Create a new master product
+     * Create a new master product.
      *
      * @param  array  $input
      * @return \App\Models\MasterProduct
@@ -87,7 +86,7 @@ class CreateNewProduct
     }
 
     /**
-     * Create new product
+     * Create new product.
      *
      * @param  array  $input
      * @param MasterProduct $master
@@ -107,7 +106,7 @@ class CreateNewProduct
     }
 
     /**
-     * Create variant option
+     * Create variant option.
      *
      * @param  string  $name
      * @return \App\Models\VariantOption
@@ -120,7 +119,7 @@ class CreateNewProduct
     }
 
     /**
-     * Create new product detail that connect product to its variant options
+     * Create new product detail that connect product to its variant options.
      *
      * @param  int  $productId
      * @param  int  $variantId

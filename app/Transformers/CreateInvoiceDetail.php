@@ -12,24 +12,24 @@ class CreateInvoiceDetail
 
         $shippingAddress = [
             'phone' => $shipment->phone,
-            'address' => $shipment->delivery_address . ' ' . $shipment->delivery_district,
+            'address' => $shipment->delivery_address.' '.$shipment->delivery_district,
             'city' => $shipment->delivery_city,
             'postal_code' => $shipment->postal_code,
         ];
 
         $productItems = [];
 
-        foreach($order->items as $item) {
+        foreach ($order->items as $item) {
             $productItems[] = [
                 'price' => $item->final_price,
                 'quantity' => $item->quantity,
-                'name' => $item->name . $item->variant ? ', ' . $item->variant : '',
+                'name' => $item->name.$item->variant ? ', '.$item->variant : '',
             ];
         }
 
         $productItems[] = [
-                'name' => $shipment->courier->name . ' ' . $shipment->service,
-                'price' => $shipment->price,
+            'name' => $shipment->courier->name.' '.$shipment->service,
+            'price' => $shipment->price,
         ];
 
         return [

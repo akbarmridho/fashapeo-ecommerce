@@ -2,19 +2,19 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Repository\CategoryRepositoryInterface;
-use App\Repository\StatusRepositoryInterface;
-use App\Repository\DeliveryRepositoryInterface;
 use App\Repository\CartRepositoryInterface;
-use App\Repository\WishlistRepositoryInterface;
-use App\Repository\ProductRepositoryInterface;
-use App\Repository\Eloquent\CategoryRepository;
-use App\Repository\Eloquent\StatusRepository;
+use App\Repository\CategoryRepositoryInterface;
+use App\Repository\DeliveryRepositoryInterface;
 use App\Repository\Eloquent\CartRepository;
-use App\Repository\Eloquent\WishlistRepository;
+use App\Repository\Eloquent\CategoryRepository;
 use App\Repository\Eloquent\ProductRepository;
+use App\Repository\Eloquent\StatusRepository;
+use App\Repository\Eloquent\WishlistRepository;
+use App\Repository\ProductRepositoryInterface;
+use App\Repository\StatusRepositoryInterface;
 use App\Repository\Vendor\RajaongkirRepository;
+use App\Repository\WishlistRepositoryInterface;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

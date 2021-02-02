@@ -6,8 +6,8 @@ use Illuminate\View\Component;
 
 class recommendation extends Component
 {
-
     public $title;
+
     /**
      * Create a new component instance.
      *

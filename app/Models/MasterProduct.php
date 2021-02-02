@@ -65,12 +65,12 @@ class MasterProduct extends Model
 
     public function getMinPriceAttribute()
     {
-        return config('payment.currency_symbol') . $this->products()->min('price');
+        return config('payment.currency_symbol').$this->products()->min('price');
     }
 
     public function getMaxPriceAttribute()
     {
-        return config('payment.currency_symbol') . $this->products()->max('price');
+        return config('payment.currency_symbol').$this->products()->max('price');
     }
 
     public function getPriceRangeAttribute()
@@ -79,9 +79,9 @@ class MasterProduct extends Model
         $max = $this->products()->max('price');
         $symbol = config('payment.currency_symbol');
         if ($min === $max) {
-            return $symbol . $min;
+            return $symbol.$min;
         } else {
-            return $symbol . $min . ' -- ' . $symbol . $max;
+            return $symbol.$min.' -- '.$symbol.$max;
         }
     }
 
@@ -120,12 +120,11 @@ class MasterProduct extends Model
         $result = [];
 
         foreach ($serialized as $image) {
-
             array_push($result, [
                 'source' => $image['id'],
                 'options' => [
                     'type' => 'local',
-                ]
+                ],
             ]);
         }
 
@@ -138,6 +137,7 @@ class MasterProduct extends Model
 
         $transformed = $products->map(function ($item, $key) {
             $discount = $item->active_discount ?: 0;
+
             return [
                 'initial_price' => $item->price,
                 'discount_value' => $discount,
