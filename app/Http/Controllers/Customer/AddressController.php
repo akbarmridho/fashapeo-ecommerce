@@ -57,7 +57,7 @@ class AddressController extends Controller
 
         session('status', 'Address deleted');
 
-        return back();
+        return redirect()->route('customer.address');
     }
 
     public function update(Address $address, Request $request, UpdateAddress $updater)
