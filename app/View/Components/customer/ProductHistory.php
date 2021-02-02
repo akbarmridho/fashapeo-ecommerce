@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class productOverview extends Component
+class ProductHistory extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class productOverview extends Component
      */
     public function render()
     {
-        return view('components.customer.product-overview');
+        return view('components.customer.product-history');
     }
 }

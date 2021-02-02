@@ -4,7 +4,7 @@ namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class productCardGroup extends Component
+class ProductCardGroup extends Component
 {
     public $productsCardGroupTitle;
 

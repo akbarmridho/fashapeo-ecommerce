@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class productWishlist extends Component
+class ProductCard extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class productWishlist extends Component
      */
     public function render()
     {
-        return view('components.customer.product-wishlist');
+        return view('components.customer.product-card');
     }
 }

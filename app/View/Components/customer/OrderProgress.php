@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class productCart extends Component
+class OrderProgress extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class productCart extends Component
      */
     public function render()
     {
-        return view('components.customer.product-cart');
+        return view('components.customer.order-progress');
     }
 }

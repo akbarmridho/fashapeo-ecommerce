@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class productHistory extends Component
+class ProductCart extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class productHistory extends Component
      */
     public function render()
     {
-        return view('components.customer.product-history');
+        return view('components.customer.product-cart');
     }
 }

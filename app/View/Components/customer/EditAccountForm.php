@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class productCard extends Component
+class EditAccountForm extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class productCard extends Component
      */
     public function render()
     {
-        return view('components.customer.product-card');
+        return view('components.customer.edit-account-form');
     }
 }

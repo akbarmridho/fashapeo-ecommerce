@@ -4,16 +4,18 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class addressForm extends Component
+class Recommendation extends Component
 {
+    public $title;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($title)
     {
-        //
+        $this->title = $title;
     }
 
     /**
@@ -23,6 +25,6 @@ class addressForm extends Component
      */
     public function render()
     {
-        return view('components.customer.address-form');
+        return view('components.main.recommendation');
     }
 }

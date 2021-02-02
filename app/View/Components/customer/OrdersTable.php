@@ -4,18 +4,16 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class addressTable extends Component
+class OrdersTable extends Component
 {
-    public $addresses;
-
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($addresses)
+    public function __construct()
     {
-        $this->addresses = $addresses;
+        //
     }
 
     /**
@@ -25,6 +23,6 @@ class addressTable extends Component
      */
     public function render()
     {
-        return view('components.customer.address-table');
+        return view('components.customer.orders-table');
     }
 }

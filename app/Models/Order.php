@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\DateTimeCast;
 
 class Order extends Model
 {
-    use HasFactory, Traits\DateTimeSerializer;
+    use HasFactory;
 
     protected $dates = [
         'created_at',
@@ -21,6 +22,12 @@ class Order extends Model
         'transaction_id',
         'shipment_id',
         'completed_at',
+    ];
+
+    protected $casts = [
+        'created_at' => DateTimeCast::class,
+        'updated_at' => DateTimeCast::class,
+        'completed_at' => DateTimeCast::class,
     ];
 
     public function customer()

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use App\Casts\DateCast;
 
 class Product extends Model
 {
-    use HasFactory, Traits\DateSerializer;
+    use HasFactory;
 
     protected $fillable = [
         'master_product_id',
@@ -16,6 +17,11 @@ class Product extends Model
         'price',
         'sku',
         'active',
+    ];
+
+    protected $casts = [
+        'created_at' => DateCast::class,
+        'updated_at' => DateCast::class,
     ];
 
     public function masterProduct()
@@ -104,11 +110,11 @@ class Product extends Model
 
     public function getActiveDiscountAttribute()
     {
-        if (! $this->discount && ! $this->discount->valid_until) {
+        if (!$this->discount && !$this->discount->valid_until) {
             if ($this->discount->valid_until->gt(Carbon::now())) {
                 return $this->discount->discount_value;
             }
-        } elseif (! $this->discount) {
+        } elseif (!$this->discount) {
             return $this->discount->discount_value;
         }
 
@@ -125,7 +131,7 @@ class Product extends Model
     {
         $image = $this->image;
 
-        if (! $image) {
+        if (!$image) {
             return null;
         }
 

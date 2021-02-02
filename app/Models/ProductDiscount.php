@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use App\Casts\DateTimeCast;
+use App\Casts\DateCast;
 
 class ProductDiscount extends Model
 {
-    use HasFactory, Traits\DateTimeSerializer;
+    use HasFactory;
 
     protected $dates = [
         'created_at',
@@ -23,6 +25,12 @@ class ProductDiscount extends Model
     ];
 
     protected $touches = ['product'];
+
+    protected $casts = [
+        'created_at' => DateCast::class,
+        'updated_at' => DateCast::class,
+        'valid_until' => DateTimeCast::class,
+    ];
 
     public function product()
     {

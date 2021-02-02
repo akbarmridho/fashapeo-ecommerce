@@ -4,18 +4,18 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class recommendation extends Component
+class Notifications extends Component
 {
-    public $title;
 
+    public $notification;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title)
+    public function __construct($notification)
     {
-        $this->title = $title;
+        $this->notification = $notification;
     }
 
     /**
@@ -25,6 +25,6 @@ class recommendation extends Component
      */
     public function render()
     {
-        return view('components.customer.recommendation');
+        return view('components.main.notifications');
     }
 }

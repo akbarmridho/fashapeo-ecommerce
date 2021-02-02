@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
+use App\Casts\DateCast;
 
 class MasterProduct extends Model
 {
-    use HasFactory, SoftDeletes, Searchable, Traits\DateSerializer;
+    use HasFactory, SoftDeletes, Searchable;
 
     protected $fillable = [
         'name',
@@ -20,6 +21,11 @@ class MasterProduct extends Model
         'width',
         'height',
         'length',
+    ];
+
+    protected $casts = [
+        'created_at' => DateCast::class,
+        'updated_at' => DateCast::class,
     ];
 
     public function products()
@@ -65,12 +71,12 @@ class MasterProduct extends Model
 
     public function getMinPriceAttribute()
     {
-        return config('payment.currency_symbol').$this->products()->min('price');
+        return config('payment.currency_symbol') . $this->products()->min('price');
     }
 
     public function getMaxPriceAttribute()
     {
-        return config('payment.currency_symbol').$this->products()->max('price');
+        return config('payment.currency_symbol') . $this->products()->max('price');
     }
 
     public function getPriceRangeAttribute()
@@ -79,9 +85,9 @@ class MasterProduct extends Model
         $max = $this->products()->max('price');
         $symbol = config('payment.currency_symbol');
         if ($min === $max) {
-            return $symbol.$min;
+            return $symbol . $min;
         } else {
-            return $symbol.$min.' -- '.$symbol.$max;
+            return $symbol . $min . ' -- ' . $symbol . $max;
         }
     }
 

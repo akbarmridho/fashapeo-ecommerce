@@ -17,8 +17,15 @@ My Account
                     <a href="">Mark all as read</a>
                 </div>
                 <hr>
-                    <x-customer.notifications />
-                    <x-customer.notifications />
+                    @if($notifications->isEmpty())
+                    <div>
+                        <h4>No Notification</h4>
+                    </div>
+                    @else
+                        @foreach($notifications as $notification)
+                            <x-customer.notifications :notification="$notification"/>
+                        @endforeach
+                    @endif
             </div>
         </div>
     </div>

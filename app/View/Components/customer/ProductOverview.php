@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class ordersTable extends Component
+class ProductOverview extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class ordersTable extends Component
      */
     public function render()
     {
-        return view('components.customer.orders-table');
+        return view('components.customer.product-overview');
     }
 }

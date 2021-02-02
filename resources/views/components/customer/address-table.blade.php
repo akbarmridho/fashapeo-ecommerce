@@ -26,9 +26,20 @@
           </td>
           <td>
             <a href="{{ route('customer.address.show', ['address' => $address->id]) }}" class="btn btn-sm btn-info shadow-0 px-2"><i class="far fa-edit"></i></a>
-            <form action="?k=yea">  
+            <form action="{{ route('customer.address.delete', ['address' => $address->id]) }}" method="POST">
+              @csrf
+              @method('delete')  
               <button class="btn btn-sm btn-danger shadow-0 px-2 need-confirm" type="submit"><i class="far fa-trash-alt"></i></button>
             </form>
+            @if($address->is_main)
+              <button class="btn btn-sm btn-light shadow-0 px-2" disabled><i class="fas fa-star"></i></button>
+            @else
+              <form action="{{ route('customer.address.main', ['address' => $address->id]) }}" method="POST">
+              @csrf
+              @method('put')
+              <button class="btn btn-sm btn-light shadow-0 px-2" type="submit"><i class="far fa-star"></i></button>
+              </form>
+            @endif
         </td>
         </tr>
       @endforeach

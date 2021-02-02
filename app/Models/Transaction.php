@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\DateTimeCast;
 
 class Transaction extends Model
 {
@@ -25,6 +26,12 @@ class Transaction extends Model
     ];
 
     protected $touches = ['order'];
+
+    protected $casts = [
+        'created_at' => DateTimeCast::class,
+        'updated_at' => DateTimeCast::class,
+        'completed_at' => DateTimeCast::class,
+    ];
 
     public function status()
     {

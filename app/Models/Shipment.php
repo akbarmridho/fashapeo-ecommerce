@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\DateCast;
 
 class Shipment extends Model
 {
@@ -28,6 +29,11 @@ class Shipment extends Model
     ];
 
     protected $touches = ['order'];
+
+    protected $casts = [
+        'created_at' => DateCast::class,
+        'updated_at' => DateCast::class,
+    ];
 
     public function courier()
     {

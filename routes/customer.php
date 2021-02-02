@@ -59,7 +59,8 @@ Route::name('customer.')->group(function () {
             Route::put('address/edit/{address}', [AddressController::class, 'update'])
                 ->name('address.update');
 
-            Route::delete('address/edit/{address}', [AddressController::class, 'delete']);
+            Route::delete('address/edit/{address}', [AddressController::class, 'delete'])
+                ->name('address.delete');
 
             Route::post('address/edit/{address}/main', [AddressController::class, 'setMain'])
                 ->name('address.main');

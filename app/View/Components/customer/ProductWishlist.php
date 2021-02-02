@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class orderProgress extends Component
+class ProductWishlist extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class orderProgress extends Component
      */
     public function render()
     {
-        return view('components.customer.order-progress');
+        return view('components.customer.product-wishlist');
     }
 }

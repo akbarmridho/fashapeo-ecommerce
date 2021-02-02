@@ -49,8 +49,3 @@
     </div>
     <button class="btn btn-primary">Update Password</button>
 </form>
-<link rel="stylesheet" href="/css/flatpickr.css">
-<script src="/js/flatpickr.js"></script>
-<script>
-    flatpickr('#dateOfBirth', {maxDate: '1/1/2010', dateFormat: 'j/m/Y'});
-</script>

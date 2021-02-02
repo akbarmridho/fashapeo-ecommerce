@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class CustomerController extends Controller
 {
@@ -14,7 +15,9 @@ class CustomerController extends Controller
 
     public function notification()
     {
-        return view('customer.pages.my-account.notifications');
+        $customer = Auth::guard('customer')->user();
+        $notifications = $customer->notifications;
+        return view('customer.pages.my-account.notifications', compact('notifications'));
     }
 
     public function profile()

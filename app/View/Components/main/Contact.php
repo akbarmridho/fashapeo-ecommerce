@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class shipmentOptions extends Component
+class Contact extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class shipmentOptions extends Component
      */
     public function render()
     {
-        return view('components.customer.shipment-options');
+        return view('components.main.contact');
     }
 }

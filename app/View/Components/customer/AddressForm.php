@@ -4,7 +4,7 @@ namespace App\View\Components\customer;
 
 use Illuminate\View\Component;
 
-class editAccountForm extends Component
+class AddressForm extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class editAccountForm extends Component
      */
     public function render()
     {
-        return view('components.customer.edit-account-form');
+        return view('components.customer.address-form');
     }
 }
