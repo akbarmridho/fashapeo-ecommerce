@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Actions\Address\UpdateAddress;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateWarehouseRequest;
-use Illuminate\Http\Request;
 use App\Models\Warehouse;
-use App\Actions\Address\UpdateAddress;
 use App\Repository\DeliveryRepositoryInterface as Deliveries;
+use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
@@ -35,7 +35,7 @@ class WarehouseController extends Controller
 
     public function store(CreateWarehouseRequest $request, UpdateAddress $creator)
     {
-        if(Warehouse::count() === 0) {
+        if (Warehouse::count() === 0) {
             $main = true;
         } else {
             $main = false;
@@ -95,7 +95,7 @@ class WarehouseController extends Controller
 
     public function setMain(Warehouse $warehouse)
     {
-        if(! $old = Warehouse::active()->first()) {
+        if (! $old = Warehouse::active()->first()) {
             $old->main = false;
             $old->save();
         }

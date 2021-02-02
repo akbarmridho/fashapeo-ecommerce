@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Order;
-use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Models\User;
 use App\Repository\StatusRepositoryInterface as Status;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OrderPolicy
 {

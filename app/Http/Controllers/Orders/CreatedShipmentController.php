@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers\Orders;
 
-use App\Http\Requests\UpdateShipmentRequest;
+use App\Actions\Order\UpdateOrder;
+use App\Actions\Order\UpdateStatus;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FinalizeShipmentRequest;
+use App\Http\Requests\UpdateShipmentRequest;
+use App\Models\Address;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Address;
-use App\Actions\Order\UpdateStatus;
-use App\Actions\Order\UpdateOrder;
-use App\Repository\StatusRepositoryInterface;
 use App\Repository\DeliveryRepositoryInterface;
-use App\Http\Controllers\Controller;
+use App\Repository\StatusRepositoryInterface;
 
 class CreatedShipmentController extends Controller
 {
-
     private $status;
     private $delivery;
 
@@ -47,7 +46,7 @@ class CreatedShipmentController extends Controller
         UpdateStatus $statusUpdater
     ) {
         foreach ($request->products as $product) {
-            if (!$note = $product['note']) {
+            if (! $note = $product['note']) {
                 $updater->updateNote(OrderItem::find($product), $note);
             }
         }

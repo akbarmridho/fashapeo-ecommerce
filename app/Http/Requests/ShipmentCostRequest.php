@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\ValidCourier;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ShipmentCostRequest extends FormRequest
 {

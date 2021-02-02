@@ -2,14 +2,13 @@
 
 namespace App\Actions\Vendor;
 
+use App\Exceptions\InvalidPathException;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use App\Exceptions\InvalidPathException;
 
 class Filepond
 {
-
     public function getServerIdFromPath($path)
     {
         return Crypt::encryptString($path);
@@ -17,13 +16,13 @@ class Filepond
 
     public function getPathFromServerId($serverId)
     {
-        if (!trim($serverId)) {
+        if (! trim($serverId)) {
             throw new InvalidPathException();
         }
 
         $filepath = Crypt::decryptString($serverId);
 
-        if (!Str::startsWith($filepath, config('image.temp_img_path', 'temp_img'))) {
+        if (! Str::startsWith($filepath, config('image.temp_img_path', 'temp_img'))) {
             throw new InvalidPathException();
         }
 
@@ -43,17 +42,17 @@ class Filepond
         $imageName = \basename($oldPath);
 
         if ($pathPrefix !== null) {
-            $targetPath = $publicPrefix . DIRECTORY_SEPARATOR . $pathPrefix;
-            $url = $pathPrefix . DIRECTORY_SEPARATOR . $imageName;
+            $targetPath = $publicPrefix.DIRECTORY_SEPARATOR.$pathPrefix;
+            $url = $pathPrefix.DIRECTORY_SEPARATOR.$imageName;
         } else {
             $targetPath = $publicPrefix;
             $url = $imageName;
         }
 
-
-        $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
+        $finalPath = $targetPath.DIRECTORY_SEPARATOR.$imageName;
         if (Storage::move($oldPath, $finalPath)) {
             $this->deleteTemporaryPath(\dirname($oldPath));
+
             return Storage::url($url);
         }
     }

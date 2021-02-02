@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Variant;
 use App\Http\Controllers\Controller;
+use App\Models\Variant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 

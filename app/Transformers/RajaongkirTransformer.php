@@ -18,7 +18,7 @@ class RajaongkirTransformer
     {
         return collect($array)->map(function ($item, $key) {
             return [
-                'name' => $item['type'] . ' ' . $item['city_name'],
+                'name' => $item['type'].' '.$item['city_name'],
                 'id' => $item['city_id'],
                 'province_id' => $item['province_id'],
             ];

@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdministrationController;
+use App\Http\Controllers\FilepondController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\Orders\CreatedTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FilepondController;
-use App\Http\Controllers\AdministrationController;
-use App\Http\Controllers\Orders\CreatedTransactionController;
-use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------

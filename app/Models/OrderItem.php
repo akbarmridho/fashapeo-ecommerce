@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Actions\Calculations\ProductItemTotalPrice as CalculatePrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Actions\Calculations\ProductItemTotalPrice as CalculatePrice;
 
 class OrderItem extends Model
 {

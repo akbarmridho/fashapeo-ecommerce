@@ -2,10 +2,10 @@
 
 namespace App\Repository\Cache;
 
-use App\Repository\ProductRepositoryInterface;
-use App\Repository\Eloquent\ProductRepository as EloquentProductRepository;
-use Illuminate\Support\Facades\Cache;
 use App\Models\Category;
+use App\Repository\Eloquent\ProductRepository as EloquentProductRepository;
+use App\Repository\ProductRepositoryInterface;
+use Illuminate\Support\Facades\Cache;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -19,14 +19,14 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function all($page)
     {
-        return Cache::tags(['products'])->remember('products.all:page:' . (int) $page, 60 * 60, function ($page) {
+        return Cache::tags(['products'])->remember('products.all:page:'.(int) $page, 60 * 60, function ($page) {
             return $this->parent->all();
         });
     }
 
     public function archived($page)
     {
-        return Cache::tags(['products'])->remember('products.archived:page:' . (int) $page, 60 * 60, function () {
+        return Cache::tags(['products'])->remember('products.archived:page:'.(int) $page, 60 * 60, function () {
             return $this->parent->archived();
         });
     }
@@ -39,7 +39,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function category(Category $category, $page)
     {
         return Cache::tags(['products'])->remember(
-            'products.category:' . $category->id . ':page:' . (int) $page,
+            'products.category:'.$category->id.':page:'.(int) $page,
             $this->time,
             function ($category) {
                 return $this->parent->category($category);
@@ -61,7 +61,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function newArrival($page)
     {
         return Cache::tags(['products'])->remember(
-            'products.new_arrival:page:' . (int) $page,
+            'products.new_arrival:page:'.(int) $page,
             $this->time,
             function ($page) {
                 return $this->parent->newArrival();

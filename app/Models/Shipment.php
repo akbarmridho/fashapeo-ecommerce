@@ -24,7 +24,7 @@ class Shipment extends Model
         'destination_delivery',
         'destination_name',
         'postal_code',
-        'phone'
+        'phone',
     ];
 
     protected $touches = ['order'];

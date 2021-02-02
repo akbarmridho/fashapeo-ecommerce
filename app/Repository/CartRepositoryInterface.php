@@ -2,14 +2,14 @@
 
 namespace App\Repository;
 
-use App\Models\Product;
-use App\Models\Customer;
 use App\Models\Cart;
+use App\Models\Customer;
+use App\Models\Product;
 
 interface CartRepositoryInterface
 {
     public function all();
-    
+
     public function create(Product $product, Customer $customer, int $quantity): Cart;
 
     public function delete(Cart $cart);

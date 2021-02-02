@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repository\CategoryRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
     private $category;
 
     public function __construct(CategoryRepositoryInterface $categoryRepository)
@@ -42,26 +41,22 @@ class CategoryController extends Controller
 
     public function update(Request $request, int $id)
     {
-        if(! $this->category->update($request->all(), $id))
-        {
+        if (! $this->category->update($request->all(), $id)) {
             session()->flash('error', 'Categories only support one level of subcategory');
         } else {
             session()->flash('status', 'Category updated');
         }
 
         return back();
-        
     }
 
     public function delete(int $id)
     {
-        if(! $this->category->delete($id)) 
-        {
+        if (! $this->category->delete($id)) {
             session()->flash('error', 'Category with child cannot be deleted. 
                                        Please dissociate the children first');
         } else {
             session()->flash('status', 'Category deleted');
         }
-
     }
 }

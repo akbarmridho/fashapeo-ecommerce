@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Orders;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\Transaction;
-use App\Events\PaymentConfirmed;
+use App\Actions\Order\UpdateOrder;
+use App\Actions\Order\UpdateStatus;
+use App\Actions\Vendor\Midtrans;
 use App\Events\OrderCancelled;
+use App\Events\PaymentConfirmed;
 use App\Events\PaymentExpired;
 use App\Events\TransactionDenied;
-use App\Actions\Order\UpdateStatus;
-use App\Actions\Order\UpdateOrder;
-use App\Actions\Vendor\Midtrans;
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Transaction;
 use App\Repository\StatusRepositoryInterface;
+use Illuminate\Http\Request;
 
 class CreatedTransactionController extends Controller
 {
@@ -56,7 +56,7 @@ class CreatedTransactionController extends Controller
                     $handler->updateTransaction($order, $request->all());
                     $this->setDateCompletion($order->transaction);
                     event(new PaymentConfirmed($order));
-                } else if ($fraud === 'challenge') {
+                } elseif ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
                 }
                 break;
@@ -67,7 +67,7 @@ class CreatedTransactionController extends Controller
                     $handler->updateTransaction($order, $request->all());
                     $handler->revertStock($order);
                     $this->cancelOrder($order);
-                } else if ($fraud === 'challenge') {
+                } elseif ($fraud === 'challenge') {
                     $payment->approve($payment->notification->order_id);
                 }
                 break;

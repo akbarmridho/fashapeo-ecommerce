@@ -2,14 +2,13 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\Product;
-use App\Models\Customer;
 use App\Models\Cart;
+use App\Models\Customer;
+use App\Models\Product;
 use App\Repository\CartRepositoryInterface;
 
 class CartRepository implements CartRepositoryInterface
 {
-
     public $cart;
 
     public function __construct(Cart $cart)
@@ -22,7 +21,7 @@ class CartRepository implements CartRepositoryInterface
         return $this->cart->all();
     }
 
-    public function create (Product $product, Customer $customer, int $quantity): Cart
+    public function create(Product $product, Customer $customer, int $quantity): Cart
     {
         return Cart::create([
             'user_id' => $customer->id,
@@ -31,12 +30,12 @@ class CartRepository implements CartRepositoryInterface
         ]);
     }
 
-    public function delete (Cart $cart)
+    public function delete(Cart $cart)
     {
         return $cart->delete();
     }
 
-    public function increment (Cart $cart): Cart
+    public function increment(Cart $cart): Cart
     {
         $cart->quantity++;
         $cart->save();
@@ -44,7 +43,7 @@ class CartRepository implements CartRepositoryInterface
         return $cart;
     }
 
-    public function decrement (Cart $cart): Cart
+    public function decrement(Cart $cart): Cart
     {
         $cart->quantity--;
         $cart->save();

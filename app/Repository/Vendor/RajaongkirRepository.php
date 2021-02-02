@@ -2,17 +2,17 @@
 
 namespace App\Repository\Vendor;
 
-use Illuminate\Support\Facades\Http;
 use App\Repository\DeliveryRepositoryInterface;
 use App\Transformers\RajaongkirTransformer as Transformer;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
 
 class RajaongkirRepository implements DeliveryRepositoryInterface
 {
     private $apiKey;
     private $http;
 
-    function __construct()
+    public function __construct()
     {
         $this->apiKey = env('RAJAONGKIR_API_KEY');
         $this->http = Http::retry(3, 500)->withHeaders([
@@ -74,12 +74,12 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
 
         $data = $this->http->get($apiUrl, ['id' => $cityId]);
 
-        if (!$data->successful()) {
+        if (! $data->successful()) {
             return false;
         }
 
         return [
-            'city' => $data['type'] . ' ' . $data['city_name'],
+            'city' => $data['type'].' '.$data['city_name'],
             'province' => $data['province'],
             'vendor_id' => $data['city_id'],
         ];

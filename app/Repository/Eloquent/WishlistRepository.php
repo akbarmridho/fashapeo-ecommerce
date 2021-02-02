@@ -2,8 +2,8 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Models\MasterProduct;
 use App\Models\Customer;
+use App\Models\MasterProduct;
 use App\Models\Wishlist;
 use App\Repository\WishlistRepositoryInterface;
 
@@ -28,5 +28,4 @@ class WishlistRepository implements WishlistRepositoryInterface
     {
         return $wishlist->delete();
     }
-
 }

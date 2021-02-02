@@ -2,16 +2,16 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use App\Actions\Product\UsedVariant;
 use App\Models\Variant;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
 
-class VariantsIsValid implements Rule {
-    
+class VariantsIsValid implements Rule
+{
     use UsedVariant;
 
-    public function passes ($attribute, $value)
+    public function passes($attribute, $value)
     {
         $variants = $this->retreiveUsedVariant($value);
 
@@ -19,26 +19,20 @@ class VariantsIsValid implements Rule {
             return true;
         }
 
-        foreach($variants as $variant) {
-
-            if($var = Variant::find($variant['id'])) {
-                
-                if($var->name !== Str::title($variant['name'])) {
+        foreach ($variants as $variant) {
+            if ($var = Variant::find($variant['id'])) {
+                if ($var->name !== Str::title($variant['name'])) {
                     return false;
                 }
-
             } else {
-
                 return false;
-
             }
-
         }
 
         return true;
     }
 
-    public function message ()
+    public function message()
     {
         return 'Used variants name or id is invalid';
     }

@@ -17,14 +17,13 @@ class Warehouse extends Model
 
     public $timestamps = false;
 
-    public function address ()
+    public function address()
     {
         return $this->morphOne(Address::class, 'addressable');
     }
 
-    public function scopeActive ($query)
+    public function scopeActive($query)
     {
         return $query->where('main', true);
     }
-
 }

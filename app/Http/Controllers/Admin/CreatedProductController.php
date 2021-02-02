@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Actions\Product\CreateNewProduct;
 use App\Actions\Product\ProductImage;
-use App\Repository\CategoryRepositoryInterface;
-use App\Models\Variant;
+use App\Http\Controllers\Controller;
 use App\Models\MasterProduct;
+use App\Models\Variant;
+use App\Repository\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class CreatedProductController extends Controller
 {
@@ -45,6 +45,7 @@ class CreatedProductController extends Controller
         Cache::tags('products')->flush();
 
         session()->flash('status', 'Product created');
+
         return response()->json(['message' => 'Product created'], 200);
     }
 

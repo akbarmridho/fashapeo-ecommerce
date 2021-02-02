@@ -29,7 +29,7 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(
             [
                 'main.pages.*',
-                'customer.pages.*'
+                'customer.pages.*',
             ],
             CategoryComposer::class
         );

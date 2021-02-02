@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisteredAdminController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -17,12 +18,10 @@ use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;
 use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
-use App\Http\Controllers\RegisteredAdminController;
 
 // ADMIN ROUTES
 
 Route::prefix('admin')->name('admin.')->group(function () {
-
     $limiter = config('fortify.limiters.login');
 
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])
@@ -32,7 +31,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
         ->middleware(array_filter([
             'guest:admin',
-            $limiter ? 'throttle:' . $limiter : null,
+            $limiter ? 'throttle:'.$limiter : null,
         ]));
 
     Route::get('/register', [RegisteredAdminController::class, 'create'])
@@ -52,7 +51,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware(array_filter([
         'guest:customer',
-        $limiter ? 'throttle:' . $limiter : null,
+        $limiter ? 'throttle:'.$limiter : null,
     ]));
 
 Route::get('/register', [RegisteredUserController::class, 'create'])

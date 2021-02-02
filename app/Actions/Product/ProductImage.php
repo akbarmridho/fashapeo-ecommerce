@@ -2,13 +2,13 @@
 
 namespace App\Actions\Product;
 
+use App\Actions\Vendor\Filepond;
+use App\Models\Image;
 use App\Models\MasterProduct;
 use App\Models\Product;
-use App\Models\Image;
-use App\Actions\Vendor\Filepond;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Collection;
 use App\Transformers\FilepondImageSerializer as Serializer;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 trait ProductImage
 {
@@ -18,7 +18,7 @@ trait ProductImage
         $serialized = Serializer::convert($images);
         $productImages = $product->images();
 
-        if (array_key_exists('old', $serialized) && !empty($serialized['old'])) {
+        if (array_key_exists('old', $serialized) && ! empty($serialized['old'])) {
             $filtered = $productImages->whereNotIn('id', $serialized['old'])->get();
             $this->deleteImagesFromList($filtered, config('image.product_img_path'));
         }
@@ -26,7 +26,6 @@ trait ProductImage
         foreach ($serialized['images'] as $index => $image) {
             $imagePath = config('image.product_img_path');
             if ($image['is_new']) {
-
                 $newPath = $filepond->move($image['content'], $imagePath);
                 $product->images()->create([
                     'url' => $newPath,
@@ -71,7 +70,7 @@ trait ProductImage
                 return \basename($item);
             }
 
-            return $pathPrefix . DIRECTORY_SEPARATOR . \basename($item);
+            return $pathPrefix.DIRECTORY_SEPARATOR.\basename($item);
         });
 
         Storage::disk('public')->delete($nameList->all());
@@ -93,7 +92,7 @@ trait ProductImage
         if ($pathPrefix === null) {
             $path = \basename($image->url);
         } else {
-            $path = $pathPrefix . DIRECTORY_SEPARATOR . \basename($image->url);
+            $path = $pathPrefix.DIRECTORY_SEPARATOR.\basename($image->url);
         }
 
         Storage::disk('public')->delete($path);

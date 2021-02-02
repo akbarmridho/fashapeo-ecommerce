@@ -4,8 +4,8 @@ namespace App\Repository;
 
 use App\Models\Status;
 
-interface StatusRepositoryInterface {
-
+interface StatusRepositoryInterface
+{
     public function find(int $code): Status;
 
     public function orderCreated(): Status;

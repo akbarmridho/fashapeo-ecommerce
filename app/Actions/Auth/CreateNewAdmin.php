@@ -4,12 +4,12 @@ namespace App\Actions\Auth;
 
 use App\Models\Admin;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
 class CreateNewAdmin implements CreatesNewUsers
 {

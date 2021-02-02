@@ -4,15 +4,15 @@ namespace App\Actions\Auth;
 
 use App\Models\Admin;
 use App\Models\Customer;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class Authenticate
 {
     public function __invoke(Request $request)
     {
         $customer = Customer::where('email', $request->email)->firstOr(function () {
-                return false;
+            return false;
         });
 
         if ($customer &&

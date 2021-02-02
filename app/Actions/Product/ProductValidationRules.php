@@ -9,7 +9,6 @@ use Illuminate\Validation\Rule;
 
 trait ProductValidationRules
 {
-
     public function createProductValidation()
     {
         return [
@@ -30,7 +29,7 @@ trait ProductValidationRules
             ],
             'images' => [
                 'required',
-                'array'
+                'array',
             ],
             'usedVariant' => [
                 'string',
@@ -64,7 +63,7 @@ trait ProductValidationRules
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('master_products')->ignore($master->id)
+                Rule::unique('master_products')->ignore($master->id),
             ],
             'category' => [
                 'required',
@@ -77,7 +76,7 @@ trait ProductValidationRules
             ],
             'images' => [
                 'required',
-                'array'
+                'array',
             ],
             'new_variants' => [
                 'array',

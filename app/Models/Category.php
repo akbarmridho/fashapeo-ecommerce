@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\MasterProduct;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MasterProduct;
 
 class Category extends Model
 {
@@ -16,14 +16,14 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'parent_id'
+        'parent_id',
     ];
 
     public function products()
     {
         return $this->hasMany(MasterProduct::class);
     }
- 
+
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');

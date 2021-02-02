@@ -33,12 +33,12 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function activities() 
+    public function activities()
     {
         return $this->hasMany(OrderActivity::class);
-    } 
+    }
 
-    public function status() 
+    public function status()
     {
         return $this->hasManyThrough(Status::class, OrderActivity::class);
     }
@@ -72,7 +72,7 @@ class Order extends Model
     {
         $subtotal = [];
 
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             array_push($subtotal, $item->quantity * $item->product->weight);
         }
 

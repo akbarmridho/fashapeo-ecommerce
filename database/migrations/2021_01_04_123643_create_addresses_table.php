@@ -22,7 +22,7 @@ class CreateAddressesTable extends Migration
             $table->string('province');
             $table->string('city');
             $table->string('district');
-            $table->string('postal_code'); 
+            $table->string('postal_code');
             $table->string('delivery_address');
             $table->string('phone');
             $table->boolean('is_main')->default(false);

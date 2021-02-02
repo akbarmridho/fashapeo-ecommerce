@@ -2,8 +2,8 @@
 
 namespace App\Actions\Address;
 
-trait AddressValidationRules {
-
+trait AddressValidationRules
+{
     public function addressValidation()
     {
         return [
@@ -18,5 +18,4 @@ trait AddressValidationRules {
             'phone' => 'required|starts_with:628,08|digits_between:9,15',
         ];
     }
-
 }

@@ -20,13 +20,13 @@ class LastVisitedCookie
     {
         $order = $request->route('product');
 
-        if(! is_int($order)) {
+        if (! is_int($order)) {
             throw new \InvalidArgumentException('Parameter should be integer');
         }
 
-        if(! $lastVisited = $request->cookie('lastVisited')) {
+        if (! $lastVisited = $request->cookie('lastVisited')) {
             $recents = explode(',', $lastVisited);
-            if(count($recents) >= 8) {
+            if (count($recents) >= 8) {
                 $recents = array_shift($recents);
             }
             $recents[] = $order;
@@ -35,8 +35,8 @@ class LastVisitedCookie
         }
 
         $response = $next($request);
-        
-        $response->cookie('lastVisited', implode(',', $recents), 60*24*30);
+
+        $response->cookie('lastVisited', implode(',', $recents), 60 * 24 * 30);
 
         return $response;
     }

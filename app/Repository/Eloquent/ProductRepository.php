@@ -2,14 +2,13 @@
 
 namespace App\Repository\Eloquent;
 
-use App\Repository\ProductRepositoryInterface;
 use App\Models\Category;
 use App\Models\MasterProduct;
+use App\Repository\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Cookie;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-
     public $paginate = 8;
     public $master;
 
@@ -51,6 +50,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function recentViewed()
     {
         $lists = Cookie::get('lastVisited');
+
         return $this->master->withRelationship()->findMany(explode(',', $lists));
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Actions\Calculations;
 
-trait ProductItemTotalPrice {
-
+trait ProductItemTotalPrice
+{
     public function calculate()
     {
-        if($this->price_cut) {
+        if ($this->price_cut) {
             $price = $this->price - $this->price_cut;
         } else {
             $price = $this->price;
@@ -16,5 +16,4 @@ trait ProductItemTotalPrice {
 
         $this->save();
     }
-
 }

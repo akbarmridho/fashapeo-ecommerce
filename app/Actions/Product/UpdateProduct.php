@@ -2,20 +2,19 @@
 
 namespace App\Actions\Product;
 
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
+use App\Exceptions\CannotValidateProductId;
 use App\Models\MasterProduct;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\VariantOption;
 use App\Models\Variant;
-use App\Exceptions\CannotValidateProductId;
+use App\Models\VariantOption;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class UpdateProduct
 {
-
     use ProductImage, ProductValidationRules, UsedVariant;
 
     public function update(MasterProduct $master, $input)
@@ -25,11 +24,10 @@ class UpdateProduct
         $this->updateMaster($master, $input);
 
         if ($usedVariants = $this->retreiveUsedVariant($input['used_variant'])) {
-
             foreach ($input['variants'] as $key => $variant) {
                 Validator::make($variant, $this->variantValidation())->validate();
 
-                if (!isset($variant['id']) || !array_key_exists('id', $variant)) {
+                if (! isset($variant['id']) || ! array_key_exists('id', $variant)) {
                     throw new CannotValidateProductId;
                 }
 
@@ -41,9 +39,7 @@ class UpdateProduct
             $this->deleteVariants($master->products()->without(['details', 'image', 'discount'])->whereNotIn('id', $ids)->get());
 
             if (array_key_exists('new_variants', $input)) {
-
                 foreach ($input['new_variants'] as $key => $variant) {
-
                     Validator::make($variant, $this->variantValidation())->validate();
                     $product = $this->createProduct($variant, $master);
 
@@ -102,7 +98,7 @@ class UpdateProduct
 
         if (array_key_exists('image', $input)) {
             $this->productImage($product, $input['image']);
-        } else if ($product->image) {
+        } elseif ($product->image) {
             $this->deleteImage($product->image, config('image.product_img_path'));
         }
     }
@@ -132,7 +128,7 @@ class UpdateProduct
     }
 
     /**
-     * Create variant option
+     * Create variant option.
      *
      * @param  string  $name
      * @return \App\Models\VariantOption
@@ -145,7 +141,7 @@ class UpdateProduct
     }
 
     /**
-     * Create new product detail that connect product to its variant options
+     * Create new product detail that connect product to its variant options.
      *
      * @param  int  $productId
      * @param  int  $variantId
