@@ -60,6 +60,21 @@ class Order extends Model
         return $this->hasOne(Shipment::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_success', null);
+    }
+
+    public function scopeCompleted($query)
+    {
+        return $query->where('is_success', true);
+    }
+
+    public function scopeCancelled($query)
+    {
+        return $query->where('is_success', false);
+    }
+
     public function scopeWithRelationship($query)
     {
         return $query->with([
@@ -72,7 +87,7 @@ class Order extends Model
 
     public function scopeRecentStatus($query)
     {
-        return $query->status()->latest();
+        return $query->status()->latest()->first();
     }
 
     public function getWeightAttribute()

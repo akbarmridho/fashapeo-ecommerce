@@ -111,6 +111,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('orders/completed', [OrderController::class, 'archived'])
         ->name('orders.completed');
 
-    Route::post('orders/{id}/tracking', [OrderController::class, 'setTrackingNumber'])
+    Route::get('order/{order:order_number}', [OrderController::class, 'show'])
+        ->name('order.detail');
+
+    Route::put('order/{order:order_number}/complete', [OrderController::class, 'complete'])
+        ->name('order.complete');
+
+    Route::put('order/{order:order_number}/cancel', [OrderController::class, 'cancel'])
+        ->name('order.cancel');
+
+    Route::delete('order/{oder:order_number', [OrderController::class, 'delete'])
+        ->name('order.delete');
+
+    Route::put('order/{order:order_number}/tracking', [OrderController::class, 'setTrackingNumber'])
         ->name('orders.tracking');
 });

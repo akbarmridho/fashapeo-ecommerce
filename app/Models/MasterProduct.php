@@ -139,7 +139,7 @@ class MasterProduct extends Model
 
     protected function calculatePrice()
     {
-        $products = $this->products()->without(['details', 'image'])->get();
+        $products = $this->products()->get();
 
         $transformed = $products->map(function ($item, $key) {
             $discount = $item->active_discount ?: 0;
