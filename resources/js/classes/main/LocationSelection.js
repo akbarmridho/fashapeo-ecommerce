@@ -19,7 +19,7 @@ class LocationSelection {
     }
 
     initializeCityHandler() {
-        this.initializeCity(this.provinceInput.selectedOptions.dataset.id);
+        this.initializeCity(this.provinceInput.selectedOptions[0].dataset.id);
     }
 
     async initializeProvince() {
@@ -92,12 +92,12 @@ class LocationSelection {
 
     addProvinceData(provinceData) {
         if (this.provinceInput.dataset.selected) {
-            this.provinceInput.selectedOptions.forEach(element => {
+            this.provinceInput.selectedOptions.forEach((element) => {
                 element.selected = false;
             });
         }
 
-        provinceData.forEach(province => {
+        provinceData.forEach((province) => {
             let option = this.createProvinceOptionElement(province);
             this.provinceInput.append(option);
         });
@@ -108,7 +108,7 @@ class LocationSelection {
     addCityData(cityData) {
         this.removeCityData();
 
-        cityData.forEach(city => {
+        cityData.forEach((city) => {
             let option = this.createCityOptionElement(city);
             this.cityInput.append(option);
         });

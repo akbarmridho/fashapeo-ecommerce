@@ -92,35 +92,11 @@
             </div>
           </li>
           <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{ route('admin.warehouse') }}">Warehouses</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
           </li>
-          {{-- <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-mdb-toggle="collapse"
-              data-mdb-target="#categories"
-              aria-mdb-expanded="false"
-            >
-              Categories
-            </a>
-            <!-- Dropdown menu -->
-            <div
-              class="collapse list-group list-group-flush pe-4 small"
-              id="categories"
-            >
-              <div class="dropdown-menu-dark">
-                <a class="list-group-item dropdown-item bg-dark" href="#"
-                  >View All Category</a
-                >
-                <a class="list-group-item dropdown-item bg-dark" href="#"
-                  >Add Category</a
-                >
-              </div>
-            </div>
-          </li> --}}
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"

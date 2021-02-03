@@ -2,44 +2,46 @@
   <thead>
     <tr>
       <th scope="col">No</th>
-      <th scope="col">Label</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
       <th scope="col">Address</th>
       <th scope="col" style="min-width: 125px">Actions</th>
     </tr>
   </thead>
   <tbody>
-    @if($addresses->isEmpty())
+    @if($warehouses->isEmpty())
     <tr>
-      <td colspan="4">
-        <h4>No address found</h4>
+      <td colspan="5">
+        <h4>No warehouse found</h4>
       </td>
     </tr>
     @else
-      @foreach($addresses as $index => $address)
+      @foreach($warehouses as $index => $warehouse)
         <tr class="
-        @if($address->is_main)
+        @if($warehouse->main)
         table-primary
         @endif
         ">
           <th scope="row">{{ $index + 1 }}</th>
-          <td>{{ $address->label }}</td>
+          <td>{{ $warehouse->name }}</td>
+          <td>{{ $warehouse->description }}</td>
           <td>
-            {{ $address->name . ', ' . $address->phone}} <br>
-            {{ $address->delivery_address . ' ' . $address->district . ', ' . $address->postal_code }} <br>
-            {{ $address->city . ', ' . $address->province }}
+            {{ $warehouse->address->name . ', ' . $warehouse->address->phone}} <br>
+            {{ $warehouse->address->delivery_address . ' ' . $warehouse->address->district . ', ' . $warehouse->address->postal_code }} <br>
+            {{ $warehouse->address->city . ', ' . $warehouse->address->province }}
           </td>
           <td>
             <div class="d-flex">
-              <a href="{{ route('customer.address.show', ['address' => $address->id]) }}" class="btn btn-sm btn-info shadow-0 px-2 mx-1"><i class="far fa-edit"></i></a>
-              <form action="{{ route('customer.address.delete', ['address' => $address->id]) }}" method="POST">
+              <a href="{{ route('admin.warehouse.show', ['warehouse' => $warehouse->id]) }}" class="btn btn-sm btn-info shadow-0 px-2 mx-1"><i class="far fa-edit"></i></a>
+              <form action="{{ route('admin.warehouse.delete', ['warehouse' => $warehouse->id]) }}" method="POST">
                 @csrf
                 @method('delete')  
                 <button class="btn btn-sm btn-danger shadow-0 px-2 need-confirm mx-1" type="submit"><i class="far fa-trash-alt"></i></button>
               </form>
-              @if($address->is_main)
+              @if($warehouse->main)
               <button class="btn btn-sm btn-light shadow-0 px-2 mx-1" disabled><i class="fas fa-star"></i></button>
               @else
-              <form action="{{ route('customer.address.main', ['address' => $address->id]) }}" method="POST">
+              <form action="{{ route('admin.warehouse.main', ['warehouse' => $warehouse->id]) }}" method="POST">
                 @csrf
                 @method('put')
                 <button class="btn btn-sm btn-light shadow-0 px-2 mx-1 need-confirm" type="submit"><i class="far fa-star"></i></button>

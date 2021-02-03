@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class ProductCard extends Component
+class ProductWishlist extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class ProductCard extends Component
      */
     public function render()
     {
-        return view('components.customer.product-card');
+        return view('components.main.product-wishlist');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\auth;
 
 use Illuminate\View\Component;
 
-class ProductOverview extends Component
+class ResetPassword extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class ProductOverview extends Component
      */
     public function render()
     {
-        return view('components.customer.product-overview');
+        return view('components.auth.reset-password');
     }
 }

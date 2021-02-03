@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class ProductHistory extends Component
+class ProductCart extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class ProductHistory extends Component
      */
     public function render()
     {
-        return view('components.customer.product-history');
+        return view('components.main.product-cart');
     }
 }

@@ -58,7 +58,7 @@ class MasterProduct extends Model
 
     public function getMainImageAttribute()
     {
-        return $this->images()->where('order', 1)->first();
+        return $this->images()->orderByDesc('order')->first();
     }
 
     public function getSoldAttribute()

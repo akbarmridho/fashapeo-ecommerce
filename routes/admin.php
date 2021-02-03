@@ -84,23 +84,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('warehouse', [WarehouseController::class, 'index'])
         ->name('warehouse');
 
-    Route::get('warehouse/{id}', [WarehouseController::class, 'show'])
+    Route::get('warehouse/show/{warehouse}', [WarehouseController::class, 'show'])
         ->name('warehouse.show');
 
     Route::get('warehouse/create', [WarehouseController::class, 'create'])
         ->name('warehouse.create');
 
-    Route::post('warehouse/create', [WarehouseController::class, 'store']);
+    Route::post('warehouse/create', [WarehouseController::class, 'store'])
+        ->name('warehouse.store');
 
-    Route::delete('warehouse/{id}', [WarehouseController::class, 'delete'])
+    Route::delete('warehouse/show/{warehouse}', [WarehouseController::class, 'delete'])
         ->name('warehouse.delete');
 
-    Route::put('warehouse/{id}/address', [WarehouseController::class, 'updateAddress'])
-        ->name('warehouse.address');
+    Route::put('warehouse/show/{warehouse}', [WarehouseController::class, 'update'])
+        ->name('warehouse.update');
 
-    Route::put('warehouse/{id}', [WarehouseController::class, 'updateWarehouse']);
-
-    Route::post('warehouse/{id}/main', [WarehouseController::class, 'setMain'])
+    Route::put('warehouse/show/{warehouse}/main', [WarehouseController::class, 'setMain'])
         ->name('warehouse.main');
 
     Route::get('orders', [OrderController::class, 'active'])

@@ -50,6 +50,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'created_at' => DateCast::class,
         'updated_at' => DateCast::class,
+        'born_at' => 'date:Y-m-d',
     ];
 
     public function getNameAttribute()

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\auth;
+namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class verifyEmail extends Component
+class ProductCard extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class verifyEmail extends Component
      */
     public function render()
     {
-        return view('components.auth.verify-email');
+        return view('components.main.product-card');
     }
 }

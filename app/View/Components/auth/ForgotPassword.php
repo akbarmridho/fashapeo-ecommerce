@@ -4,7 +4,7 @@ namespace App\View\Components\auth;
 
 use Illuminate\View\Component;
 
-class register extends Component
+class ForgotPassword extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class register extends Component
      */
     public function render()
     {
-        return view('components.auth.register');
+        return view('components.auth.forgot-password');
     }
 }

@@ -9,7 +9,7 @@ My Account
     <div class="container">
         <div class="row mt-5">
             <div class="col-12 col-md-3 me-4">
-            @include('customer.includes/my-account-nav');
+            @include('customer.includes.my-account-nav');
             </div>
             <div class="col-12 col-md-8 p-4 shadow-1">
                 <div class="d-flex justify-content-between">
@@ -23,7 +23,7 @@ My Account
                     </div>
                     @else
                         @foreach($notifications as $notification)
-                            <x-customer.notifications :notification="$notification"/>
+                            <x-main.notifications :notification="$notification"/>
                         @endforeach
                     @endif
             </div>

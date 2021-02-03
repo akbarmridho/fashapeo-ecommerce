@@ -22,6 +22,7 @@ class CustomerController extends Controller
 
     public function profile()
     {
-        return view('customer.pages.my-account.edit-account');
+        $user = Auth::guard('customer')->user();
+        return view('customer.pages.my-account.edit-account', compact('user'));
     }
 }

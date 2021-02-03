@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use App\Models\User;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -21,26 +22,31 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                'sex' => ['required'],
-                'birthDate' => ['date'],
-                Rule::unique('users')->ignore($user->id),
+                Rule::unique(User::class)->ignore($user->id)
             ],
+            'sex' => 'required',
+            'phone' => 'nullable|starts_with:628,08|digits_between:9,15',
+            'birtDate' => 'date'
         ])->validateWithBag('updateProfileInformation');
 
-        if ($input['email'] !== $user->email &&
-            $user instanceof MustVerifyEmail) {
+        if (
+            $input['email'] !== $user->email &&
+            $user instanceof MustVerifyEmail
+        ) {
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                'name' => Str::title($input['name']),
+                'first_name' => Str::title($input['first_name']),
+                'last_name' => Str::title($input['last_name']),
                 'email' => $input['email'],
+                'phone' => $input['phone'],
                 'sex' => $input['sex'],
                 'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d'),
             ])->save();
@@ -57,9 +63,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser($user, array $input)
     {
         $user->forceFill([
-            'name' => Str::title($input['name']),
+            'first_name' => Str::title($input['first_name']),
+            'last_name' => Str::title($input['las_name']),
             'email' => $input['email'],
             'email_verified_at' => null,
+            'phone' => $input['phone'],
+            'sex' => $input['sex'],
+            'born_at' => Carbon::parse($input['birthDate'])->format('Y-m-d'),
         ])->save();
 
         $user->sendEmailVerificationNotification();

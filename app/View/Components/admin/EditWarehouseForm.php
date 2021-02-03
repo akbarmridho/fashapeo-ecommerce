@@ -1,19 +1,21 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\admin;
 
 use Illuminate\View\Component;
 
-class EditAccountForm extends Component
+class EditWarehouseForm extends Component
 {
+    public $warehouse;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($warehouse)
     {
-        //
+        $this->warehouse = $warehouse;
     }
 
     /**
@@ -23,6 +25,6 @@ class EditAccountForm extends Component
      */
     public function render()
     {
-        return view('components.customer.edit-account-form');
+        return view('components.admin.edit-warehouse-form');
     }
 }

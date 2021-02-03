@@ -56,7 +56,7 @@ class AddressController extends Controller
     {
         $address->delete();
 
-        session('status', 'Address deleted');
+        session()->flash('status', 'Address deleted');
 
         return redirect()->route('customer.address');
     }
@@ -74,7 +74,7 @@ class AddressController extends Controller
     {
         $customer = Auth::guard('customer')->user();
 
-        if (! $old = $customer->addresses()->active()->first()) {
+        if ($old = $customer->addresses()->active()->first()) {
             $old->is_main = false;
             $old->save();
         }

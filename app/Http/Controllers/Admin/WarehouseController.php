@@ -6,55 +6,52 @@ use App\Actions\Address\UpdateAddress;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateWarehouseRequest;
 use App\Models\Warehouse;
-use App\Repository\DeliveryRepositoryInterface as Deliveries;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    public $deliveries;
-
-    public function __construct(Deliveries $deliveries)
-    {
-        $this->deliveries = $deliveries;
-    }
-
     public function index()
     {
-        //
+        $warehouses = Warehouse::orderByDesc('id')->get();
+
+        return view('admin.pages.warehouse', compact('warehouses'));
     }
 
-    public function show()
+    public function show(Warehouse $warehouse)
     {
-        //
+        return view('admin.pages.edit-warehouse', compact('warehouse'));
     }
 
     public function create()
     {
-        //
+        return view('admin.pages.create-warehouse');
     }
 
     public function store(CreateWarehouseRequest $request, UpdateAddress $creator)
     {
-        if (Warehouse::count() === 0) {
+        $warehouseCount = Warehouse::count();
+
+        if ($warehouseCount === 0) {
             $main = true;
+        } else if ($warehouseCount >= 5) {
+            session()->flash('error', 'Only five warehouse that are allowed');
+            return redirect()->route('admin.warehouse');
         } else {
             $main = false;
         }
 
         $warehouse = Warehouse::create([
-            'name' => $request->name,
+            'name' => $request->warehouse_name,
             'description' => $request->description,
             'main' => $main,
         ]);
 
-        $address = $request->address;
-        $address = array_merge($address, $this->deliveries->address($address['city'] ?: $address['vendor_id']));
-
-        $address = $creator->create($address, true);
-
+        $address = $creator->create($request->address, true);
         $warehouse->address()->save($address);
 
         session()->flash('status', 'Warehouse created');
+
+        return redirect()->route('admin.warehouse');
     }
 
     public function delete(Warehouse $warehouse)
@@ -64,38 +61,26 @@ class WarehouseController extends Controller
 
         session('status', 'Warehouse and its address has been deleted');
 
-        return back();
+        return redirect()->route('admin.warehouse');
     }
 
-    public function updateWarehouse(Warehouse $warehouse, Request $request)
+    public function update(Warehouse $warehouse, CreateWarehouseRequest $request, UpdateAddress $updater)
     {
-        $validated = $request->validate([
-            'name' => 'string|required|max:255',
-            'description' => 'string|nullable|max:255',
-        ]);
+        $updater->update($warehouse->address, $request->address);
 
         $warehouse->fill([
-            'name' => $validated['name'],
-            'description' => $validated['description'],
+            'name' => $request->warehouse_name,
+            'description' => $request->description,
         ])->save();
 
         session()->flash('status', 'Warehouse updated');
 
-        return back();
-    }
-
-    public function updateAddress(Warehouse $warehouse, Request $request, UpdateAddress $updater)
-    {
-        $updater->update($warehouse->address, $request->all());
-
-        session()->flash('status', 'Address updated');
-
-        return back();
+        return redirect()->route('admin.warehouse');
     }
 
     public function setMain(Warehouse $warehouse)
     {
-        if (! $old = Warehouse::active()->first()) {
+        if ($old = Warehouse::active()->first()) {
             $old->main = false;
             $old->save();
         }
@@ -105,6 +90,6 @@ class WarehouseController extends Controller
 
         session()->flash('status', 'Main warehouse updated');
 
-        return back();
+        return redirect()->route('admin.warehouse');
     }
 }

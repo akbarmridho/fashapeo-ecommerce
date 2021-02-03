@@ -4,16 +4,18 @@ namespace App\View\Components\auth;
 
 use Illuminate\View\Component;
 
-class resetPassword extends Component
+class EditAccountForm extends Component
 {
+    public $user;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -23,6 +25,6 @@ class resetPassword extends Component
      */
     public function render()
     {
-        return view('components.auth.reset-password');
+        return view('components.auth.edit-account-form');
     }
 }

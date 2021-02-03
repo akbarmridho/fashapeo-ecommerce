@@ -24,7 +24,7 @@ class CreateWarehouseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'warehouse_name' => 'required|string|max:255',
             'description' => 'string|nullable|max:255',
             'address' => 'array',
         ];
