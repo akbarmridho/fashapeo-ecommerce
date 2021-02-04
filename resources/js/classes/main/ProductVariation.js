@@ -1,5 +1,5 @@
 class ProductVariation {
-    constructor(products) {
+    constructor() {
         this.products = products;
         this.price = document.getElementById("price");
         this.variations = document.querySelectorAll(".product-variant");
@@ -69,6 +69,7 @@ class ProductVariation {
         this.price.textContent = product.price.toLocaleString("id");
         // this.productImage = document.getElementById("productImage");
         // this.productImage.style.backgroundImage = `url('${product.image}')`;
+        // update selected variant untuk prepare add to wishlist atau add to cart
     }
 }
 

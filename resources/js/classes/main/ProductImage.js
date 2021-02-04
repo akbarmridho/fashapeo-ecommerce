@@ -20,6 +20,8 @@ class ProductImage {
             this.productImageHandler.bind(this)
         );
         this.slideChange();
+        // listen event ketika kombinasi varian terpilih dan terpadat gambar
+        // cek juga alternatif di class sebelah
     }
 
     setDefault() {
@@ -33,11 +35,11 @@ class ProductImage {
 
     imageList() {
         this.images = this.productImageThumbnails.querySelectorAll("img");
-        return Array.from(this.images).map(element => {
+        return Array.from(this.images).map((element) => {
             return {
                 href: element.src,
                 type: "image",
-                index: element.dataset.index
+                index: element.dataset.index,
             };
         });
     }

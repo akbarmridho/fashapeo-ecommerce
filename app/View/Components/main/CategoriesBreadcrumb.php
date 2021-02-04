@@ -4,18 +4,20 @@ namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class Recommendation extends Component
+class CategoriesBreadcrumb extends Component
 {
-    public $title;
+    public $category;
+    public $categories;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title)
+    public function __construct($category, $categories)
     {
-        $this->title = $title;
+        $this->category = $category;
+        $this->categories = $categories;
     }
 
     /**
@@ -25,6 +27,6 @@ class Recommendation extends Component
      */
     public function render()
     {
-        return view('components.main.recommendation');
+        return view('components.main.categories-breadcrumb');
     }
 }

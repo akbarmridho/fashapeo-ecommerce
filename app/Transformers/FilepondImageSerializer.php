@@ -11,7 +11,10 @@ class FilepondImageSerializer
     {
         $result = [];
 
-        foreach ($images as $image) {
+        foreach ($images as $index => $image) {
+            if ($index >= 4) {
+                break;
+            }
             try {
                 Crypt::decryptString($image);
                 $result['images'][] = ['content' => $image, 'is_new' => true];

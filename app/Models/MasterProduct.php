@@ -87,7 +87,7 @@ class MasterProduct extends Model
         if ($min === $max) {
             return $symbol . $min;
         } else {
-            return $symbol . $min . ' -- ' . $symbol . $max;
+            return $symbol . $min . ' — ' . $symbol . $max;
         }
     }
 
@@ -127,9 +127,9 @@ class MasterProduct extends Model
             }
 
             if ($item['discount']) {
-                $finalPrice = $item['price'] - $item['discount']['discount_value'];
+                $discountPrice = $item['price'] - $item['discount']['discount_value'];
             } else {
-                $finalPrice = $item['price'];
+                $discountPrice = null;
             }
 
             $a = [
@@ -137,17 +137,15 @@ class MasterProduct extends Model
                 'stock' => $item['stock'],
                 'image' => $item['image'],
                 'active' => $item['active'],
-                'initial_price' => config('payment.currency_symbol') . $item['price'],
-                'final_price' => config('payment.currency_symbol') . $finalPrice,
+                'price' => config('payment.currency_symbol') . $item['price'],
+                'discount_price' => config('payment.currency_symbol') . $discountPrice,
             ];
 
             return $a;
         });
 
         return [
-            'name' => $this->name,
             'variants' => $variants,
-            'images' => $this->images->toArray(),
             'products' => $products,
         ];
     }

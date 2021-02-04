@@ -18,16 +18,11 @@ Route::get('/', [MainPageController::class, 'home'])->name('home');
 
 Route::middleware('last.visited')->get('/product/{product:slug}', [MainPageController::class, 'product'])->name('product');
 
-// Route::get('/category', function () {
-//     return view('customer.pages.category');
-// });
+Route::get('/category/{category:slug}', [MainPageController::class, 'category'])
+    ->name('products.category');
 
 // Route::get('/page', function () {
 //     return view('customer.pages.single-page');
-// });
-
-// Route::get('/product', function () {
-//     return view('customer.pages.product');
 // });
 
 // Route::get('/contact', function () {

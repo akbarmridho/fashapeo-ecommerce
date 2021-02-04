@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Main;
 use App\Http\Controllers\Controller;
 use App\Repository\ProductRepositoryInterface;
 use App\Models\MasterProduct;
+use App\Models\Category;
 
 class MainPageController extends Controller
 {
@@ -22,7 +23,12 @@ class MainPageController extends Controller
 
     public function product(MasterProduct $product)
     {
-        dump($product->product_information->toArray());
-        return view('main.pages.product', compact('product'));
+        $recentViewed = $this->products->recentViewed();
+        return view('main.pages.product', compact('product', 'recentViewed'));
+    }
+
+    public function category(Category $category)
+    {
+        return view('main.pages.category');
     }
 }

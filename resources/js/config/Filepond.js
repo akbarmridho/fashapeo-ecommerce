@@ -2,7 +2,7 @@ const UploadProductImage = {
     server: {
         process: {
             url: "/api/image/process",
-            ondata: formData => {
+            ondata: (formData) => {
                 let newData = new FormData();
                 for (let value of formData.values()) {
                     if (value instanceof File) {
@@ -10,12 +10,12 @@ const UploadProductImage = {
                     }
                 }
                 return newData;
-            }
+            },
         },
         revert: "/api/image/delete",
         restore: null,
         load: "/api/image?type=product&load=",
-        fetch: null
+        fetch: null,
     },
     maxFileSize: "3MB",
     maxFiles: 1,
@@ -28,7 +28,7 @@ const UploadProductImage = {
     credits: false,
     labelIdle:
         "<span class='filepond--label-action'><i class='fas fa-plus p-0 m-0'></i></span>",
-    imageResizeTargetWidth: 1024
+    imageResizeTargetWidth: 1024,
     // imageTransformVariants: {
     //     thumb_medium_: transforms => {
     //         transforms.resize.size.width = 384;
@@ -48,7 +48,7 @@ const UploadMasterProductImage = {
     server: {
         process: {
             url: "/api/image/process",
-            ondata: formData => {
+            ondata: (formData) => {
                 let newData = new FormData();
                 for (let value of formData.values()) {
                     if (value instanceof File) {
@@ -56,22 +56,22 @@ const UploadMasterProductImage = {
                     }
                 }
                 return newData;
-            }
+            },
         },
         revert: "/api/image/delete",
         restore: null,
         load: "/api/image?type=product&load=",
-        fetch: null
+        fetch: null,
     },
     allowReorder: true,
     maxFileSize: "3MB",
-    maxFiles: 5,
+    maxFiles: 4,
     allowMultiple: true,
     required: true,
     itemInsertLocation: "after",
     styleItemPanelAspectRatio: 1,
     imageCropAspectRatio: 1,
-    imageResizeTargetWidth: 1024
+    imageResizeTargetWidth: 1024,
     // imageTransformVariants: {
     //     thumb_medium_: transforms => {
     //         transforms.resize.size.width = 384;
@@ -91,7 +91,7 @@ function dec2hex(dec) {
     return dec.toString(16).padStart(2, "0");
 }
 
-const stringGenerator = len => {
+const stringGenerator = (len) => {
     var arr = new Uint8Array((len || 40) / 2);
     window.crypto.getRandomValues(arr);
     return Array.from(arr, dec2hex).join("");

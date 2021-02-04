@@ -51,6 +51,6 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $lists = Cookie::get('lastVisited');
 
-        return $this->master->withRelationship()->whereIn('slug', explode(',', $lists))->get();
+        return $this->master->withRelationship()->findMany(array_map('intval', explode(',', $lists)));
     }
 }

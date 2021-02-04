@@ -1,5 +1,5 @@
 <h1 align="center">
-Fashapeo E-Ecommerce
+Fashapeo E-Commerce
 </h1>
 
 ## About Fashapeo
