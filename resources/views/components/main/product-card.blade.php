@@ -9,7 +9,7 @@
                     src="{{ $product->main_image->url }}"
                     class="img-fluid"
                 />
-                <a href="#!">
+                <a href="{{ route('product', ['product' => $product])}}">
                     <div
                         class="mask"
                         style="background-color: rgba(251, 251, 251, 0.15)"
@@ -17,7 +17,7 @@
                 </a>
             </div>
             <div class="card-body">
-                <a href="#" class="text-body card-title h5"
+                <a href="{{ route('product', ['product' => $product ]) }}" class="text-body card-title h5"
                     >{{ $product->name }}</a
                 >
                 <p class="card-text">

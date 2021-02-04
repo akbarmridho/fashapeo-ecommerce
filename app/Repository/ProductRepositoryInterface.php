@@ -16,7 +16,7 @@ interface ProductRepositoryInterface
 
     public function bestSeller();
 
-    public function newArrival($page);
+    public function newArrival();
 
     public function recentViewed();
 }

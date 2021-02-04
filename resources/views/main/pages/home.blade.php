@@ -10,8 +10,8 @@ Fashapeo - Your Everyday Wear
     @include('main.includes.main-carousel')
     <!-- Carousel wrapper -->
     <div class="container">
-        <x-main.product-card-group productsCardGroupTitle="BEST SELLER" />
-        <x-main.product-card-group productsCardGroupTitle="NEW ARRIVAL" />
+        {{-- <x-main.product-card-group productsCardGroupTitle="BEST SELLER" /> --}}
+        <x-main.product-card-group title="NEW ARRIVAL" :products="$newArrival"/>
         @include('main.samples.products-by-category')
     </div>
 </main>

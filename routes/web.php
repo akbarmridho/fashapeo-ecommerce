@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MainPageController::class, 'home'])->name('home');
 
-Route::get('/product/{product:slug}/', ['']);
+Route::middleware('last.visited')->get('/product/{product:slug}', [MainPageController::class, 'product'])->name('product');
 
 // Route::get('/category', function () {
 //     return view('customer.pages.category');

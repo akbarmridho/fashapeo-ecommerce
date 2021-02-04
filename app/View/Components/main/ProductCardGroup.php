@@ -6,16 +6,18 @@ use Illuminate\View\Component;
 
 class ProductCardGroup extends Component
 {
-    public $productsCardGroupTitle;
+    public $title;
+    public $products;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($productsCardGroupTitle)
+    public function __construct($title, $products)
     {
-        $this->productsCardGroupTitle = $productsCardGroupTitle;
+        $this->title = $title;
+        $this->products = $products;
     }
 
     /**

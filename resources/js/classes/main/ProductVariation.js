@@ -2,7 +2,7 @@ class ProductVariation {
     constructor(products) {
         this.products = products;
         this.price = document.getElementById("price");
-        this.variations = document.querySelectorAll("#variant");
+        this.variations = document.querySelectorAll(".product-variant");
         this.form = document.getElementById("variations");
         this.initializer();
     }
@@ -16,16 +16,16 @@ class ProductVariation {
         const variations = document.querySelectorAll("#variant");
         let selectionDivElements = [];
         this.variationName = [];
-        variations.forEach(variation => {
+        variations.forEach((variation) => {
             this.variationName.push(variation.dataset.variant);
             const variants = variation.querySelectorAll("div");
-            variants.forEach(variant => selectionDivElements.push(variant));
+            variants.forEach((variant) => selectionDivElements.push(variant));
         });
         this.selectionDivElements = selectionDivElements;
     }
 
     clickListener() {
-        this.selectionDivElements.forEach(element => {
+        this.selectionDivElements.forEach((element) => {
             element
                 .querySelector("input")
                 .addEventListener("change", this.evaluator.bind(this));
@@ -35,7 +35,7 @@ class ProductVariation {
     evaluator() {
         let selected = [];
 
-        this.variationName.forEach(name => {
+        this.variationName.forEach((name) => {
             const selectedValue = this.form.elements[name].value;
             if (selectedValue === "" || selectedValue === null) {
                 return;
@@ -53,7 +53,7 @@ class ProductVariation {
         let filtered = variants;
 
         for (const data of selectedData) {
-            filtered = filtered.filter(variant => {
+            filtered = filtered.filter((variant) => {
                 if (variant[data.name] === data.value) {
                     return variant;
                 }

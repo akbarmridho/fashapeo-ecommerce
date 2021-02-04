@@ -1,5 +1,9 @@
-@extends('customer.layouts.main') @section('title') Fashapeo - Your Everyday
-Wear @endsection @section('content')
+@extends('layouts.main')
+@section('title')
+Fashapeo - Your Everyday Wear
+@endsection 
+
+@section('content')
 <main>
     <div class="container mt-5">
         <div class="row  rounded-3 p-4">
@@ -57,14 +61,14 @@ Wear @endsection @section('content')
             </div>
             <div class="col-12 col-md-8 col-lg-6 px-5 pt-3">
                 <h2 class="h2">
-                    Mango Man Basic T-Shirt
+                    {{ $product->name }}
                 </h2>
-               <p class="small"><span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i> <b>Sold 500 Product</b></p>
+               <p class="small"><span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i> <b>Sold {{ $product->sold }} Product</b></p>
 
                 <div class="row mt-5">
                     <form action="" id="variations">
                     <p class="h5">Color:</p>
-                    <div class="col-12 mb-4" id="variant" data-variant="color">
+                    <div class="col-12 mb-4 product-variant" data-variant="color">
                         <div class="form-check form-check-inline">
                             <input
                                 class="form-check-input"
@@ -103,7 +107,7 @@ Wear @endsection @section('content')
                         </div>
                     </div>
                     <p class="h5">Size:</p>
-                    <div class="col-12 mb-4" id="variant" data-variant="size">
+                    <div class="col-12 mb-4 product-variant" data-variant="size">
                         <div class="form-check form-check-inline">
                             <input
                                 class="form-check-input"
@@ -159,11 +163,11 @@ Wear @endsection @section('content')
                     <span class="text-danger fw-bold">
                         Rp<span id="price">350.000</span>
                     </span>
-                    {{-- <span class="text-muted">
+                    <span class="text-muted">
                         <small>
                             <s>Rp500.000</s>
                         </small>
-                    </span> --}}
+                    </span>
                 </h3></div>
                     <div class="row">
                         
@@ -227,36 +231,14 @@ Wear @endsection @section('content')
             <hr class="divider">
             <div class="col-12">
                 <p class="h4">Product Description:</p>
-                <p class="">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores, magni optio et sunt suscipit iusto nisi
-                    totam quis, nobis mollitia necessitatibus.Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores, magni optio et sunt suscipit iusto nisi
-                    totam quis, nobis mollitia necessitatibus.Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores.
-                </p>
-                <img src="img/size.jpg" alt="" class="img-fluid">
-                <p class="">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores, magni optio et sunt suscipit iusto nisi
-                    totam quis, nobis mollitia necessitatibus.Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores, magni optio et sunt suscipit iusto nisi
-                    totam quis, nobis mollitia necessitatibus.Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Sapiente nesciunt atque nemo neque ut officiis nostrum
-                    incidunt maiores.
-                </p>
+                {!! $product->description !!}
             </div>
         </div>
         {{-- <x-customer.recommendation title="Recent Viewed" /> --}}
-        <x-customer.recommendation title="For you" />
+        <x-main.recommendation title="For you" />
     </div>
-    <link rel="stylesheet" href="{{ asset('css/glightbox.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/glightbox.min.css') }}">
     <script src="{{ asset('js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('js/pages/product.js') }}" defer></script>
+    <script src="{{ asset('js/pages/product.js') }}" defer></script> --}}
 </main>
 @endsection

@@ -45,20 +45,20 @@ class MasterProduct extends Model
 
     public function scopeNewArrival($query)
     {
-        return $query->orderByDesc('created_at');
+        return $query->latest();
     }
 
     public function scopeWithRelationship($query)
     {
         return $query->with([
             'images',
-            'products',
+            'products.discount'
         ]);
     }
 
     public function getMainImageAttribute()
     {
-        return $this->images()->orderByDesc('order')->first();
+        return $this->images->sortByDesc('order')->first();
     }
 
     public function getSoldAttribute()
@@ -98,12 +98,12 @@ class MasterProduct extends Model
 
     public function getStockAttribute()
     {
-        return $this->products()->sum('stock');
+        return $this->products->sum('stock');
     }
 
     public function getSingleVariantAttribute()
     {
-        return $this->products()->first();
+        return $this->products->first();
     }
 
     public function getUsedVariantAttribute()
@@ -111,6 +111,45 @@ class MasterProduct extends Model
         $product = $this->single_variant;
 
         return $product->variant_id;
+    }
+
+    public function getProductInformationAttribute()
+    {
+        $master = collect($this->products()->withRelationship()->get()->toArray());
+
+        $variants = $master->pluck('details')->flatten(1)->mapToGroups(function ($item, $key) {
+            return [$item['variant']['name'], $item['variant_option']['name']];
+        });
+
+        $products = $master->map(function ($item, $key) {
+            foreach ($item['details'] as $detail) {
+                $a[$detail['variant']['name']] = $detail['variant_option']['name'];
+            }
+
+            if ($item['discount']) {
+                $finalPrice = $item['price'] - $item['discount']['discount_value'];
+            } else {
+                $finalPrice = $item['price'];
+            }
+
+            $a = [
+                'id' => $item['id'],
+                'stock' => $item['stock'],
+                'image' => $item['image'],
+                'active' => $item['active'],
+                'initial_price' => config('payment.currency_symbol') . $item['price'],
+                'final_price' => config('payment.currency_symbol') . $finalPrice,
+            ];
+
+            return $a;
+        });
+
+        return [
+            'name' => $this->name,
+            'variants' => $variants,
+            'images' => $this->images->toArray(),
+            'products' => $products,
+        ];
     }
 
     public function getImagesFilepondJsonAttribute()
@@ -139,7 +178,7 @@ class MasterProduct extends Model
 
     protected function calculatePrice()
     {
-        $products = $this->products()->get();
+        $products = $this->products;
 
         $transformed = $products->map(function ($item, $key) {
             $discount = $item->active_discount ?: 0;
@@ -152,23 +191,24 @@ class MasterProduct extends Model
         });
 
         $max = $transformed->max('final_price');
-        $min = $transformed->mix('final_price');
+        $min = $transformed->min('final_price');
 
         $maxModel = $transformed->firstWhere('final_price', $max);
         $minModel = $transformed->firstWhere('final_price', $min);
 
         return [
-            'min_price' => $minModel['initial_price'],
-            'max_price' => $maxModel['initial_price'],
-            'min_discounted_price' => $minModel['discount_value'],
-            'max_discounted_price' => $maxModel['discount_value'],
-            'min_final' => $minModel['final_price'],
-            'max_final' => $maxModel['final_price'],
+            'min_price' => config('payment.currency_symbol') . $minModel['initial_price'],
+            'max_price' => config('payment.currency_symbol') . $maxModel['initial_price'],
+            'min_discount' => $minModel['discount_value'],
+            'max_discount' => $maxModel['discount_value'],
+            'min_final' => config('payment.currency_symbol') . $minModel['final_price'],
+            'max_final' => config('payment.currency_symbol') . $maxModel['final_price'],
+            'has_stock' => $this->stock > 0 ? true : false,
         ];
     }
 
     protected function makeAllSearchableUsing($query)
     {
-        return $this->withRelationship();
+        return $query->withRelationship();
     }
 }

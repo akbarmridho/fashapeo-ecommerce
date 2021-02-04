@@ -113,3 +113,8 @@ input[type="number"] {
     width: 400px;
     margin: 0;
 }
+
+.ql-image {
+    max-width: 100% !important;
+    height: auto !important;
+}

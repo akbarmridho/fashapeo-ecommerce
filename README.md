@@ -4,7 +4,7 @@ Fashapeo E-Ecommerce
 
 ## About Fashapeo
 
-Fashapeo e-commerce is a e-commerce web application with flexible and expandable system. This web app developed to support single seller system. Currently, Fashapeo e-commerce have several feature such as:
+Fashapeo e-commerce is an e-commerce web application with flexible and expandable system. This web app is developed to support single seller system. Currently, Fashapeo e-commerce have several feature such as:
 
 -   Flexible product creation option. Single or multi product variant are possible.
 -   Product discount by variation.
@@ -12,7 +12,7 @@ Fashapeo e-commerce is a e-commerce web application with flexible and expandable
 -   Sales analytics with export support.
 -   Support multiple user role (Customer, Admin, etc) with single users table inteface.
 
-## Web Denpendency
+## App Denpendency
 
 We have several Laravel/PHP denpendencies such as:
 

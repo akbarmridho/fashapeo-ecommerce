@@ -24,9 +24,9 @@ class Product extends Model
         'updated_at' => DateCast::class,
     ];
 
-    public function masterProduct()
+    public function master()
     {
-        return $this->hasOne(MasterProduct::class);
+        return $this->belongsTo(MasterProduct::class);
     }
 
     public function details()
@@ -44,6 +44,11 @@ class Product extends Model
         return $this->hasOne(ProductDiscount::class);
     }
 
+    public function activeDiscount()
+    {
+        return $this->discount()->active();
+    }
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);
@@ -54,14 +59,14 @@ class Product extends Model
         return $this->details()->join('variants', 'product_details.variant_id', '=', 'variants.id');
     }
 
-    public function withRelationship()
+    public function scopeWithRelationship($query)
     {
-        return $this->with(['details', 'images', 'discount']);
+        return $query->with(['details', 'image', 'activeDiscount']);
     }
 
     public function getProductNameAttribute()
     {
-        return $this->masterProduct->name;
+        return $this->master->name;
     }
 
     public function getVariantNameAttribute()
@@ -105,20 +110,7 @@ class Product extends Model
 
     public function getWeightAttribute()
     {
-        return $this->masterProduct->weight;
-    }
-
-    public function getActiveDiscountAttribute()
-    {
-        if (!$this->discount && !$this->discount->valid_until) {
-            if ($this->discount->valid_until->gt(Carbon::now())) {
-                return $this->discount->discount_value;
-            }
-        } elseif (!$this->discount) {
-            return $this->discount->discount_value;
-        }
-
-        return null;
+        return $this->master->weight;
     }
 
     public function getSoldAttribute()

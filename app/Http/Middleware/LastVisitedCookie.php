@@ -2,10 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LastVisitedCookie
 {
@@ -18,20 +16,18 @@ class LastVisitedCookie
      */
     public function handle(Request $request, Closure $next)
     {
-        $order = $request->route('product');
+        $product = $request->route('product');
 
-        if (! is_int($order)) {
-            throw new \InvalidArgumentException('Parameter should be integer');
-        }
-
-        if (! $lastVisited = $request->cookie('lastVisited')) {
-            $recents = explode(',', $lastVisited);
-            if (count($recents) >= 8) {
-                $recents = array_shift($recents);
+        if ($lastVisited = $request->cookie('lastVisited')) {
+            $recents = array_map('intval', explode(',', $lastVisited));
+            if (!in_array($product->id, $recents)) {
+                if (count($recents) >= 8) {
+                    array_shift($recents);
+                }
+                array_push($recents, $product->id);
             }
-            $recents[] = $order;
         } else {
-            $recents = [$order];
+            $recents = [$product->id];
         }
 
         $response = $next($request);

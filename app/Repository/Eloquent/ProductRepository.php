@@ -42,7 +42,7 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->master->withRelationship()->all()->sortByDesc('sold')->take(8);
     }
 
-    public function newArrival($page = null)
+    public function newArrival()
     {
         return $this->master->withRelationship()->newArrival()->paginate($this->paginate);
     }
@@ -51,6 +51,6 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $lists = Cookie::get('lastVisited');
 
-        return $this->master->withRelationship()->findMany(explode(',', $lists));
+        return $this->master->withRelationship()->whereIn('slug', explode(',', $lists))->get();
     }
 }
