@@ -24,7 +24,8 @@ class MainPageController extends Controller
     public function product(MasterProduct $product)
     {
         $recentViewed = $this->products->recentViewed();
-        return view('main.pages.product', compact('product', 'recentViewed'));
+        $productInformation = $product->product_information;
+        return view('main.pages.product', compact('product', 'recentViewed', 'productInformation'));
     }
 
     public function category(Category $category)

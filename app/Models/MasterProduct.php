@@ -127,7 +127,7 @@ class MasterProduct extends Model
             }
 
             if ($item['discount']) {
-                $discountPrice = $item['price'] - $item['discount']['discount_value'];
+                $discountPrice = config('payment.currency_symbol') . (intval($item['price']) - intval($item['discount']['discount_value']));
             } else {
                 $discountPrice = null;
             }
@@ -138,7 +138,7 @@ class MasterProduct extends Model
                 'image' => $item['image'],
                 'active' => $item['active'],
                 'price' => config('payment.currency_symbol') . $item['price'],
-                'discount_price' => config('payment.currency_symbol') . $discountPrice,
+                'discount_price' => $discountPrice,
             ];
 
             return $a;

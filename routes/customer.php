@@ -19,6 +19,9 @@ Route::name('customer.')->group(function () {
     Route::get('/cart', [CartController::class, 'show'])
         ->name('carts');
 
+    Route::post('/cart', [CartController::class, 'add'])
+        ->name('carts.add');
+
     Route::post('/cart/{id}/increment', [CartController::class, 'increment'])
         ->name('carts.increment');
 

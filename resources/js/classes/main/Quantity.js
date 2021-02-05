@@ -51,6 +51,10 @@ class Quantity {
         this.quantityInput.value = newValue;
         this.evaluateInput();
     }
+
+    setQuantityLimit(limit) {
+        this.quantityInput.max = limit;
+    }
 }
 
-module.exports = Quantity;
+export { Quantity };

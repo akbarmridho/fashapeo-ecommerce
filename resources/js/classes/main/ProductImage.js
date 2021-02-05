@@ -20,8 +20,6 @@ class ProductImage {
             this.productImageHandler.bind(this)
         );
         this.slideChange();
-        // listen event ketika kombinasi varian terpilih dan terpadat gambar
-        // cek juga alternatif di class sebelah
     }
 
     setDefault() {
@@ -63,10 +61,25 @@ class ProductImage {
 
     slideChange() {
         this.lightbox.on("slide_changed", ({ prev, current }) => {
-            const currentImageNode = this.images[current.index];
-            this.changeProductImage(currentImageNode);
+            if (current.index < this.images.length) {
+                const currentImageNode = this.images[current.index];
+                this.changeProductImage(currentImageNode);
+            }
+        });
+    }
+
+    addVariantImage(image) {
+        let dummyImage = document.createElement("img");
+        dummyImage.src = image;
+        dummyImage.dataset.index = this.images.length;
+        this.changeProductImage({ src: image });
+        this.lightbox.removeSlide(this.images.length);
+        this.lightbox.insertSlide({
+            href: image,
+            type: "image",
+            index: this.images.length,
         });
     }
 }
 
-module.exports = ProductImage;
+export { ProductImage };

@@ -41,8 +41,8 @@
                     </p>
                     <form action="" id="variations">
                         <div class="row mt-5">
-                            @isset($product->product_information['variants'])
-                                @foreach ($product->product_information['variants'] as $variant => $options)
+                            @isset($productInformation['variants'])
+                                @foreach ($productInformation['variants'] as $variant => $options)
                                     <p class="h5">{{ $variant }}:</p>
                                     <div class="col-12 mb-4 product-variant" data-variant="{{ $variant }}">
                                         @foreach ($options as $option)
@@ -80,7 +80,7 @@
 
                     <div class="row mb-4">
                         <div class="col-12 col-md-8">
-                            <button class="btn btn-secondary btn-rounded" id="wishlist">
+                            <button class="btn btn-secondary btn-rounded" id="wishlist" data-id="{{ $product->id }}">
                                 <i class="far fa-heart mr-3"></i> Add to wishlist
                             </button>
                             <button class="btn btn-primary btn-rounded mt-2" id="cart">
@@ -116,9 +116,14 @@
                 </div>
             </div>
             <x-main.product-card-group title="For you" :products="$recentViewed" />
+
         </div>
+
+        @include('main.notifications.carts')
+        @include('main.notifications.wishlist')
+
         <script>
-            window.variantData = @json($product - > product_information, JSON_FORCE_OBJECT)
+            window.variantData = @json($productInformation, JSON_FORCE_OBJECT)
 
         </script>
     </main>
