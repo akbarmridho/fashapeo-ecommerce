@@ -72,7 +72,7 @@ class ProductImage {
         let dummyImage = document.createElement("img");
         dummyImage.src = image;
         dummyImage.dataset.index = this.images.length;
-        this.changeProductImage({ src: image });
+        this.changeProductImage(dummyImage);
         this.lightbox.removeSlide(this.images.length);
         this.lightbox.insertSlide({
             href: image,

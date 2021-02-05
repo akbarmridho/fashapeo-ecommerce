@@ -4,7 +4,7 @@ const AddToCart = require("./AddToCart").default;
 
 class ProductVariation {
     constructor() {
-        this.products = window.variantData;
+        this.products = Object.values(window.variantData.products);
         this.price = document.getElementById("price");
         this.variations = document.querySelectorAll(".product-variant");
         this.form = document.getElementById("variations");
@@ -27,16 +27,11 @@ class ProductVariation {
     }
 
     withoutVariantInitializer() {
-        if (
-            !this.products.products[0].active |
-            (this.products.products[0].stock == 0)
-        ) {
+        if (!this.products[0].active | (this.products[0].stock == 0)) {
             this.cart.disableCart();
         } else {
-            this.quantityInput.setQuantityLimit(
-                this.products.products[0].stock
-            );
-            this.cart.updateSelectedProduct(this.products.products[0].id);
+            this.quantityInput.setQuantityLimit(this.products[0].stock);
+            this.cart.updateSelectedProduct(this.products[0].id);
         }
     }
 
@@ -46,6 +41,7 @@ class ProductVariation {
         if (this.variations.length === 1) {
             this.singleVariantTypeValidator();
         }
+        this.cart.disableCart();
     }
 
     retreiveVariations() {
@@ -54,7 +50,9 @@ class ProductVariation {
         this.variations.forEach((variation) => {
             this.variationName.push(variation.dataset.variant);
             const options = variation.querySelectorAll("div");
-            options.forEach((variant) => selectionDivElements.push(variant));
+            options.forEach((variant) => {
+                selectionDivElements.push(variant);
+            });
         });
         this.selectionDivElements = selectionDivElements;
     }
@@ -68,7 +66,7 @@ class ProductVariation {
     }
 
     singleVariantTypeValidator() {
-        this.products.products.forEach((variant) => {
+        this.products.forEach((variant) => {
             if (!variant.active | (variant.stock == 0)) {
                 document.querySelector(
                     `input[value=${
@@ -80,7 +78,7 @@ class ProductVariation {
     }
 
     doubleVariantTypeValidator(selected) {
-        let filtered = this.products.products.filter((variant) => {
+        let filtered = this.products.filter((variant) => {
             if (variant[selected.name] == selected.value) {
                 return variant;
             }
@@ -88,7 +86,7 @@ class ProductVariation {
 
         filtered.forEach((variant) => {
             const input = document.querySelector(
-                `input[value=${selected.name}]`
+                `input[value=${selected.value}]`
             );
             if (!variant.active | (variant.stock == 0)) {
                 input.disabled = true;
@@ -102,18 +100,18 @@ class ProductVariation {
         let selected = [];
 
         this.variationName.forEach((name) => {
-            const selectedValue = this.form.querySelector(
+            const input = this.form.querySelector(
                 `input[name=${name}]:checked`
-            ).value;
-            if (selectedValue === "" || selectedValue === null) {
+            );
+
+            if (!input) {
+                return;
+            }
+            if ((input.value === "") | (input.value === null)) {
                 return;
             }
 
-            selected.filter((selection) => {
-                if (selection.name !== name) {
-                    return selection;
-                }
-            });
+            const selectedValue = input.value;
 
             if (this.variationName.length !== 1) {
                 this.doubleVariantTypeValidator({
@@ -127,12 +125,11 @@ class ProductVariation {
 
         if (selected.length === this.variationName.length) {
             this.filterVariants(selected);
-            selected.splice(0, selected.length);
         }
     }
 
     filterVariants(selectedData) {
-        let filtered = this.products.products;
+        let filtered = this.products;
 
         for (const data of selectedData) {
             filtered = filtered.filter((variant) => {
@@ -158,6 +155,7 @@ class ProductVariation {
         }
         this.quantityInput.setQuantityLimit(product.stock);
         this.cart.updateSelectedProduct(product.id);
+        this.cart.enableCart();
     }
 }
 

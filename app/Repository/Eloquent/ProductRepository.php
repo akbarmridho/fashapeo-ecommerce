@@ -34,6 +34,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function category(Category $category, $page = null)
     {
+        // $category->join('categori')
         return $category->products()->withRelationship()->paginate($this->paginate);
     }
 

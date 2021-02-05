@@ -2,9 +2,10 @@ class AddToCart {
     constructor() {
         this.cartButton = document.getElementById("cart");
         this.quantityInput = document.getElementById("quantity");
+        this.initializer();
     }
 
-    initialize() {
+    initializer() {
         this.cartButton.addEventListener(
             "click",
             this.requestHandler.bind(this)
@@ -26,10 +27,14 @@ class AddToCart {
         this.cartDuplicate = new window.mdb.Toast(
             this.cartDuplicateNotification
         );
-        this.cartFailed = new window.mdb.Toas(this.cartFailedNotification);
+        this.cartFailed = new window.mdb.Toast(this.cartFailedNotification);
     }
 
     requestHandler() {
+        if (!window.authenticated) {
+            window.location.href = "/login";
+        }
+
         window.axios
             .post("/cart", {
                 id: this.product,
@@ -48,7 +53,7 @@ class AddToCart {
     }
 
     getQuantity() {
-        return parse_int(this.quantityInput.value);
+        return parseInt(this.quantityInput.value);
     }
 
     updateSelectedProduct(productId) {
@@ -57,6 +62,10 @@ class AddToCart {
 
     disableCart() {
         this.cartButton.disabled = true;
+    }
+
+    enableCart() {
+        this.cartButton.disabled = false;
     }
 }
 

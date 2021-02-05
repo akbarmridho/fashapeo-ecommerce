@@ -118,15 +118,13 @@ class MasterProduct extends Model
         $master = collect($this->products()->withRelationship()->get()->toArray());
 
         $variants = $master->pluck('details')->flatten(1)->mapToGroups(function ($item, $key) {
-            return [$item['variant']['name'], $item['variant_option']['name']];
+            return [$item['variant']['name'] => $item['variant_option']['name']];
+        })->map(function ($item, $key) {
+            return $item->unique();
         });
 
         $products = $master->map(function ($item, $key) {
-            foreach ($item['details'] as $detail) {
-                $a[$detail['variant']['name']] = $detail['variant_option']['name'];
-            }
-
-            if ($item['discount']) {
+            if ($item['active_discount']) {
                 $discountPrice = config('payment.currency_symbol') . (intval($item['price']) - intval($item['discount']['discount_value']));
             } else {
                 $discountPrice = null;
@@ -135,11 +133,15 @@ class MasterProduct extends Model
             $a = [
                 'id' => $item['id'],
                 'stock' => $item['stock'],
-                'image' => $item['image'],
+                'image' => $item['image'] ? $item['image']['url'] : null,
                 'active' => $item['active'],
                 'price' => config('payment.currency_symbol') . $item['price'],
                 'discount_price' => $discountPrice,
             ];
+
+            foreach ($item['details'] as $detail) {
+                $a[$detail['variant']['name']] = $detail['variant_option']['name'];
+            }
 
             return $a;
         });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\RegisteredAdminController;
+use App\Http\Controllers\AuthCheckController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -31,7 +32,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])
         ->middleware(array_filter([
             'guest:admin',
-            $limiter ? 'throttle:'.$limiter : null,
+            $limiter ? 'throttle:' . $limiter : null,
         ]));
 
     Route::get('/register', [RegisteredAdminController::class, 'create'])
@@ -51,7 +52,7 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware(array_filter([
         'guest:customer',
-        $limiter ? 'throttle:'.$limiter : null,
+        $limiter ? 'throttle:' . $limiter : null,
     ]));
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -60,6 +61,10 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
 // COMMON USED ROUTES
+
+Route::get('/auth/customer', [AuthCheckController::class, 'customer']);
+
+Route::get('/auth/admin', [AuthCheckController::class, 'admin']);
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');

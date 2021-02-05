@@ -31,13 +31,13 @@ Route::name('customer.')->group(function () {
     Route::delete('/cart/{id}', [CartController::class, 'delete'])
         ->name('carts.delete');
 
-    Route::get('/wishlists', [WishlistController::class, 'index'])
+    Route::get('/wishlist', [WishlistController::class, 'index'])
         ->name('wishlists');
 
-    Route::post('/products/{product:slug}/wishlist', [WishlistController::class, 'store'])
+    Route::post('/wishlist', [WishlistController::class, 'store'])
         ->name('wishlists.store');
 
-    Route::delete('/wishlists/{id}', [WishlistController::class, 'delete'])
+    Route::delete('/wishlist/{id}', [WishlistController::class, 'delete'])
         ->name('wishlists.delete');
 
     Route::prefix('my-account')->group(function () {

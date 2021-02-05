@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Main;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Repository\ProductRepositoryInterface;
 use App\Models\MasterProduct;
@@ -25,7 +26,13 @@ class MainPageController extends Controller
     {
         $recentViewed = $this->products->recentViewed();
         $productInformation = $product->product_information;
-        return view('main.pages.product', compact('product', 'recentViewed', 'productInformation'));
+        if ($customer = Auth::guard("customer")->user()) {
+            $wishlist = $customer->wishlists()->where('master_product_id', $product->id)->first();
+        } else {
+            $wishlist = null;
+        }
+
+        return view('main.pages.product', compact('product', 'recentViewed', 'productInformation', 'wishlist'));
     }
 
     public function category(Category $category)

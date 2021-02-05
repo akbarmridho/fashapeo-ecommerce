@@ -27,7 +27,7 @@ class CartController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'quantity' => 'required|integer|gt:1'
+            'quantity' => 'required|integer|gt:0'
         ]);
 
         $product = Product::findOrFail($validated['id']);

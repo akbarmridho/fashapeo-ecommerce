@@ -14,7 +14,7 @@ class Wishlist extends Model
         'master_product_id',
     ];
 
-    protected $with = ['product'];
+    // protected $with = ['product'];
 
     public $timestamps = false;
 
@@ -25,6 +25,6 @@ class Wishlist extends Model
 
     public function product()
     {
-        return $this->hasOne(MasterProduct::class);
+        return $this->belongsTo(MasterProduct::class);
     }
 }
