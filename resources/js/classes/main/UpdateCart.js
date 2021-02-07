@@ -1,3 +1,7 @@
-class UpdateCart {}
+class UpdateCart {
+    constructor() {
+        //
+    }
+}
 
 export default UpdateCart;

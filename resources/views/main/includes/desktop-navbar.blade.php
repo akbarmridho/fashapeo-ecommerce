@@ -1,33 +1,32 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-2-strong">
-    <!-- Container wrapper -->
+
     <div class="container">
-        <!-- Toggle button -->
+
         <button class="navbar-toggler" id="sidenavCollapse" type="button">
             <i class="fas fa-bars"></i>
         </button>
 
-        <!-- Navbar brand -->
+
         <a class="navbar-brand" href="{{ route('home') }}"><img src="/img/thin.png" alt="" height="50" /></a>
 
         <a href="#" class="d-lg-none link-dark"><i class="fas fa-shopping-cart"></i><span
                 class="badge bg-danger rounded-pill badge-notification">1</span></a>
 
-        <!-- Collapsible wrapper -->
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left links -->
+
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item mx-2">
                     <a class="nav-link
                 @if (request()->routeIs('home')) active @endif
                         " aria-current="page" href="{{ route('home') }}">Home</a>
                 </li>
-                <!-- Navbar dropdown -->
                 <li class="nav-item dropdown mx-2">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-mdb-toggle="dropdown" aria-mdb-expanded="false">
                         Shop
                     </a>
-                    <!-- Dropdown menu -->
+
                     <div class="dropdown-menu" id="categoriesMenu">
                         <x-main.category-menu :categories="$categories" />
                     </div>
@@ -50,7 +49,7 @@
                         <div class="dropdown-menu">
                             <a href="{{ route('customer.dashboard') }}" class="dropdown-item">My Account</a>
                             <a href="" class="dropdown-item">Orders</a>
-                            <a href="" class="dropdown-item">Wishlist</a>
+                            <a href="{{ route('customer.wishlists') }}" class="dropdown-item">Wishlist</a>
                             <hr class="dropdown-divider" />
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf

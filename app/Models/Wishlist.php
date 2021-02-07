@@ -14,17 +14,5 @@ class Wishlist extends Model
         'master_product_id',
     ];
 
-    // protected $with = ['product'];
-
     public $timestamps = false;
-
-    public function customer()
-    {
-        return $this->hasOne(Customer::class);
-    }
-
-    public function product()
-    {
-        return $this->belongsTo(MasterProduct::class);
-    }
 }

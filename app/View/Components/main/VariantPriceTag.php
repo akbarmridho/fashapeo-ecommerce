@@ -4,17 +4,18 @@ namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class ProductWishlist extends Component
+class VariantPriceTag extends Component
 {
-    public $product;
+    public $price;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($product)
+    public function __construct($price)
     {
-        $this->product = $product;
+        $this->price = $price;
     }
 
     /**
@@ -24,6 +25,6 @@ class ProductWishlist extends Component
      */
     public function render()
     {
-        return view('components.main.product-wishlist');
+        return view('components.main.variant-price-tag');
     }
 }

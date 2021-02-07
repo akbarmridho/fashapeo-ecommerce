@@ -1,4 +1,4 @@
-@extends('customer.layouts.main')
+@extends('layouts.main')
 
 @section('title')
     Wishlist
@@ -23,10 +23,11 @@
             <div class="row">
                 <h4>Your wishlist</h4>
                 <div class="col-12 col-md-7 p-4 mr-auto">
-                    <x-customer.product-wishlist />
-                    <x-customer.product-wishlist />
-                    <x-customer.product-wishlist />
+                    @foreach ($wishlists as $wishlist)
+                        <x-main.product-wishlist :product="$wishlist" />
+                    @endforeach
                 </div>
+                {{-- {{ $products->links() }} --}}
             </div>
 
         </div>

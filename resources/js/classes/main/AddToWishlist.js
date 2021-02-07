@@ -62,7 +62,6 @@ class AddToWishlist {
             .then((response) => {
                 this.wishlistSuccess.show();
                 this.setAsAdded();
-                this.updateId(response.id);
             })
             .catch((error) => {
                 if (error.response.status == 422) {
@@ -82,7 +81,6 @@ class AddToWishlist {
             .then((response) => {
                 this.wishlistDelete.show();
                 this.setAsNotAdded();
-                this.updateId(response.id);
             })
             .catch((error) => {
                 this.wishlistFailed.show();
@@ -97,6 +95,7 @@ class AddToWishlist {
     setAsNotAdded() {
         const icon = `<i class="far fa-heart mr-2">`;
         this.wishlistButton.innerHTML = icon;
+        this.wishlistButton.dataset.state = "unselected";
         this.enableButton();
     }
 
@@ -111,6 +110,7 @@ class AddToWishlist {
     setAsAdded() {
         const icon = `<i class="fas fa-heart mr-2">`;
         this.wishlistButton.innerHTML = icon;
+        this.wishlistButton.dataset.state = "selected";
         this.enableButton();
     }
 
@@ -120,10 +120,6 @@ class AddToWishlist {
 
     disableButton() {
         this.wishlistButton.disabled = false;
-    }
-
-    updateId(newId) {
-        this.wishlistButton.dataset.id = newId;
     }
 }
 

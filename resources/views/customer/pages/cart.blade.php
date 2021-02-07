@@ -1,7 +1,11 @@
-@extends('customer.layouts.main')
+@extends('layouts.main')
 
 @section('title')
     Carts
+@endsection
+
+@section('additional-script')
+    <script src="{{ mix('js/pages/customer/cart.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -23,9 +27,9 @@
             <div class="row">
                 <h4>Your cart</h4>
                 <div class="col-12 col-md-7 p-4">
-                    <x-customer.product-cart />
-                    <x-customer.product-cart />
-                    <x-customer.product-cart />
+                    @foreach ($products as $product)
+                        <x-main.product-cart :product="$product" />
+                    @endforeach
                 </div>
                 <div class="col-12 col-md-3 ms-auto">
                     <div class="card">

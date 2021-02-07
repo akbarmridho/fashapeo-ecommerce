@@ -1,15 +1,20 @@
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-3">
-            <img src="/img/kaos1.jpg" alt="" class="img-fluid" />
+            <img src="{{ $product->master->main_image->url }}" alt="" class="img-fluid" />
         </div>
         <div class="col-9">
             <div class="card-body">
                 <button class="btn btn-sm px-2 rounded-3 shadow-0 btn-danger float-end"><i
                         class="fas fa-trash"></i></button>
-                <h5 class="card-title">Mango Man Basic T-Shirt</h5>
-                <h6 class="card-subtitle text-muted mb-3">Variant: S, White</h6>
-                <p class="card-text text-danger fw-bold h6">Rp500.000</p>
+                <a class="card-title h5 link-dark"
+                    href="{{ route('product', ['product' => $product->master]) }}">{{ $product->product_name }}</a>
+                @isset($product->variant_name))
+                    <h6 class="card-subtitle text-muted mb-3">Variant: {{ $product->variant_name }}</h6>
+                @endisset
+                <p class="card-text text-danger fw-bold h6">
+                    <x-main.variant-price-tag :price="$product->final_price" />
+                </p>
                 <div class="row mt-3">
                     <div class="col-8">
                         <div class="form-outline">

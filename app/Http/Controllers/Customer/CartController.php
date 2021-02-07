@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Repository\CartRepositoryInterface as Carts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,10 @@ class CartController extends Controller
 
     public function show()
     {
-        return view('customer.pages.cart');
+        $customer = Auth::guard('customer')->user();
+        $products = $customer->carts;
+
+        return view('customer.pages.cart', compact('products'));
     }
 
     public function add(Request $request)
@@ -40,29 +44,23 @@ class CartController extends Controller
 
         $customer = Auth::guard('customer')->user();
 
-        $cartCount = $customer->carts()->where('product_id', $validated['id'])->count();
-
-        if ($cartCount === 0) {
-            $this->carts->create($product, $customer, $quantity);
-        } else {
-            return response(['message' => 'Cart already exist'], 422);
-        }
+        $customer->carts()->syncWithoutDetaching([$validated['id'] => ['quantity' => $validated['quantity']]]);
     }
 
-    public function increment(Cart $cart)
+    public function increment($cart)
     {
-        if ($cart->quantity + 1 <= $cart->product->stock) {
-            $this->carts->increment($cart);
-        }
+        $customer = Auth::guard('customer')->user();
+        $customer->carts()->find($cart)->pivot->increment('quantity');
     }
 
-    public function decrement(Cart $cart)
+    public function decrement($cart)
     {
-        $this->carts->decrement($cart);
+        $customer = Auth::guard('customer')->user();
+        $customer->carts()->find($cart)->pivot->increment('quantity');
     }
 
-    public function delete(Cart $cart)
+    public function delete($cart)
     {
-        $this->carts->delete($cart);
+        $customer->carts()->detach($cart);
     }
 }

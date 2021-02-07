@@ -87,7 +87,7 @@
                         <div class="col-12 col-md-8">
                             @if ($wishlist)
                                 <button class="btn btn-secondary btn-rounded" id="wishlist" data-state="selected"
-                                    data-id="{{ $wishlist->id }}">
+                                    data-id="{{ $product->id }}">
                                     <i class="fas fa-heart mr-2"></i>
                                 </button>
                             @else
@@ -130,11 +130,15 @@
             </div>
         </div>
         <x-main.product-card-group title="For you" :products="$recentViewed" />
-        @include('main.notifications.carts')
-        @include('main.notifications.wishlists')
+
     </div>
     <script>
         window.variantData = @json($productInformation, JSON_FORCE_OBJECT)
 
     </script>
+@endsection
+
+@section('additional-layout')
+    @include('main.notifications.carts')
+    @include('main.notifications.wishlists')
 @endsection

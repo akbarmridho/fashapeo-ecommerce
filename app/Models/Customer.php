@@ -10,12 +10,12 @@ class Customer extends User
 
     public function wishlists()
     {
-        return $this->hasMany(Wishlist::class);
+        return $this->belongsToMany(MasterProduct::class, 'wishlists');
     }
 
     public function carts()
     {
-        return $this->hasMany(Cart::class);
+        return $this->belongsToMany(Product::class, 'carts')->withPivot('quantity');
     }
 
     public function orders()

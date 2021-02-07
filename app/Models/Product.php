@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Carbon;
 use App\Casts\DateCast;
 
 class Product extends Model
@@ -26,7 +25,7 @@ class Product extends Model
 
     public function master()
     {
-        return $this->belongsTo(MasterProduct::class);
+        return $this->belongsTo(MasterProduct::class, 'master_product_id', 'id');
     }
 
     public function details()
@@ -137,5 +136,21 @@ class Product extends Model
         ];
 
         return \json_encode($result);
+    }
+
+    public function getFinalPriceAttribute()
+    {
+        if ($discount = $this->active_discount) {
+            $discountValue = $discount->discount_value;
+        } else {
+            $discountValue = 0;
+        }
+
+        return [
+            'has_stock' => $this->stock > 0 ? true : false,
+            'initial_price' => config('payment.currency_symbol') . $this->price,
+            'discount_value' => $discountValue,
+            'final_price' => config('payment.currency_symbol') . ($this->price - $discountValue),
+        ];
     }
 }

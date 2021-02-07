@@ -3,6 +3,7 @@
         @if ($price['max_discount'] == 0 && $price['min_discount'] == 0)
             {{ $price['min_final'] }}
         @else
+            <del><span class="text-muted">{{ $price['min_price'] }}</span></del>
             {{ $price['min_final'] }}
         @endif
     @else

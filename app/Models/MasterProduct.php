@@ -181,13 +181,19 @@ class MasterProduct extends Model
         $products = $this->products;
 
         $transformed = $products->map(function ($item, $key) {
-            $discount = $item->active_discount ?: 0;
-
-            return [
-                'initial_price' => $item->price,
-                'discount_value' => $discount,
-                'final_price' => $item->price - $discount,
-            ];
+            if ($discount = $item->active_discount) {
+                return [
+                    'initial_price' => $item->price,
+                    'discount_value' => $discount->discount_value,
+                    'final_price' => $item->price - $discount->discount_value,
+                ];
+            } else {
+                return [
+                    'initial_price' => $item->price,
+                    'discount_value' => 0,
+                    'final_price' => $item->price,
+                ];
+            }
         });
 
         $max = $transformed->max('final_price');

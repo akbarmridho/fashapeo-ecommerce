@@ -32,13 +32,13 @@ class ProductDetail extends Model
         return $this->belongsTo(VariantOption::class);
     }
 
-    public function getVariantNameAttribute()
-    {
-        return $this->variant->name.' '.$this->variantOption->name;
-    }
+    // public function getVariantNameAttribute()
+    // {
+    //     return $this->variant->name . ' ' . $this->variantOption->name;
+    // }
 
-    public function getVariantTypeAttribute()
-    {
-        return $this->variant->name;
-    }
+    // public function getVariantTypeAttribute()
+    // {
+    //     return $this->variant->name;
+    // }
 }

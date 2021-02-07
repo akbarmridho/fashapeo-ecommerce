@@ -22,22 +22,24 @@ class WishlistController extends Controller
     {
         $customer = Auth::guard('customer')->user();
 
-        $wishlist = $this->wishlist->create(MasterProduct::findOrFail($request->id), $customer);
+        $customer->wishlists()->attach($request->id);
 
-        return response()->json(['message' => 'Product added to your wishlist', 'id' => $wishlist->id], 200);
+        return response()->json(['message' => 'Product added to your wishlist'], 200);
     }
 
     public function delete(int $id)
     {
-        $wishlist = Wishlist::findOrFail($id);
+        $customer = Auth::guard('customer')->user();
 
-        $this->wishlist->delete($wishlist);
+        $customer->wishlists()->detach($id);
 
-        return response()->json(['message' => 'Product removed from your wishlist', 'id' => $wishlist->master_product_id], 200);
+        return response()->json(['message' => 'Product removed from your wishlist'], 200);
     }
 
     public function index()
     {
-        return view('customer.pages.wishlist');
+        $customer = Auth::guard('customer')->user();
+        $wishlists = $customer->wishlists;
+        return view('customer.pages.wishlist', compact('wishlists'));
     }
 }
