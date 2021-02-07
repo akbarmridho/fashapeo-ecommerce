@@ -22,9 +22,18 @@ class CartController extends Controller
     public function show()
     {
         $customer = Auth::guard('customer')->user();
-        $products = $customer->carts;
+        $products = $customer->carts()->wishRelationship()->get();
 
-        return view('customer.pages.cart', compact('products'));
+        $initialPrice = $products->sum('price');
+        $discountPrice = $products->sum('discount.discount_value') ?: 0;
+
+        $summary = [
+            'items' => config('payment.currency_symbol') . $initialPrice,
+            'discount' => config('payment.currency_symbol') . $discountPrice,
+            'total' => config('payment.currency_symbol') . ($initialPrice - $discountPrice),
+        ];
+
+        return view('customer.pages.cart', compact('products', 'summary'));
     }
 
     public function add(Request $request)
@@ -47,16 +56,16 @@ class CartController extends Controller
         $customer->carts()->syncWithoutDetaching([$validated['id'] => ['quantity' => $validated['quantity']]]);
     }
 
-    public function increment($cart)
+    public function update(Request $request)
     {
-        $customer = Auth::guard('customer')->user();
-        $customer->carts()->find($cart)->pivot->increment('quantity');
-    }
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'quantity' => 'required|gte:1'
+        ]);
 
-    public function decrement($cart)
-    {
         $customer = Auth::guard('customer')->user();
-        $customer->carts()->find($cart)->pivot->increment('quantity');
+
+        $customer->carts()->updateExistingPivot($validated['id'], ['quantity' => $validated['quantity']]);
     }
 
     public function delete($cart)

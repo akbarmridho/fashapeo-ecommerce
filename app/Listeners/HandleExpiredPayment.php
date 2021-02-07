@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderCompleted;
+use App\Events\PaymentExpired;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class OrderCompletedNotification
+class HandleExpiredPayment
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class OrderCompletedNotification
     /**
      * Handle the event.
      *
-     * @param  OrderCompleted  $event
+     * @param  PaymentExpired  $event
      * @return void
      */
-    public function handle(OrderCompleted $event)
+    public function handle(PaymentExpired $event)
     {
         //
     }

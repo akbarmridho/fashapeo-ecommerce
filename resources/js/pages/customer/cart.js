@@ -1,5 +1,7 @@
-const { Quantity } = require("../../classes/main/Quantity");
+const UpdateCart = require("../../classes/main/UpdateCart").default;
 
 document.addEventListener("DOMContentLoaded", () => {
-    new Quantity();
+    document.querySelectorAll("product-cart").forEach((cart) => {
+        new UpdateCart(cart);
+    });
 });

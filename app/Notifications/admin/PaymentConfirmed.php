@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Admin;
 
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
@@ -44,9 +44,9 @@ class PaymentConfirmed extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Payment Confirmed',
-            'message' => 'Your order ' . $this->order->order_number . ' has been confirmed. We will process your order immediately',
-            'link' => route('customer.orders.show', ['order' => $this->order]),
+            'title' => 'Payment From Order ' . $this->order->order_number . ' Has Been Confirmed',
+            'message' => 'Customer has paid payment for order ' . $this->order->order_number . ' and waiting for seller response. Process order immediately',
+            'link' => route('admin.orders.detail', ['order' => $this->order]),
         ];
     }
 }

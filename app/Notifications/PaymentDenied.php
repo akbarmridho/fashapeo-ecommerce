@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class PaymentConfirmed extends Notification
+class PaymentDenied extends Notification
 {
     use Queueable;
 
@@ -44,8 +44,8 @@ class PaymentConfirmed extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Payment Confirmed',
-            'message' => 'Your order ' . $this->order->order_number . ' has been confirmed. We will process your order immediately',
+            'title' => 'Order Denied',
+            'message' => 'Your order ' . $this->order->order_number . ' payment has been denied. Please contact us if you feel something went wrong.',
             'link' => route('customer.orders.show', ['order' => $this->order]),
         ];
     }

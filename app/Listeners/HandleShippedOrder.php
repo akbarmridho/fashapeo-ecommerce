@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderCreated;
+use App\Events\OrderShipped;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class OrderCreatedNotification
+class HandleShippedOrder
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class OrderCreatedNotification
     /**
      * Handle the event.
      *
-     * @param  OrderCreated  $event
+     * @param  OrderShipped  $event
      * @return void
      */
-    public function handle(OrderCreated $event)
+    public function handle(OrderShipped $event)
     {
         //
     }

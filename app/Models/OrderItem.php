@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Actions\Calculations\ProductItemTotalPrice as CalculatePrice;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    use HasFactory, CalculatePrice;
+    use HasFactory;
 
     protected $fillable = [
         'order_id',

@@ -4,12 +4,14 @@ namespace App\Actions\Order;
 
 use App\Actions\Address\ActiveOriginAddress;
 use App\Actions\Calculations\CreateOrderNumber;
+use App\Actions\Calculations\OrderItemTotal;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Shipment;
+use App\Models\Product;
 
 class PlaceNewOrder
 {
@@ -19,7 +21,7 @@ class PlaceNewOrder
     {
         $order = $this->createOrder($customer, $this->generate());
 
-        foreach ($order->carts as $cart) {
+        foreach ($customer->carts as $cart) {
             $this->createOrderItem($order, $cart);
         }
 
@@ -39,24 +41,27 @@ class PlaceNewOrder
         ]);
     }
 
-    public function createOrderItem(Order $order, Cart $cart)
+    public function createOrderItem(Order $order, Product $product)
     {
-        $product = $cart->product;
-        $product->stock = $product->stock - $cart->quantity;
+        $product->stock = $product->stock - $product->pivot->quantity;
         $product->save();
+
+        if ($dsc = $product->active_discount) {
+            $discount = $dsc->discount_value;
+        } else {
+            $discount = 0;
+        }
 
         $orderItem = OrderItem::create([
             'order_id' => $order->id,
             'product_id' => $product->id,
             'name' => $product->product_name,
             'variant' => $product->variant_name,
-            'quantity' => $cart->quantity,
+            'quantity' => $product->pivot->quantity,
             'price' => $product->price,
-            'price_cut' => $product->active_discount,
+            'price_cut' => $discount,
+            'final_price' => OrderItemTotal::calculate($product->price, $discount, $product->pivot->quantity)
         ]);
-
-        $orderItem->calculate();
-        $cart->delete();
 
         return $orderItem;
     }

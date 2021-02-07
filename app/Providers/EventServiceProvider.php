@@ -9,13 +9,13 @@ use App\Events\OrderShipped;
 use App\Events\PaymentConfirmed;
 use App\Events\PaymentExpired;
 use App\Events\TransactionDenied;
-use App\Listeners\OrderCancelledNotification;
-use App\Listeners\OrderCompletedNotification;
-use App\Listeners\OrderCreatedNotification;
-use App\Listeners\OrderShippedNotification;
-use App\Listeners\PaymentConfirmedNotification;
-use App\Listeners\PaymentExpiredNotification;
-use App\Listeners\TransactionDeniedNotification;
+use App\Listeners\HandleOrderCancelled;
+use App\Listeners\HandleCompletedOrder;
+use App\Listeners\HandleCreatedOrder;
+use App\Listeners\HandleShippedOrder;
+use App\Listeners\HandleConfirmedPayment;
+use App\Listeners\HandleExpiredPayment;
+use App\Listeners\HandleDeniedPayment;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -33,25 +33,25 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         OrderCreated::class => [
-            OrderCreatedNotification::class,
+            HandleCreatedOrder::class,
         ],
         OrderCancelled::class => [
-            OrderCreatedNotification::class,
+            HandleOrderCancelled::class,
         ],
         OrderCompleted::class => [
-            OrderCompletedNotification::class,
+            HandleCompletedOrder::class,
         ],
         OrderShipped::class => [
-            OrderShippedNotification::class,
+            HandleShippedOrder::class,
         ],
         PaymentConfirmed::class => [
-            PaymentConfirmedNotification::class,
+            HandleConfirmedPayment::class,
         ],
         PaymentExpired::class => [
-            PaymentExpiredNotification::class,
+            HandleExpiredPayment::class,
         ],
         TransactionDenied::class => [
-            TransactionDeniedNotification::class,
+            HandleDeniedPayment::class,
         ],
     ];
 

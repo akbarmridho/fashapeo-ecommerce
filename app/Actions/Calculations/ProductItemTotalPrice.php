@@ -2,18 +2,14 @@
 
 namespace App\Actions\Calculations;
 
-trait ProductItemTotalPrice
+class OrderItemTotal
 {
-    public function calculate()
+    public static function calculate($productInitial, $productDiscount, $quantity)
     {
-        if ($this->price_cut) {
-            $price = $this->price - $this->price_cut;
-        } else {
-            $price = $this->price;
+        if ($productDiscount > 0) {
+            return ($productInitial - $productDiscount) * $quantity;
         }
 
-        $this->final_price = ($price * $this->quantity);
-
-        $this->save();
+        return $productInitial * $quantity;
     }
 }

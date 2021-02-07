@@ -22,11 +22,8 @@ Route::name('customer.')->group(function () {
     Route::post('/cart', [CartController::class, 'add'])
         ->name('carts.add');
 
-    Route::post('/cart/{id}/increment', [CartController::class, 'increment'])
-        ->name('carts.increment');
-
-    Route::post('/cart/{id}/decrement', [CartController::class, 'decrement'])
-        ->name('carts.decrement');
+    Route::put('/cart', [CartController::class, 'update'])
+        ->name('carts.update');
 
     Route::delete('/cart/{id}', [CartController::class, 'delete'])
         ->name('carts.delete');
