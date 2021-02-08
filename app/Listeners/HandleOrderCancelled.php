@@ -2,7 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderCancelled;
+use App\Models\Admin;
+use App\Notifications\OrderCancelled;
+use App\Notifications\Admin\OrderCancelled as AdminOrderCancelled;
+use App\Events\OrderCancelled as OrderCancelledEvent;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -21,11 +25,12 @@ class HandleOrderCancelled
     /**
      * Handle the event.
      *
-     * @param  OrderCancelled  $event
+     * @param  OrderCancelledEvent  $event
      * @return void
      */
-    public function handle(OrderCancelled $event)
+    public function handle(OrderCancelledEvent $event)
     {
-        //
+        $event->customer->notify(new OrderCancelled($event->order));
+        Notification::send(Admin::all(), new AdminOrderCancelled($event->order));
     }
 }

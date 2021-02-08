@@ -95,4 +95,31 @@ class UpdateOrder
             'price' => $data[$key]['cost']['value'],
         ];
     }
+
+    public function setDateCompletion(Transaction $transaction)
+    {
+        $transaction->fill(['completed_at' => now()])->save();
+    }
+
+    public function updateFailedOrder(Order $order)
+    {
+        $order->fill([
+            'completed_at' => now(),
+            'is_success' => false,
+        ])->save();
+    }
+
+    public function completeOrder(Order $order)
+    {
+        $order->fill([
+            'completed_at' => now(),
+            'is_success' => true,
+        ])->save();
+    }
+
+    public function cancelOrder($order)
+    {
+        $this->setDateCompletion($order->transaction);
+        $this->updateFailedOrder($order);
+    }
 }

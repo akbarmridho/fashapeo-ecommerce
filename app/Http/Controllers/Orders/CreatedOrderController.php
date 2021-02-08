@@ -3,31 +3,28 @@
 namespace App\Http\Controllers\Orders;
 
 use App\Actions\Order\PlaceNewOrder;
-use App\Actions\Order\UpdateStatus;
+use App\Services\OrderStatus;
 use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
-use App\Repository\StatusRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CreatedOrderController extends Controller
 {
-    private $status;
+    protected $status;
 
-    public function __construct(StatusRepositoryInterface $statusRepository)
+    public function __construct(OrderStatus $status)
     {
-        $this->status = $statusRepository;
+        $this->status = $status;
     }
 
-    public function create(PlaceNewOrder $creator, UpdateStatus $updater)
+    public function create(PlaceNewOrder $creator)
     {
         $customer = Auth::guard('customer')->user();
 
         $order = $creator->place($customer);
 
-        $updater->update($order, $this->status->orderCreated());
-
-        event(new OrderCreated($order));
+        $this->status->orderCreated($order);
 
         return redirect()->route('customer.order.shipment', $order);
     }

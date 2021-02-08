@@ -16,6 +16,7 @@ class PaymentConfirmed
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $order;
+    public $customer;
 
     /**
      * Create a new event instance.
@@ -25,8 +26,8 @@ class PaymentConfirmed
     public function __construct(Order $order)
     {
         $this->order = $order;
+        $this->customer = $order->customer;
     }
-
     /**
      * Get the channels the event should broadcast on.
      *

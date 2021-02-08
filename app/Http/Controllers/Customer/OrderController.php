@@ -6,7 +6,7 @@ use App\Actions\Order\UpdateStatus;
 use App\Events\OrderCompleted;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Repository\StatusRepositoryInterface;
+use App\Services\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +14,7 @@ class OrderController extends Controller
 {
     public $status;
 
-    public function __construct(StatusRepositoryInterface $status)
+    public function __construct(OrderStatus $status)
     {
         $this->status = $status;
     }
@@ -33,13 +33,7 @@ class OrderController extends Controller
     {
         $this->authorize('markCompleted', $order);
 
-        $updater->update($order, $this->status->orderArrived());
-        $updater->update($order, $this->status->orderCompleted());
-        $order->fill([
-            'completed_at' => now(),
-            'is_success' => true,
-        ])->save();
-        event(new OrderCompleted($order));
+        $this->status->orderArrived($order);
 
         return back();
     }

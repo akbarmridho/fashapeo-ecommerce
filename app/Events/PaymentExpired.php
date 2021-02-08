@@ -16,6 +16,7 @@ class PaymentExpired
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $order;
+    public $customer;
 
     /**
      * Create a new event instance.
@@ -25,6 +26,7 @@ class PaymentExpired
     public function __construct(Order $order)
     {
         $this->order = $order;
+        $this->customer = $order->customer;
     }
 
     /**

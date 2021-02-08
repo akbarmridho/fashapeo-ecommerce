@@ -2,7 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\OrderCompleted;
+use App\Models\Admin;
+use App\Events\OrderCompleted as OrderCompletedEvent;
+use App\Notifications\OrderCompleted;
+use App\Notifications\Admin\OrderCompleted as AdminOrderCompleted;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -24,8 +28,9 @@ class HandleCompletedOrder
      * @param  OrderCompleted  $event
      * @return void
      */
-    public function handle(OrderCompleted $event)
+    public function handle(OrderCompletedEvent $event)
     {
-        //
+        $event->customer->notify(new OrderCompleted($event->order));
+        Notification::send(Admin::all(), new AdminOrderCompleted($event->order));
     }
 }

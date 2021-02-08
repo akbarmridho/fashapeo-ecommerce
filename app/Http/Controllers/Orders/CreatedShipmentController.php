@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Orders;
 
+use App\Services\OrderStatus;
 use App\Actions\Order\UpdateOrder;
 use App\Actions\Order\UpdateStatus;
 use App\Http\Controllers\Controller;
@@ -19,10 +20,10 @@ class CreatedShipmentController extends Controller
     private $delivery;
 
     public function __construct(
-        StatusRepositoryInterface $statusRepository,
+        OrderStatus $status,
         DeliveryRepositoryInterface $delivery
     ) {
-        $this->status = $statusRepository;
+        $this->status = $status;
         $this->delivery = $delivery;
     }
 
@@ -42,11 +43,10 @@ class CreatedShipmentController extends Controller
     public function finalize(
         FinalizeShipmentRequest $request,
         Order $order,
-        UpdateOrder $updater,
-        UpdateStatus $statusUpdater
+        UpdateOrder $updater
     ) {
         foreach ($request->products as $product) {
-            if (! $note = $product['note']) {
+            if (!$note = $product['note']) {
                 $updater->updateNote(OrderItem::find($product), $note);
             }
         }
@@ -68,7 +68,7 @@ class CreatedShipmentController extends Controller
 
         $updater->setShipmentOption($shipment, $courier, $cost);
         $updater->createTransaction($order);
-        $statusUpdater->update($order, $this->status->shipmentCreated());
+        $this->status->shipmentCreated($order);
 
         return redirect()->route('customer.orders.transaction');
     }

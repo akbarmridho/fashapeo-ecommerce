@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Notifications\PaymentDenied;
 use App\Events\TransactionDenied;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -26,6 +27,6 @@ class TransactionDeniedNotification
      */
     public function handle(TransactionDenied $event)
     {
-        //
+        $event->customer->notify(new PaymentDenied($event->order));
     }
 }

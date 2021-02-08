@@ -2,7 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\PaymentConfirmed;
+use App\Models\Admin;
+use App\Events\PaymentConfirmed as PaymentConfirmedEvent;
+use App\Notifications\PaymentConfirmed;
+use App\Notifications\Admin\PaymentConfirmed as AdminPaymentConfirmed;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -24,8 +28,9 @@ class HandleConfirmedPayment
      * @param  PaymentConfirmed  $event
      * @return void
      */
-    public function handle(PaymentConfirmed $event)
+    public function handle(PaymentConfirmedEvent $event)
     {
-        //
+        $event->customer->notify(new PaymentConfirmed($event->order));
+        Notification::send(Admin::all(), new AdminPaymentConfirmed($event->order));
     }
 }
