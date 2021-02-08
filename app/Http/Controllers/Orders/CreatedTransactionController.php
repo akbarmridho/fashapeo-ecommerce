@@ -21,7 +21,7 @@ class CreatedTransactionController extends Controller
     {
         session(['order_id' => $order->id]);
 
-        return view('customer.pages.orders.invoice');
+        return view('customer.pages.orders.invoice', compact('order'));
     }
 
     public function token(Order $order, Midtrans $payment)

@@ -26,11 +26,25 @@ class OrderItem extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function getPriceSummaryAttribute()
+    {
+        return [
+            'price' => config('payment.currency_symbol') . $this->price,
+            'price_cut' => $this->price_cut,
+            'final_price' => config('payment.currency_symbol') . $this->final_price,
+        ];
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->product->master->main_image;
     }
 }

@@ -60,12 +60,13 @@ class CartController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'quantity' => 'required|gte:1'
+            'quantity' => 'required|gte:1',
+            'note' => 'string:nullable',
         ]);
 
         $customer = Auth::guard('customer')->user();
 
-        $customer->carts()->updateExistingPivot($validated['id'], ['quantity' => $validated['quantity']]);
+        $customer->carts()->updateExistingPivot($validated['id'], ['quantity' => $validated['quantity'], 'note' => $validated['note']]);
     }
 
     public function delete($cart)

@@ -18,9 +18,9 @@
                 <div class="row mt-3">
                     <div class="col-8">
                         <div class="form-outline">
-                            <input name="notes[{{ $product->id }}][notes]" type="text" id="formControlSm"
-                                class="form-control form-control-sm" />
-                            <label class="form-label" for="formControlSm">Notes</label>
+                            <input name="note" type="text" id="formControlSm"
+                                class="form-control form-control-sm cart-note" value="{{ $product->pivot->note }}" />
+                            <label class="form-label" for="formControlSm">Note</label>
                         </div>
                     </div>
                     <div class="col-4">

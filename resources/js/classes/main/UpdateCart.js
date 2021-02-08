@@ -4,6 +4,7 @@ class UpdateCart {
         this.decrementBtn = element.querySelector(".decrement");
         this.quantityInput = element.querySelector(".quantity");
         this.deleteButton = element.querySelector(".cart-delete");
+        this.noteInput = element.querySelector(".cart-note");
         this.pending = false;
         this.productId = element.dataset.id;
         this.initializeEventListener();
@@ -22,21 +23,26 @@ class UpdateCart {
             "change",
             this.evaluateInput.bind(this)
         );
+        this.noteInput.addEventListener('change', this.evaluateInput.bind(this);)
         this.deleteButton.addEventListener("click", this.deleteCart.bind(this));
     }
 
-    retreiveValue() {
+    retreiveQuantity() {
         return parseInt(this.quantityInput.value);
     }
 
+    retreiveNote() {
+        return this.noteInput.value;
+    }
+
     evaluateInput() {
-        const currentValue = this.retreiveValue();
+        const currentValue = this.retreiveQuantity();
         if (currentValue > 1) {
             this.decrementBtn.disabled = false;
-            this.updateQuantityTimer();
+            this.setTimer();
         } else if (currentValue === 1) {
             this.decrementBtn.disabled = true;
-            this.updateQuantityTimer();
+            this.setTimer();
         } else if (currentValue <= 0) {
             this.decrementBtn.disabled = true;
             this.quantityInput.value = 1;
@@ -44,12 +50,12 @@ class UpdateCart {
     }
 
     incrementHandler() {
-        const newValue = this.retreiveValue() + 1;
+        const newValue = this.retreiveQuantity() + 1;
         this.operate(newValue);
     }
 
     decrementHandler() {
-        const newValue = this.retreiveValue() - 1;
+        const newValue = this.retreiveQuantity() - 1;
         this.operate(newValue);
     }
 
@@ -58,20 +64,21 @@ class UpdateCart {
         this.evaluateInput();
     }
 
-    updateQuantityTimer() {
+    setTimer() {
         if (!this.pending) {
             this.pending = true;
             setTimeout(() => {
-                this.updateQuantity();
+                this.updateCart();
                 this.pending = false;
             }, 1000);
         }
     }
 
-    updateQuantity() {
+    updateCart() {
         let data = new FormData();
         data.append("id", this.productId);
-        data.append("quantity", this.retreiveValue());
+        data.append("quantity", this.retreiveQuantity());
+        data.append('note', this.retreiveNote())
         data.append("_method", "PUT");
         window.axios.post("/cart", data);
     }

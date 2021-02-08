@@ -21,8 +21,8 @@ class PlaceNewOrder
     {
         $order = $this->createOrder($customer, $this->generate());
 
-        foreach ($customer->carts as $cart) {
-            $this->createOrderItem($order, $cart);
+        foreach ($customer->carts as $product) {
+            $this->createOrderItem($order, $product);
         }
 
         $shipment = $this->createShipment($customer->active_address, $order, $order->weight);
@@ -58,6 +58,7 @@ class PlaceNewOrder
             'name' => $product->product_name,
             'variant' => $product->variant_name,
             'quantity' => $product->pivot->quantity,
+            'note' => $product->pivot->note,
             'price' => $product->price,
             'price_cut' => $discount,
             'final_price' => OrderItemTotal::calculate($product->price, $discount, $product->pivot->quantity)

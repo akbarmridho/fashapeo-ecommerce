@@ -109,12 +109,12 @@ Route::name('customer.')->group(function () {
         Route::get('/error', [OrderRedirectController::class, 'error']);
 
         Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
-            ->name('order.success');
+            ->name('order.status.success');
 
         Route::middleware(['order.check:failed', 'can:show,order'])->get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
-            ->name('order.failed');
+            ->name('order.status.failed');
 
         Route::middleware(['order.check:pending', 'can:show,order'])->get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
-            ->name('order.pending');
+            ->name('order.status.pending');
     });
 });

@@ -25,7 +25,6 @@ class FinalizeShipmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'products.*.note' => 'nullable|string|max:250',
             'courier' => 'required|max:10|string',
             'service' => 'required|max:10|string',
         ];

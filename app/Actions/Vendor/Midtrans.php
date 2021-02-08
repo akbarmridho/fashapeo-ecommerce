@@ -27,9 +27,9 @@ class Midtrans
         return Snap::getSnapToken(Invoice::create($order));
     }
 
-    public function notification($request)
+    public function notification()
     {
-        $this->notification = new Notification($request);
+        $this->notification = new Notification();
     }
 
     public function approve($orderId)

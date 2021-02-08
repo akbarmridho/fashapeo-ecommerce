@@ -8,12 +8,12 @@ use App\Casts\DateCast;
 
 class Shipment extends Model
 {
-    use HasFactory, Traits\DateTimeSerializer;
+    use HasFactory;
 
     protected $fillable = [
-        'courier_id',
         'origin_id',
         'destination_id',
+        'courier',
         'service',
         'etd',
         'price',
@@ -42,6 +42,6 @@ class Shipment extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasOne(Order::class);
     }
 }

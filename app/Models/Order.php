@@ -52,12 +52,12 @@ class Order extends Model
 
     public function transaction()
     {
-        return $this->hasOne(Transaction::class);
+        return $this->belongsTo(Transaction::class, 'shipment_id', 'id');
     }
 
     public function shipment()
     {
-        return $this->hasOne(Shipment::class);
+        return $this->belongsTo(Shipment::class, 'shipment_id', 'id');
     }
 
     public function scopeActive($query)
@@ -104,5 +104,14 @@ class Order extends Model
     public function getRecentStatusAttribute()
     {
         $this->status()->latest()->first();
+    }
+
+    public function getSubtotalAttribute()
+    {
+        $final = $this->items->sum('final_price');
+        return [
+            'int' => $final,
+            'sym' => config('payment.curreny_symbol') . $final,
+        ];
     }
 }

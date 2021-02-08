@@ -15,7 +15,7 @@ class Customer extends User
 
     public function carts()
     {
-        return $this->belongsToMany(Product::class, 'carts')->withPivot('quantity');
+        return $this->belongsToMany(Product::class, 'carts')->withPivot(['quantity', 'note']);
     }
 
     public function orders()

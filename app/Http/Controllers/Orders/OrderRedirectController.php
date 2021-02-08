@@ -12,7 +12,7 @@ class OrderRedirectController extends Controller
     public function finish(Request $request)
     {
         if ($request->session()->has('order_id')) {
-            return redirect()->route('customer.order.success', ['order' => Order::find(session('order_id'))]);
+            return redirect()->route('customer.order.status.success', ['order' => Order::find(session('order_id'))]);
         } else {
             $lastOrder = Auth::guard('customer')
                             ->user()
@@ -20,14 +20,14 @@ class OrderRedirectController extends Controller
                             ->latest('updated_at')
                             ->first();
 
-            return redirect()->route('customer.order.success', ['order' => $lastOrder]);
+            return redirect()->route('customer.order.status.success', ['order' => $lastOrder]);
         }
     }
 
     public function unfinish(Request $request)
     {
         if ($request->session()->has('order_id')) {
-            return redirect()->route('customer.order.pending', ['order' => Order::find(session('order_id'))]);
+            return redirect()->route('customer.order.status.pending', ['order' => Order::find(session('order_id'))]);
         } else {
             $lastOrder = Auth::guard('customer')
                             ->user()
@@ -35,14 +35,14 @@ class OrderRedirectController extends Controller
                             ->latest('updated_at')
                             ->first();
 
-            return redirect()->route('customer.order.pending', ['order' => $lastOrder]);
+            return redirect()->route('customer.order.status.pending', ['order' => $lastOrder]);
         }
     }
 
     public function error(Request $request)
     {
         if ($request->session()->has('order_id')) {
-            return redirect()->route('customer.order.failed', ['order' => Order::find(session('order_id'))]);
+            return redirect()->route('customer.order.status.failed', ['order' => Order::find(session('order_id'))]);
         } else {
             $lastOrder = Auth::guard('customer')
                             ->user()
@@ -50,7 +50,7 @@ class OrderRedirectController extends Controller
                             ->latest('updated_at')
                             ->first();
 
-            return redirect()->route('customer.order.failed', ['order' => $lastOrder]);
+            return redirect()->route('customer.order.status.failed', ['order' => $lastOrder]);
         }
     }
 }

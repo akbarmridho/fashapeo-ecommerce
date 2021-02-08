@@ -1,20 +1,20 @@
 <?php
 
-namespace App\View\Components\customer;
+namespace App\View\Components\main;
 
 use Illuminate\View\Component;
 
-class ShipmentOptions extends Component
+class CartSummary extends Component
 {
-    public $order;
+    public $summary;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($summary)
     {
-        $this->order = $order;
+        $this->summary = $summary;
     }
 
     /**
@@ -24,6 +24,6 @@ class ShipmentOptions extends Component
      */
     public function render()
     {
-        return view('components.customer.shipment-options');
+        return view('components.main.cart-summary');
     }
 }

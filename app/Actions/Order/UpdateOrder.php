@@ -51,12 +51,10 @@ class UpdateOrder
         )->save();
     }
 
-    public function setShipmentOption(Shipment $shipment, $courier, $cost)
+    public function setShipmentOption(Shipment $shipment, array $data)
     {
-        $data = $this->serializeCost($courier, $cost);
-
         $shipment->fill([
-            'courier_id' => $data['courier_id'],
+            'courier' => $data['name'],
             'service' => $data['service'],
             'etd' => $data['etd'],
             'price' => $data['price'],
