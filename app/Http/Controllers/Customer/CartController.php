@@ -22,7 +22,7 @@ class CartController extends Controller
     public function show()
     {
         $customer = Auth::guard('customer')->user();
-        $products = $customer->carts()->wishRelationship()->get();
+        $products = $customer->carts()->withRelationship()->get();
 
         $initialPrice = $products->sum('price');
         $discountPrice = $products->sum('discount.discount_value') ?: 0;
@@ -69,8 +69,9 @@ class CartController extends Controller
         $customer->carts()->updateExistingPivot($validated['id'], ['quantity' => $validated['quantity'], 'note' => $validated['note']]);
     }
 
-    public function delete($cart)
+    public function delete($id)
     {
-        $customer->carts()->detach($cart);
+        $customer = Auth::guard('customer')->user();
+        $customer->carts()->detach($id);
     }
 }

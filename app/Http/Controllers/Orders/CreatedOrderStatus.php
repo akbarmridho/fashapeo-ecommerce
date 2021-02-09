@@ -9,16 +9,16 @@ class CreatedOrderStatus extends Controller
 {
     public function success(Order $order)
     {
-        return view('customer.pages.orders.pending');
+        return view('customer.pages.orders.success');
     }
 
     public function failed(Order $order)
     {
-        return view('customer.pages.orders.success');
+        return view('customer.pages.orders.error');
     }
 
     public function pending(Order $order)
     {
-        return view('customer.pages.orders.error');
+        return view('customer.pages.orders.pending');
     }
 }

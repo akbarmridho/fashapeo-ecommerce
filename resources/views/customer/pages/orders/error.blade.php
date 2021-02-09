@@ -11,7 +11,7 @@
                 <x-customer.order-progress />
                 <div class="row my-5 text-center">
                     <i class="fas fa-times fa-4x text-danger my-3"></i>
-                    <p class="fw-bold">Oops, something went wrong! Error code: 403</p>
+                    <p class="fw-bold">Oops, something went wrong!</p>
                     <p>Please contact admin immediately</p>
                 </div>
             </div>

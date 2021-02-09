@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Actions\Order\UpdateStatus;
+use App\Services\OrderStatus;
 use App\Events\OrderShipped;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use App\Repository\StatusRepositoryInterface;
 use App\Repository\OrderRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -15,10 +14,15 @@ class OrderController extends Controller
     public $status;
     public $order;
 
-    public function __construct(StatusRepositoryInterface $status, OrderRepositoryInterface $order)
+    public function __construct(OrderStatus $status, OrderRepositoryInterface $order)
     {
         $this->status = $status;
         $this->order = $order;
+    }
+
+    public function show(Order $order)
+    {
+        return view('admin.pages.order-detail', compact('order'));
     }
 
     public function active()
@@ -42,33 +46,43 @@ class OrderController extends Controller
         return view('admin.pages.completed-orders', compact('orders'));
     }
 
-    public function setTrackingNumber(Order $order, Request $request, UpdateStatus $updater)
+    public function setTrackingNumber(Order $order, Request $request)
     {
         $validated = $request->validate(['tracking_number' => 'string|required|max:100']);
 
         $order->shipment->tracking_number = $validated['tracking_number'];
         $order->push();
 
-        $updater->update($order, $this->status->orderShipped());
-        event(new OrderShipped($order));
+        $this->status->orderShipped($order);
 
         session()->flash('status', 'Tracking number updated');
 
-        return back();
+        return redirect()->route('admin.orders.active');
     }
 
     public function complete(Order $order)
     {
-        //
+        $this->status->orderCompleted($order);
+
+        session()->flash('status', 'Order Completed');
+
+        return back();
     }
 
     public function cancel(Order $order)
     {
-        //
+        $this->status->orderCancelled($order);
+
+        session()->flash('status', 'Order Cancelled');
+
+        return back();
     }
 
     public function delete(Order $order)
     {
-        //
+        $order->delete();
+        session()->flash('status', 'Order Deleted');
+
+        return back();
     }
 }

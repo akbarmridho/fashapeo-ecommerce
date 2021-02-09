@@ -4,7 +4,7 @@ namespace App\View\Components\admin;
 
 use Illuminate\View\Component;
 
-class OrderDetail extends Component
+class OrderDetails extends Component
 {
     public $order;
 
@@ -25,6 +25,6 @@ class OrderDetail extends Component
      */
     public function render()
     {
-        return view('components.admin.order-detail');
+        return view('components.admin.order-details');
     }
 }

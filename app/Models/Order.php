@@ -40,19 +40,14 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function activities()
-    {
-        return $this->hasMany(OrderActivity::class);
-    }
-
     public function status()
     {
-        return $this->hasManyThrough(Status::class, OrderActivity::class);
+        return $this->belongsToMany(Status::class)->using(OrderActivity::class)->withTimestamps();
     }
 
     public function transaction()
     {
-        return $this->belongsTo(Transaction::class, 'shipment_id', 'id');
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'id');
     }
 
     public function shipment()
@@ -85,11 +80,6 @@ class Order extends Model
         ]);
     }
 
-    public function scopeRecentStatus($query)
-    {
-        return $query->status()->latest()->first();
-    }
-
     public function getWeightAttribute()
     {
         $subtotal = [];
@@ -103,7 +93,7 @@ class Order extends Model
 
     public function getRecentStatusAttribute()
     {
-        $this->status()->latest()->first();
+        $this->status->first();
     }
 
     public function getSubtotalAttribute()

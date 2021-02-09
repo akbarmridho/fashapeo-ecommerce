@@ -20,16 +20,12 @@ class Midtrans
         MidtransConfig::$isProduction = config('app.debug');
         MidtransConfig::$isSanitized = true;
         MidtransConfig::$is3ds = true;
+        $this->notification = new Notification();
     }
 
     public function token(Order $order)
     {
         return Snap::getSnapToken(Invoice::create($order));
-    }
-
-    public function notification()
-    {
-        $this->notification = new Notification();
     }
 
     public function approve($orderId)

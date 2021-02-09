@@ -42,4 +42,9 @@ class Transaction extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function getTransactionTotalAttribute()
+    {
+        return config('payment.currency_symbol') . $this->total;
+    }
 }

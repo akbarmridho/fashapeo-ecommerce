@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Wishlist extends Model
+class Wishlist extends Pivot
 {
-    use HasFactory;
-
     protected $fillable = [
         'user_id',
         'master_product_id',
     ];
 
     public $timestamps = false;
+
+    public $incrementing = true;
 }

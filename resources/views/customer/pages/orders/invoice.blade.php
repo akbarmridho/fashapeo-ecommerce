@@ -4,6 +4,18 @@
     Proceed Payment
 @endsection
 
+@section('additional-script')
+    <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="{{ config('vendor.midtrans_client') }}" defer></script>
+    <script type="text/javascript" defer>
+        var payButton = document.getElementById('pay-button');
+        payButton.addEventListener('click', function() {
+            snap.pay("{{ $token }}");
+        });
+
+    </script>
+@endsection
+
 @section('content')
     <main>
         <div class="container">

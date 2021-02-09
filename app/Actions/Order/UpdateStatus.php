@@ -3,7 +3,6 @@
 namespace App\Actions\Order;
 
 use App\Models\Order;
-use App\Models\OrderActivity;
 use App\Models\Status;
 
 class UpdateStatus
@@ -15,9 +14,6 @@ class UpdateStatus
 
     public function createActivity(Order $order, Status $status)
     {
-        return OrderActivity::create([
-            'order_id' => $order->id,
-            'status_id' => $status->id,
-        ]);
+        $order->status()->attach($status->id);
     }
 }

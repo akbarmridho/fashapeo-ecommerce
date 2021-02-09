@@ -12,8 +12,6 @@
                 <div class="row my-5 text-center">
                     <i class="fas fa-pause fa-4x text-info my-3"></i>
                     <p class="fw-bold">Your payment request has been made<br> Please pay the invoice before expiration date
-                        <br> Click button below to review payment instructions</p>
-                    <button class="btn btn-primary">View Instructions</button>
                 </div>
             </div>
         </div>

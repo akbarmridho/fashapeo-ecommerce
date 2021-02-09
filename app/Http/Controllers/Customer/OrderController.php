@@ -21,20 +21,24 @@ class OrderController extends Controller
 
     public function index()
     {
-        return view('customer.pages.my-account.orders');
+        $customer = Auth::guard('customer')->user();
+        $orders = $customer->orders()->latest()->paginate(10);
+        return view('customer.pages.my-account.orders', compact('orders'));
     }
 
-    public function show()
+    public function show(Order $order)
     {
-        return view('customer.pages.my-account.order-details');
+        return view('customer.pages.my-account.order-details', compact('order'));
     }
 
-    public function markAsCompleted(Order $order, UpdateStatus $updater)
+    public function markAsCompleted(Order $order)
     {
         $this->authorize('markCompleted', $order);
 
         $this->status->orderArrived($order);
 
-        return back();
+        session()->flash('status', 'Order has marked as completed');
+
+        return redirect()->route('customer.orders');
     }
 }

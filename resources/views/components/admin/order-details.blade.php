@@ -1,4 +1,4 @@
-<p class="h4 fw-bold">Order #{{ $order->order_number }}</p>
+<p class="h4 fw-bold">Order #{{ $order->order_number . ' by ' . $order->customer->name }}</p>
 <dl class="row">
     <dt class="col-sm-3">Order Status</dt>
     <dd class="col-sm-9">{{ $order->recent_status->name }}
@@ -52,11 +52,19 @@
     @endforeach
 </dl>
 
-@isset($order->shipment->tracking_number)
-    <div class="row">
-        <form action="{{ route('customer.orders.complete', ['order' => $order]) }}" method="post">
-            @csrf
-            <button class="btn btn-primary need-confirm" type="submit">Mark As Completed</button>
-        </form>
-    </div>
-@endisset
+<div class="row">
+    <form action="{{ route('admin.orders.tracking', ['order' => $order]) }}" method="post">
+        @csrf
+        @method('put')
+        <h5>Update Tracking Number</h5>
+        <div class="form-outline my-2">
+
+            <input name="tracking_number" type="text" @isset($order->shipment)
+                value="{{ $order->shipment->tracking_number }}"
+            @endisset
+            class="form-control">
+            <label for="" class="form-label">Tracking Number</label>
+        </div>
+        <button class="btn btn-primary need-confirm" type="submit">Update</button>
+    </form>
+</div>

@@ -7,6 +7,7 @@ use App\Actions\Vendor\Midtrans;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class CreatedTransactionController extends Controller
 {
@@ -17,24 +18,17 @@ class CreatedTransactionController extends Controller
         $this->status = $status;
     }
 
-    public function show(Order $order)
+    public function show(Order $order, Midtrans $payment)
     {
-        session(['order_id' => $order->id]);
+        $token = Cache::remember('order.' . $order->id . '.key', 60 * 60 * 24, function ($payment, $order) {
+            return $payment->token($order);
+        });
 
-        return view('customer.pages.orders.invoice', compact('order'));
+        return view('customer.pages.orders.invoice', compact('order', 'token'));
     }
 
-    public function token(Order $order, Midtrans $payment)
+    public function notification(Midtrans $payment)
     {
-        return response()->json(['token' => $payment->token($order)], 200);
-    }
-
-    public function notification(
-        Request $request,
-        Midtrans $payment
-    ) {
-        $payment->notification($request->all());
-
         $status = $payment->notificaton->transaction_status;
         $fraud = $payment->notification->fraud_status;
         $order = Order::where('order_number', $payment->notification->order_id)->first();

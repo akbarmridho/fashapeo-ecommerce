@@ -59,10 +59,15 @@ class OrderStatus
         event(new OrderCompleted($order));
     }
 
+    public function orderShipped(Order $order)
+    {
+        $this->statusUpdater->update($order, $this->status->orderShipped());
+        event(new OrderShipped($order));
+    }
+
     public function shipmentCreated(Order $order)
     {
         $this->statusUpdater->update($order, $this->status->shipmentCreated());
-        event(new OrderShipped($order));
     }
 
     public function transcationSuccess(Order $order)

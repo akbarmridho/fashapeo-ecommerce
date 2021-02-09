@@ -35,13 +35,13 @@ class Shipment extends Model
         'updated_at' => DateCast::class,
     ];
 
-    public function courier()
-    {
-        return $this->hasOne(Courier::class);
-    }
-
     public function order()
     {
         return $this->hasOne(Order::class);
+    }
+
+    public function getShipmentPriceAttribute()
+    {
+        return config('payment.currency_symbol') . $this->price;
     }
 }

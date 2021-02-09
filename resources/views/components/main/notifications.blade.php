@@ -5,9 +5,8 @@
         <p class="card-text">
             {{ $notification->data['message'] }}
         </p>
-        @if (isset($notification->data['action']))
-            <a href="{{ $notification->data['link'] }}"
-                class="btn btn-primary btn-sm">{{ $notification->data['action'] }}</a>
+        @if (array_key_exists('link', $notification->data))
+            <a href="{{ $notification->data['link'] }}" class="btn btn-primary btn-sm">Open Link</a>
         @endif
     </div>
 </div>

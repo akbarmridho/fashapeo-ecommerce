@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class OrdersTable extends Component
 {
+    public $orders;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($orders)
     {
-        //
+        $this->orders = $orders;
     }
 
     /**
