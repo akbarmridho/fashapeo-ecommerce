@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Repository\ProductRepositoryInterface;
 use App\Models\MasterProduct;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 
 class MainPageController extends Controller
 {
@@ -20,12 +21,14 @@ class MainPageController extends Controller
     public function home()
     {
         $newArrival = $this->products->newArrival();
-        return view('main.pages.home', compact('newArrival'));
+        $bestSeller = $this->products->bestSeller();
+        return view('main.pages.home', compact('newArrival', 'bestSeller'));
     }
 
-    public function product(MasterProduct $product)
+    public function product($product)
     {
         $recentViewed = $this->products->recentViewed();
+        $product = $this->products->findBySlug($product);
         $productInformation = $product->product_information;
         if ($customer = Auth::guard("customer")->user()) {
             $wishlist = $customer->wishlists()->where('master_product_id', $product->id)->first();
@@ -44,8 +47,8 @@ class MainPageController extends Controller
 
     public function search(Request $request)
     {
-        if ($request->has('query')) {
-            $query = $request->query;
+        if ($request->has('term')) {
+            $query = $request->term;
             $products = $this->products->search($query);
 
             return view('main.pages.product-search', compact('products', 'query'));

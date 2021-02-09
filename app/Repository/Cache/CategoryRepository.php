@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Cache;
 class CategoryRepository implements CategoryRepositoryInterface
 {
     public $parent;
-    private $time = 60 * 60 * 24 * 30;
+    // private $time = 60 * 60 * 24 * 30; satu bulan
+    private $time = 60 * 15;
 
     public function __construct(EloquentCategoryRepository $parent)
     {

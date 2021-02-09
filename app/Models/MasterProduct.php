@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use App\Casts\DateCast;
+use Illuminate\Support\Facades\Cache;
 
 class MasterProduct extends Model
 {
@@ -52,7 +53,8 @@ class MasterProduct extends Model
     {
         return $query->with([
             'images',
-            'products.discount'
+            'products.activeDiscount',
+            'products.details'
         ]);
     }
 
@@ -63,10 +65,12 @@ class MasterProduct extends Model
 
     public function getSoldAttribute()
     {
-        return $this->products()->join('order_items', 'products.id', '=', 'order_items.product_id')
-            ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.is_success', true)
-            ->count();
+        return Cache::tags(['products'])->remember('product.' . $this->id . '.sold', 60 * 60 * 24, function () {
+            return $this->products()->join('order_items', 'products.id', '=', 'order_items.product_id')
+                ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                ->where('orders.is_success', true)
+                ->count();
+        });
     }
 
     public function getMinPriceAttribute()
@@ -211,10 +215,5 @@ class MasterProduct extends Model
             'max_final' => config('payment.currency_symbol') . $maxModel['final_price'],
             'has_stock' => $this->stock > 0 ? true : false,
         ];
-    }
-
-    protected function makeAllSearchableUsing($query)
-    {
-        return $query->withRelationship();
     }
 }

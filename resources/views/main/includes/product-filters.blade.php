@@ -13,7 +13,7 @@
     <hr class="divider" width="40%">
     @foreach ($categories as $parent)
         <div>
-            <a href="#{{ $parent->name }}" data-mdb-toggle="collapse" class="text-body">{{ $category->name }}</a>
+            <a href="#{{ $parent->name }}" data-mdb-toggle="collapse" class="text-body">{{ $parent->name }}</a>
             <div class="collapse small" id="{{ $parent->name }}">
                 <ul class="list-unstyled ps-3">
                     @foreach ($parent->children as $child)

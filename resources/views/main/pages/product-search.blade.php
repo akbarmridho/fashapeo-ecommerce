@@ -27,7 +27,7 @@
                     <hr class="divider">
                     <div class="row g-4">
                         @foreach ($products as $product)
-                            <x-main.product-cart :product="$product" />
+                            <x-main.product-card :product="$product" />
                         @endforeach
                     </div>
                     {{ $products->links() }}

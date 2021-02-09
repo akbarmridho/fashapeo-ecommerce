@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\MasterProduct;
 
 class LastVisitedCookie
 {
@@ -18,16 +19,20 @@ class LastVisitedCookie
     {
         $product = $request->route('product');
 
+        if ($product instanceof MasterProduct) {
+            $product = $product->slug;
+        }
+
         if ($lastVisited = $request->cookie('lastVisited')) {
-            $recents = array_map('intval', explode(',', $lastVisited));
-            if (!in_array($product->id, $recents)) {
+            $recents = explode(',', $lastVisited);
+            if (!in_array($product, $recents)) {
                 if (count($recents) >= 8) {
                     array_shift($recents);
                 }
-                array_push($recents, $product->id);
+                array_push($recents, $product);
             }
         } else {
-            $recents = [$product->id];
+            $recents = [$product];
         }
 
         $response = $next($request);

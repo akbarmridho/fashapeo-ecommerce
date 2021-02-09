@@ -26,9 +26,13 @@
                     </div>
                     <hr class="divider">
                     <div class="row g-4">
-                        @foreach ($products as $product)
-                            <x-main.product-cart :product="$product" />
-                        @endforeach
+                        @if ($products->isEmpty())
+                            <h3>No Product Found!</h3>
+                        @else
+                            @foreach ($products as $product)
+                                <x-main.product-card :product="$product" />
+                            @endforeach
+                        @endif
                     </div>
                     {{ $products->links() }}
                 </div>

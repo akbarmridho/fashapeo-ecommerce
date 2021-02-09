@@ -36,26 +36,31 @@ class ProductRepository implements ProductRepositoryInterface
     {
         // children
         if ($category->parent_id) {
-            return MasterProduct::where('category_id', $category->id)->withRelationship()->paginate($this->paginate);
+            return $this->master->where('category_id', $category->id)->withRelationship()->paginate($this->paginate);
         }
         // parent
-        return MasterProduct::whereIn('category_id', $category->children->plucK('id'))->withRelationship()->paginate($this->paginate);
+        return $this->master->whereIn('category_id', $category->children->plucK('id'))->withRelationship()->paginate($this->paginate);
+    }
+
+    public function findBySlug($product)
+    {
+        return $this->master->where('slug', $product)->withRelationship()->first();
     }
 
     public function bestSeller()
     {
-        return $this->master->withRelationship()->all()->sortByDesc('sold')->take(8);
+        return $this->master->withRelationship()->get()->sortByDesc('sold')->take(8);
     }
 
     public function newArrival()
     {
-        return $this->master->withRelationship()->newArrival()->paginate($this->paginate);
+        return $this->master->withRelationship()->latest()->paginate($this->paginate);
     }
 
     public function recentViewed()
     {
         $lists = Cookie::get('lastVisited');
 
-        return $this->master->withRelationship()->findMany(array_map('intval', explode(',', $lists)));
+        return $this->master->withRelationship()->whereIn('slug', explode(',', $lists))->get();
     }
 }

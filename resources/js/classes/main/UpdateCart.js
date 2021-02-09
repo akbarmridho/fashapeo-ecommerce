@@ -1,5 +1,6 @@
 class UpdateCart {
     constructor(element) {
+        console.log(element);
         this.incrementBtn = element.querySelector(".increment");
         this.decrementBtn = element.querySelector(".decrement");
         this.quantityInput = element.querySelector(".quantity");
@@ -23,7 +24,10 @@ class UpdateCart {
             "change",
             this.evaluateInput.bind(this)
         );
-        this.noteInput.addEventListener('change', this.evaluateInput.bind(this);)
+        this.noteInput.addEventListener(
+            "change",
+            this.evaluateInput.bind(this)
+        );
         this.deleteButton.addEventListener("click", this.deleteCart.bind(this));
     }
 
@@ -78,7 +82,7 @@ class UpdateCart {
         let data = new FormData();
         data.append("id", this.productId);
         data.append("quantity", this.retreiveQuantity());
-        data.append('note', this.retreiveNote())
+        data.append("note", this.retreiveNote());
         data.append("_method", "PUT");
         window.axios.post("/cart", data);
     }

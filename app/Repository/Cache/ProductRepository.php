@@ -6,11 +6,13 @@ use App\Models\Category;
 use App\Repository\Eloquent\ProductRepository as EloquentProductRepository;
 use App\Repository\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 
 class ProductRepository implements ProductRepositoryInterface
 {
     private $parent;
-    private $time = 60 * 60 * 24 * 30;
+    // private $time = 60 * 60 * 24 * 30; // satu bulan
+    private $time = 60 * 15;
 
     public function __construct(EloquentProductRepository $parent)
     {
@@ -36,15 +38,22 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->parent->search($query);
     }
 
-    public function category(Category $category, $page)
+    public function category(Category $category, $page = 1)
     {
         return Cache::tags(['products'])->remember(
             'products.category:' . $category->id . ':page:' . (int) $page,
             $this->time,
-            function ($category) {
+            function () use ($category) {
                 return $this->parent->category($category);
             }
         );
+    }
+
+    public function findBySlug($product)
+    {
+        return Cache::tags(['products'])->remember('products.slug.' . $product, $this->time, function () use ($product) {
+            return $this->parent->findBySlug($product);
+        });
     }
 
     public function bestSeller()
@@ -71,6 +80,14 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function recentViewed()
     {
-        return $this->parent->recentViewed();
+        $lists = Cookie::get('lastVisited');
+
+        $result = collect([]);
+
+        foreach (explode(',', $lists) as $slug) {
+            $result->push($this->findBySlug($slug));
+        }
+
+        return $result;
     }
 }

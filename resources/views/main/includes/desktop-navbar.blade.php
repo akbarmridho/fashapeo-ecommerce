@@ -51,7 +51,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a href="{{ route('customer.dashboard') }}" class="dropdown-item">My Account</a>
-                            <a href="{{ route('customer.notification') }}">Notifications <span
+                            <a href="{{ route('customer.notification') }}" class="dropdown-item">Notifications <span
                                     class="badge rounded-pill bg-danger float-end">{{ $customer->notification_count }}</span></a>
                             <a href="{{ route('customer.orders') }}" class="dropdown-item">Orders<span
                                     class="badge rounded-pill bg-danger float-end">{{ $customer->order_count }}</span></a>
@@ -82,15 +82,13 @@
                     <a href="" class="nav-link" id="navbarDropdown" role="button" data-mdb-toggle="dropdown"
                         aria-mdb-expanded="false"><i class="fas fa-search"></i></a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <form class="px-4 py-3">
+                        <form class="px-4 py-3" action="{{ route('products.search') }}" method="get">
                             <div class="input-group input-group-sm" style="min-width: 200px">
-                                <form action="{{ route('products.search') }}" method="get">
-                                    <input name="query" type="text" class="form-control" placeholder="Seach" />
-                                    <button class="btn btn-sm btn-outline-primary" type="button" id="button-addon2"
-                                        data-mdb-ripple-color="dark">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </form>
+                                <input name="term" type="text" class="form-control" placeholder="Seach" />
+                                <button class="btn btn-sm btn-outline-primary" type="submit"
+                                    data-mdb-ripple-color="dark">
+                                    <i class="fas fa-search"></i>
+                                </button>
                             </div>
                         </form>
                     </div>

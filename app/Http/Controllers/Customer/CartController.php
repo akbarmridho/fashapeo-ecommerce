@@ -6,18 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Repository\CartRepositoryInterface as Carts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public $carts;
-
-    public function __construct(Carts $carts)
-    {
-        $this->carts = $carts;
-    }
 
     public function show()
     {
@@ -61,7 +54,7 @@ class CartController extends Controller
         $validated = $request->validate([
             'id' => 'required|integer',
             'quantity' => 'required|gte:1',
-            'note' => 'string:nullable',
+            'note' => 'string|nullable',
         ]);
 
         $customer = Auth::guard('customer')->user();

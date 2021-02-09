@@ -9,7 +9,7 @@
                         class="fas fa-trash"></i></button>
                 <a class="card-title h5 link-dark"
                     href="{{ route('product', ['product' => $product->master]) }}">{{ $product->product_name }}</a>
-                @isset($product->variant_name))
+                @isset($product->variant_name)
                     <h6 class="card-subtitle text-muted mb-3">Variant: {{ $product->variant_name }}</h6>
                 @endisset
                 <p class="card-text text-danger fw-bold h6">
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-4">
                         <div class="input-group input-group-sm">
-                            <button type="button" class="btn btn-sm btn-outline-primary increment">
+                            <button type="button" class="btn btn-sm btn-outline-primary decrement">
                                 <i class="fas fa-minus"></i>
                             </button>
                             <input type="number" class="form-control text-center quantity"

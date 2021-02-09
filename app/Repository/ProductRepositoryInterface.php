@@ -14,6 +14,8 @@ interface ProductRepositoryInterface
 
     public function category(Category $category, $page);
 
+    public function findBySlug($product);
+
     public function bestSeller();
 
     public function newArrival();

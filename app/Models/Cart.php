@@ -10,6 +10,7 @@ class Cart extends Pivot
         'user_id',
         'product_id',
         'quantity',
+        'note'
     ];
 
     protected $with = ['product'];
