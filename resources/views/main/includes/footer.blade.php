@@ -1,9 +1,8 @@
 <footer class="bg-dark text-light text-center text-lg-start mt-5 small">
-    <!-- Grid container -->
     <div class="container px-4 pt-5 mb-5">
-        <!--Grid row-->
+
         <div class="row">
-            <!--Grid column-->
+
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">More about us</h5>
 
@@ -60,13 +59,8 @@
 
                 <img src="/img/ATM-1400x514.png" alt="" class="img-fluid" />
             </div>
-            <!--Grid column-->
         </div>
-        <!--Grid row-->
     </div>
-    <!-- Grid container -->
 
-    <!-- Copyright -->
     <div class="text-center p-3">© {{ date('Y') }} Copyright: Fashapeo</div>
-    <!-- Copyright -->
 </footer>

@@ -31,11 +31,12 @@ class ProductDiscountController extends Controller
 
     public function update(Request $request, UpdateDiscount $creator)
     {
-        foreach ($request->products as $product) {
-            if (! $variant = Product::find($product->id)) {
-                $creator->update($variant, $product);
-            }
-        }
+        // foreach(Product::findMany((array) $request->products) as $product)
+        // foreach ($request->products as $product) {
+        //     if ($variant = Product::find($product->id)) {
+        //         $creator->update($variant, $product);
+        //     }
+        // }
 
         session()->flash('status', 'Product discount created');
 

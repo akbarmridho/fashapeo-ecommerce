@@ -1,13 +1,13 @@
-@extends('customer.layouts.main')
+@extends('layouts.main')
 
 @section('title')
-Fashapeo - Your Everyday Wear
+    Contact Us
 @endsection
 
 @section('content')
-<main> 
-    <div class="container p-5">
-        @include('customer.includes.contact-form-card')
-    </div>
-</main>
+    <main>
+        <div class="container p-5">
+            @include('main.includes.contact-form-card')
+        </div>
+    </main>
 @endsection

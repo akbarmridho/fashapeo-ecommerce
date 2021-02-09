@@ -21,6 +21,9 @@ Route::middleware('last.visited')->get('/product/{product:slug}', [MainPageContr
 Route::get('/category/{category:slug}', [MainPageController::class, 'category'])
     ->name('products.category');
 
+Route::get('/search', [MainPageController::class, 'search'])
+    ->name('products.search');
+
 // Route::get('/page', function () {
 //     return view('customer.pages.single-page');
 // });

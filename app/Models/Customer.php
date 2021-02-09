@@ -32,4 +32,14 @@ class Customer extends User
     {
         return $this->addresses()->active()->first();
     }
+
+    public function getCartCountAttribute()
+    {
+        return $this->carts()->count();
+    }
+
+    public function getOrderCountAttribute()
+    {
+        return $this->orders()->whereNull('is_success')->count();
+    }
 }

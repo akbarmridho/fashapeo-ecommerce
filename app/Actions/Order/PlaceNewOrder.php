@@ -4,7 +4,7 @@ namespace App\Actions\Order;
 
 use App\Actions\Address\ActiveOriginAddress;
 use App\Actions\Calculations\CreateOrderNumber;
-use App\Actions\Calculations\OrderItemTotal;
+use App\Actions\Calculations\ProductItemTotalPrice;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Customer;
@@ -61,7 +61,7 @@ class PlaceNewOrder
             'note' => $product->pivot->note,
             'price' => $product->price,
             'price_cut' => $discount,
-            'final_price' => OrderItemTotal::calculate($product->price, $discount, $product->pivot->quantity)
+            'final_price' => ProductItemTotalPrice::calculate($product->price, $discount, $product->pivot->quantity)
         ]);
 
         return $orderItem;

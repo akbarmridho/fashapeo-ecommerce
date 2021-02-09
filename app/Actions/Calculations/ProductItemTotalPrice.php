@@ -2,7 +2,7 @@
 
 namespace App\Actions\Calculations;
 
-class OrderItemTotal
+class ProductItemTotalPrice
 {
     public static function calculate($productInitial, $productDiscount, $quantity)
     {

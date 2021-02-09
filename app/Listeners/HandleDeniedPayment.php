@@ -7,7 +7,7 @@ use App\Events\TransactionDenied;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class TransactionDeniedNotification
+class HandleDeniedPayment
 {
     /**
      * Create the event listener.

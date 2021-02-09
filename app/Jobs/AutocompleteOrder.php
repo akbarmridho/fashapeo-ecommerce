@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Actions\Order\UpdateStatus;
 use App\Events\OrderCompleted;
 use App\Models\Order;
-use App\Repository\StatusRepositoryInterface as StatusRepository;
+use App\Services\OrderStatus;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,7 +25,7 @@ class AutocompleteOrder implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(StatusRepository $status)
+    public function __construct(OrderStatus $status)
     {
         $this->status = $status;
     }
@@ -41,14 +41,11 @@ class AutocompleteOrder implements ShouldQueue
 
         foreach ($activeOrders as $order) {
             if ($order->updated_at->greaterThan(Carbon::now()->subDays(30))) {
-                if ($order->recentStatus()->is($this->status->orderShipped())) {
-                    (new UpdateStatus)->update($order, $this->status->orderCompleted());
-                    event(new OrderCompleted($order));
+                if ($order->shipment->tracking_order) {
+                    $this->status->orderCompleted($order);
                 } else {
-                    (new UpdateStatus)->update($order, $this->status->orderExpired());
+                    $this->status->orderExpired($order);
                 }
-
-                $order->fill(['completed_at' => Carbon::now()])->save();
             }
         }
     }

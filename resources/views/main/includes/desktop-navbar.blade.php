@@ -45,10 +45,16 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-mdb-toggle="dropdown" aria-mdb-expanded="false">
                             <i class="fas fa-user"></i>
+                            @if ($customer->notification_count > 0 || $customer->order_count > 0)
+                                <span class="badge bg-danger badge-dot"></span>
+                            @endif
                         </a>
                         <div class="dropdown-menu">
                             <a href="{{ route('customer.dashboard') }}" class="dropdown-item">My Account</a>
-                            <a href="" class="dropdown-item">Orders</a>
+                            <a href="{{ route('customer.notification') }}">Notifications <span
+                                    class="badge rounded-pill bg-danger float-end">{{ $customer->notification_count }}</span></a>
+                            <a href="{{ route('customer.orders') }}" class="dropdown-item">Orders<span
+                                    class="badge rounded-pill bg-danger float-end">{{ $customer->order_count }}</span></a>
                             <a href="{{ route('customer.wishlists') }}" class="dropdown-item">Wishlist</a>
                             <hr class="dropdown-divider" />
                             <form action="{{ route('logout') }}" method="post">
@@ -66,9 +72,10 @@
                 @endauth
                 <li class="nav-item mx-3">
                     <a href="{{ route('customer.carts') }}" class="nav-link"><i class="fas fa-shopping-cart"></i>
-                        {{-- <span class="badge bg-danger rounded-pill badge-notification"
-                    >1</span
-                  > --}}
+                        @auth('customer')
+                            <span
+                                class="badge bg-danger rounded-pill badge-notification">{{ $customer->cart_count }}</span>
+                        @endauth
                     </a>
                 </li>
                 <li class="nav-item dropdown mx-3">
@@ -77,22 +84,19 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         <form class="px-4 py-3">
                             <div class="input-group input-group-sm" style="min-width: 200px">
-                                <input type="text" class="form-control" placeholder="Seach" />
-                                <button class="btn btn-sm btn-outline-primary" type="button" id="button-addon2"
-                                    data-mdb-ripple-color="dark">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                                <form action="{{ route('products.search') }}" method="get">
+                                    <input name="query" type="text" class="form-control" placeholder="Seach" />
+                                    <button class="btn btn-sm btn-outline-primary" type="button" id="button-addon2"
+                                        data-mdb-ripple-color="dark">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </form>
                             </div>
                         </form>
                     </div>
                 </li>
             </ul>
-            <!-- Left links -->
-
-            <!-- Search form -->
         </div>
-        <!-- Collapsible wrapper -->
     </div>
-    <!-- Container wrapper -->
     @include('main.modals.login-register-modal')
 </nav>

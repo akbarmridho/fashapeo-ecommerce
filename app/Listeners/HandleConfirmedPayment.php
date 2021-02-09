@@ -25,7 +25,7 @@ class HandleConfirmedPayment
     /**
      * Handle the event.
      *
-     * @param  PaymentConfirmed  $event
+     * @param  PaymentConfirmedEvent  $event
      * @return void
      */
     public function handle(PaymentConfirmedEvent $event)

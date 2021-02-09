@@ -30,6 +30,6 @@ class OrderPolicy
 
     public function markCompleted(User $user, Order $order)
     {
-        return $order->customer()->is($user) && $order->recentStatus()->is($this->status->orderShipped());
+        return $order->customer()->is($user) && isset($order->shipment->tracking_number);
     }
 }

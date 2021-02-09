@@ -1,10 +1,9 @@
 @extends('layouts.main')
 @section('title')
-    Product by category {{ $category->name }}
+    Product Search
 @endsection
 @section('content')
     <main>
-        @include('main.includes.category-header')
         <div class="container mt-5">
             <div class="row">
                 <div class="col-lg-3 rounded-3 p-4">
@@ -12,8 +11,9 @@
                 </div>
                 <div class="col-lg-9 p-4">
                     <div class="d-flex">
-                        <p class="small ">Displaying {{ $products->count() }} products for category
-                            {{ $category->name }}</p>
+                        <p class="small ">Displaying {{ $products->count() }} products for search query
+                            {{ $query }}
+                        </p>
                         {{-- <div class="">
                             <select class="form-select">
                                 <option selected>Sort by</option>

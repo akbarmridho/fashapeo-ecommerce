@@ -33,6 +33,12 @@ class ViewServiceProvider extends ServiceProvider
             ],
             CategoryComposer::class
         );
-        View::composer(['customer.pages.*'], CustomerComposer::class);
+        View::composer(
+            [
+                'customer.pages.*',
+                'main.pages.*'
+            ],
+            CustomerComposer::class
+        );
     }
 }

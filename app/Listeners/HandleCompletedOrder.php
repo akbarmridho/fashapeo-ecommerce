@@ -25,7 +25,7 @@ class HandleCompletedOrder
     /**
      * Handle the event.
      *
-     * @param  OrderCompleted  $event
+     * @param  OrderCompletedEvent  $event
      * @return void
      */
     public function handle(OrderCompletedEvent $event)

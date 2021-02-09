@@ -7,11 +7,6 @@ use Illuminate\View\View;
 
 class CategoryComposer
 {
-    /**
-     * The user repository implementation.
-     *
-     * @var \App\Reposistory\CategoryRepositoryInterface
-     */
     protected $categories;
 
     /**

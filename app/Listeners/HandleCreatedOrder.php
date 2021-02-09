@@ -25,7 +25,7 @@ class HandleCreatedOrder
     /**
      * Handle the event.
      *
-     * @param  OrderCreated  $event
+     * @param  OrderCreatedEvent $event
      * @return void
      */
     public function handle(OrderCreatedEvent $event)

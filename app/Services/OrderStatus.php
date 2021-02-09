@@ -52,6 +52,12 @@ class OrderStatus
         $this->orderCompleted($order);
     }
 
+    public function orderExpired(Order $order)
+    {
+        $this->statusUpdater->update($order, $this->status->orderExpired());
+        $this->orderCancelled($order);
+    }
+
     public function orderCompleted(Order $order)
     {
         $this->statusUpdater->update($order, $this->status->orderCompleted());

@@ -44,7 +44,7 @@ class RegisteredAdminController extends Controller
      * Create a new registered user.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Actions\CreateNewAdmin  $creator
+     * @param  \App\Actions\Auth\CreateNewAdmin  $creator
      */
     public function store(Request $request, CreateNewAdmin $creator)
     {

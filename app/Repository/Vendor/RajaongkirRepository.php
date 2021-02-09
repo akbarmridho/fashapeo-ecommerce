@@ -68,23 +68,6 @@ class RajaongkirRepository implements DeliveryRepositoryInterface
         return collect([]);
     }
 
-    public function address(int $cityId): array
-    {
-        $apiUrl = 'https://api.rajaongkir.com/starter/city';
-
-        $data = $this->http->get($apiUrl, ['id' => $cityId]);
-
-        if (! $data->successful()) {
-            return false;
-        }
-
-        return [
-            'city' => $data['type'].' '.$data['city_name'],
-            'province' => $data['province'],
-            'vendor_id' => $data['city_id'],
-        ];
-    }
-
     private function arrayResponse($response)
     {
         if ($response->successful()) {

@@ -34,8 +34,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function category(Category $category, $page = null)
     {
-        // $category->join('categori')
-        return $category->products()->withRelationship()->paginate($this->paginate);
+        // children
+        if ($category->parent_id) {
+            return MasterProduct::where('category_id', $category->id)->withRelationship()->paginate($this->paginate);
+        }
+        // parent
+        return MasterProduct::whereIn('category_id', $category->children->plucK('id'))->withRelationship()->paginate($this->paginate);
     }
 
     public function bestSeller()
