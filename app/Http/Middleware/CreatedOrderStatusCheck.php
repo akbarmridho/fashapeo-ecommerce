@@ -27,9 +27,9 @@ class CreatedOrderStatusCheck
      */
     public function handle(Request $request, Closure $next, $current)
     {
-        // $order = Order::where('order_number', $request->route('order'))->firstOrFail();
-        $order = Order::findOrFail($request->route('order'));
-        if (! $orderStatus = $order->recent_status) {
+        $order = $request->route('order');
+
+        if (!$orderStatus = $order->recent_status) {
             throw new CannotValidateStatus();
         }
 
@@ -59,19 +59,19 @@ class CreatedOrderStatusCheck
 
         switch ($orderStatus->id) {
             case $this->status->orderCreated()->id:
-                $redirect = route('order.shipment', ['order', $order]);
+                $redirect = route('customer.order.shipment', ['order' => $order]);
                 break;
             case $this->status->shipmentCreated()->id:
-                $redirect = route('order.transaction', ['order', $order]);
+                $redirect = route('customer.order.transaction', ['order' => $order]);
                 break;
             case $this->status->orderProcessed()->id:
-                $redirect = route('order.success', ['order', $order]);
+                $redirect = route('customer.order.status.success', ['order' => $order]);
                 break;
-            case $this->status->paymentPending()->id:
-                $redirect = route('order.pending', ['order', $order]);
+            case $this->status->transactionPending()->id:
+                $redirect = route('customer.order.status.pending', ['order' => $order]);
                 break;
             case $this->status->orderCancelled()->id:
-                $redirect = route('order.failed', ['order', $order]);
+                $redirect = route('customer.order.status.failed', ['order' => $order]);
                 break;
             default:
                 throw new CannotValidateStatus();

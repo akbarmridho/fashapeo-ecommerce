@@ -6,6 +6,13 @@
         </div>
         <button type="button" class="btn-close ms-auto me-2" data-mdb-dismiss="toast" aria-label="Close"></button>
     </div>
+    <div class="toast d-flex align-items-center top-0 end-0 position-fixed m-3" id="cartUpdated" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="toast-body">
+            Cart updated
+        </div>
+        <button type="button" class="btn-close ms-auto me-2" data-mdb-dismiss="toast" aria-label="Close"></button>
+    </div>
     <div class="toast d-flex align-items-center top-0 end-0 position-fixed m-3" id="cartDuplicate" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="toast-body">
@@ -16,7 +23,7 @@
     <div class="toast d-flex align-items-center top-0 end-0 position-fixed m-3" id="cartFailed" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="toast-body">
-            Cannot add product to cart
+            Something went wrong
         </div>
         <button type="button" class="btn-close ms-auto me-2" data-mdb-dismiss="toast" aria-label="Close"></button>
     </div>

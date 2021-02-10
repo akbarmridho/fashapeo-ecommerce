@@ -13,6 +13,8 @@ class Midtrans
 {
     public $notification;
     public $transaction;
+    public $transaction_status;
+    public $fraud_status;
 
     public function __construct()
     {
@@ -20,7 +22,13 @@ class Midtrans
         MidtransConfig::$isProduction = config('app.debug');
         MidtransConfig::$isSanitized = true;
         MidtransConfig::$is3ds = true;
+    }
+
+    public function notification()
+    {
         $this->notification = new Notification();
+        $this->transaction_status = $this->notification->transaction_status;
+        $this->fraud_status = $this->notification->fraud_status;
     }
 
     public function token(Order $order)

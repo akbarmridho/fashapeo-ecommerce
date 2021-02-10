@@ -29,6 +29,7 @@ mix.js("resources/js/app.js", "public/js")
     .js("resources/js/pages/main.js", "public/js/pages")
     .js("resources/js/pages/product.js", "public/js/pages")
     .js("resources/js/pages/customer/cart.js", "public/js/pages/customer")
+    .js("resources/js/pages/customer/wishlist.js", "public/js/pages/customer")
     .js(
         "resources/js/pages/customer/createAddress.js",
         "public/js/pages/customer"

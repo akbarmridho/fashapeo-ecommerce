@@ -94,7 +94,7 @@ Route::name('customer.')->group(function () {
             //     ->name('order.shipment.cost');
         });
 
-        Route::middleware(['order.check.transaction', 'can:show,order'])->group(function () {
+        Route::middleware(['order.check:transaction', 'can:show,order'])->group(function () {
             Route::get('/{order:order_number}/transaction', [CreatedTransactionController::class, 'show'])
                 ->name('order.transaction');
         });
@@ -105,13 +105,13 @@ Route::name('customer.')->group(function () {
 
         Route::get('/error', [OrderRedirectController::class, 'error']);
 
-        // Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
-        //     ->name('order.status.success');
+        Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
+            ->name('order.status.success');
 
-        // Route::middleware(['order.check:failed', 'can:show,order'])->get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
-        //     ->name('order.status.failed');
+        Route::middleware(['order.check:failed', 'can:show,order'])->get('/{order:order_number}/failed', [CreatedOrderStatus::class, 'failed'])
+            ->name('order.status.failed');
 
-        // Route::middleware(['order.check:pending', 'can:show,order'])->get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
-        //     ->name('order.status.pending');
+        Route::middleware(['order.check:pending', 'can:show,order'])->get('/{order:order_number}/pending', [CreatedOrderStatus::class, 'pending'])
+            ->name('order.status.pending');
     });
 });

@@ -46,7 +46,7 @@ class OrderCancelled extends Notification
         return [
             'title' => 'Order ' . $this->order->order_number . ' Has Been Cancelled',
             'message' => 'Order number ' . $this->order->order_number . ' has been cancelled.',
-            'link' => route('admin.orders.detail', ['order' => $this->order]),
+            'link' => route('admin.order.detail', ['order' => $this->order]),
         ];
     }
 }

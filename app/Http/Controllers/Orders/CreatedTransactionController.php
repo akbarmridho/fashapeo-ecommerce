@@ -20,7 +20,7 @@ class CreatedTransactionController extends Controller
 
     public function show(Order $order, Midtrans $payment)
     {
-        $token = Cache::remember('order.' . $order->id . '.key', 60 * 60 * 24, function ($payment, $order) {
+        $token = Cache::remember('order.' . $order->id . '.key', 60 * 60 * 24, function () use ($payment, $order) {
             return $payment->token($order);
         });
 
@@ -29,8 +29,9 @@ class CreatedTransactionController extends Controller
 
     public function notification(Midtrans $payment)
     {
-        $status = $payment->notificaton->transaction_status;
-        $fraud = $payment->notification->fraud_status;
+        $payment->notification;
+        $status = $payment->transaction_status;
+        $fraud = $payment->fraud_status;
         $order = Order::where('order_number', $payment->notification->order_id)->first();
 
         switch ($status) {

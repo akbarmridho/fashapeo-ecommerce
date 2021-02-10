@@ -14,7 +14,7 @@ class UpdatePriceTotal {
 
     handleChange() {
         this.updateShipmentCost(this.getShipmentCost());
-        this.updateOrderTotal(this.total + this.getShipmentCost());
+        this.updateOrderTotal(this.subtotal + this.getShipmentCost());
     }
 
     getShipmentCost() {

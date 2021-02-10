@@ -38,17 +38,14 @@ class CreatedShipmentController extends Controller
         return response()->json(['message' => 'Shipment address updated']);
     }
 
-    public function finalize(
-        FinalizeShipmentRequest $request,
-        Order $order
-    ) {
-
+    public function finalize(Request $request, Order $order)
+    {
         $shipment = $order->shipment;
 
         $this->delivery->finalizeShipment($shipment, $request->shipment);
 
         $this->status->shipmentCreated($order);
 
-        return redirect()->route('customer.orders.transaction', ['order' => $order]);
+        return redirect()->route('customer.order.transaction', ['order' => $order]);
     }
 }

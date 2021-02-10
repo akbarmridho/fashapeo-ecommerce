@@ -46,7 +46,7 @@ class PaymentConfirmed extends Notification
         return [
             'title' => 'Payment From Order ' . $this->order->order_number . ' Has Been Confirmed',
             'message' => 'Customer has paid payment for order ' . $this->order->order_number . ' and waiting for seller response. Process order immediately',
-            'link' => route('admin.orders.detail', ['order' => $this->order]),
+            'link' => route('admin.order.detail', ['order' => $this->order]),
         ];
     }
 }

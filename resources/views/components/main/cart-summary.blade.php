@@ -18,6 +18,7 @@
     </div>
     <div class="card-footer text-center">
         <form action="{{ route('customer.order.create') }}" method="POST">
+            @csrf
             <button class="btn btn-primary" type="submit"><i class="fas fa-shopping-cart me-3"></i>Checkout</button>
         </form>
     </div>

@@ -18,7 +18,9 @@ class DateTimeCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        if (is_string($value)) {
+        if (!isset($value)) {
+            return null;
+        } else if (is_string($value)) {
             return Converter::getConvertedDateTime(Carbon::parse($value));
         }
 

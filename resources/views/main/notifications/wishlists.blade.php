@@ -16,7 +16,7 @@
     <div class="toast d-flex align-items-center top-0 end-0 position-fixed m-3" id="wishlistFailed" role="alert"
         aria-live="assertive" aria-atomic="true">
         <div class="toast-body">
-            Cannot add product to wishlist
+            Something went wrong
         </div>
         <button type="button" class="btn-close ms-auto me-2" data-mdb-dismiss="toast" aria-label="Close"></button>
     </div>

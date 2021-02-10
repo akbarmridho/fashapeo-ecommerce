@@ -1,6 +1,6 @@
 class UpdateCart {
     constructor(element) {
-        console.log(element);
+        this.element = element;
         this.incrementBtn = element.querySelector(".increment");
         this.decrementBtn = element.querySelector(".decrement");
         this.quantityInput = element.querySelector(".quantity");
@@ -9,6 +9,7 @@ class UpdateCart {
         this.pending = false;
         this.productId = element.dataset.id;
         this.initializeEventListener();
+        this.getNotificationElement();
     }
 
     initializeEventListener() {
@@ -29,6 +30,19 @@ class UpdateCart {
             this.evaluateInput.bind(this)
         );
         this.deleteButton.addEventListener("click", this.deleteCart.bind(this));
+    }
+
+    getNotificationElement() {
+        this.cartUpdatedNotification = document.getElementById("cartUpdated");
+        this.cartDeletedNotificaiton = document.getElementById("cartDelete");
+        this.cartFailedNotification = document.getElementById("cartFailed");
+        this.initializeToast();
+    }
+
+    initializeToast() {
+        this.cartUpdated = new window.mdb.Toast(this.cartUpdatedNotification);
+        this.cartDeleted = new window.mdb.Toast(this.cartDeletedNotificaiton);
+        this.cartFailed = new window.mdb.Toast(this.cartFailedNotification);
     }
 
     retreiveQuantity() {
@@ -84,11 +98,31 @@ class UpdateCart {
         data.append("quantity", this.retreiveQuantity());
         data.append("note", this.retreiveNote());
         data.append("_method", "PUT");
-        window.axios.post("/cart", data);
+        window.axios
+            .post("/cart", data)
+            .then((response) => {
+                this.cartUpdated.show();
+            })
+            .catch((error) => {
+                this.cartFailed.show();
+            });
     }
 
     deleteCart() {
-        window.axios.delete(`/cart/${this.productId}`);
+        window.axios
+            .delete(`/cart/${this.productId}`)
+            .then((response) => {
+                this.cartDeleted.show();
+                this.removeElement();
+                window.location.reload();
+            })
+            .catch((error) => {
+                this.cartFailed.show();
+            });
+    }
+
+    removeElement() {
+        this.element.remove();
     }
 }
 

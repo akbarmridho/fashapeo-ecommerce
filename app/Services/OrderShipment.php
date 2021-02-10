@@ -33,39 +33,37 @@ class OrderShipment
     {
         $opt = explode(':', $option);
         $courier = $opt[0];
-        $service = $opt[1];
+        $srv = $opt[1];
 
         $courier = $this->getCachedShipmentOptions($shipment)->firstWhere('code', $courier);
 
         $courier = is_array($courier) ? $courier : $courier->toArray();
 
-        $service = collect($courier['costs'])->firstWhere('service', $service);
-
-        $service = is_array($courier) ? $courier : $courier->toArray();
+        $service = collect($courier['costs'])->firstWhere('service', $srv);
 
         return [
             'name' => $courier['name'],
             'code' => $courier['code'],
             'service' => $service['service'],
-            'price' => $service['cost']['value'],
-            'etd' => $service['cost']['etd'],
+            'price' => $service['cost'][0]['value'],
+            'etd' => $service['cost'][0]['etd'],
         ];
     }
 
     public function getShipmentOptions(Shipment $shipment)
     {
-        $result = collect([]);
+        $result = collect();
 
         foreach (Courier::all()->pluck('code') as $courier) {
-            $result->push($this->delivery->cost($shipment->destination_id, $shipment->origin_id, $shipment->weight, $courier)->toArray());
+            $result->push(array_values($this->delivery->cost($shipment->destination_id, $shipment->origin_id, $shipment->weight, $courier)->toArray()));
         }
 
-        return $result;
+        return $result->flatten(1);
     }
 
     public function getCachedShipmentOptions(Shipment $shipment)
     {
-        return Cache::remember('shipment.cost.' . $shipment->id, $this->cacheTime, function ($shipment) {
+        return Cache::remember('shipment.cost.' . $shipment->id, $this->cacheTime, function () use ($shipment) {
             return $this->getShipmentOptions($shipment);
         });
     }

@@ -108,7 +108,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('orders/cancelled', [OrderController::class, 'cancelled'])
         ->name('orders.cancelled');
 
-    Route::get('orders/completed', [OrderController::class, 'archived'])
+    Route::get('orders/completed', [OrderController::class, 'completed'])
         ->name('orders.completed');
 
     Route::get('order/{order:order_number}', [OrderController::class, 'show'])

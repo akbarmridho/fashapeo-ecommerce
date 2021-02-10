@@ -8,7 +8,7 @@
     <main>
         @include('main.includes.main-carousel')
         <div class="container">
-            <x-main.product-card-group title="NEW ARRIVAL" :products="$bestSeller" />
+            <x-main.product-card-group title="BEST SELLER" :products="$bestSeller" />
             <x-main.product-card-group title="NEW ARRIVAL" :products="$newArrival" />
             @include('main.samples.products-by-category')
         </div>

@@ -12,7 +12,7 @@ class CreateInvoiceDetail
 
         $shippingAddress = [
             'phone' => $shipment->phone,
-            'address' => $shipment->delivery_address.' '.$shipment->delivery_district,
+            'address' => $shipment->delivery_address . ' ' . $shipment->delivery_district,
             'city' => $shipment->delivery_city,
             'postal_code' => $shipment->postal_code,
         ];
@@ -23,12 +23,12 @@ class CreateInvoiceDetail
             $productItems[] = [
                 'price' => $item->final_price,
                 'quantity' => $item->quantity,
-                'name' => $item->name.$item->variant ? ', '.$item->variant : '',
+                'name' => $item->name . $item->variant ? ', ' . $item->variant : '',
             ];
         }
 
         $productItems[] = [
-            'name' => $shipment->courier->name.' '.$shipment->service,
+            'name' => $shipment->courier . ' ' . $shipment->service,
             'price' => $shipment->price,
         ];
 

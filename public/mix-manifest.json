@@ -4,6 +4,7 @@
     "/js/pages/main.js": "/js/pages/main.js",
     "/js/pages/product.js": "/js/pages/product.js",
     "/js/pages/customer/cart.js": "/js/pages/customer/cart.js",
+    "/js/pages/customer/wishlist.js": "/js/pages/customer/wishlist.js",
     "/js/pages/customer/createAddress.js": "/js/pages/customer/createAddress.js",
     "/js/pages/customer/shipment.js": "/js/pages/customer/shipment.js",
     "/js/pages/auth/register.js": "/js/pages/auth/register.js",

@@ -17,7 +17,7 @@ class CreateOrderItemsTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->nullOnDelete();
-            $table->foreignId('product_discount_id')->constrained()->nullOnDelete();
+            $table->foreignId('product_discount_id')->constrained()->nullOnDelete()->nullable();
             $table->string('name');
             $table->string('variant')->nullable();
             $table->string('note')->nullable();

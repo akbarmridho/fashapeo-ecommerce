@@ -4,6 +4,10 @@
     Wishlist
 @endsection
 
+@section('additional-script')
+    <script src="{{ mix('/js/pages/customer/wishlist.js') }}" defer></script>
+@endsection
+
 @section('content')
     <main>
         <div class="container">
@@ -27,9 +31,11 @@
                         <x-main.product-wishlist :product="$wishlist" />
                     @endforeach
                 </div>
-                {{-- {{ $products->links() }} --}}
             </div>
-
         </div>
     </main>
+@endsection
+
+@section('additional-layout')
+    @include('main.notifications.wishlists')
 @endsection

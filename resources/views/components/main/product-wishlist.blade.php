@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3 wishlist">
     <div class="row g-0">
         <div class="col-3">
             <img src="{{ $product->main_image->url }}" alt="" class="img-fluid" />
@@ -10,8 +10,7 @@
                 <p class="card-text text-danger fw-bold h6 mb-3">
                     <x-main.product-price-tag :price="$product->price" />
                 </p>
-                <button class="btn btn-secondary btn-rounded" id="wishlist" data-state="selected"
-                    data-id="{{ $product->id }}">
+                <button class="btn btn-secondary btn-rounded wishlist-button" data-id="{{ $product->id }}">
                     <i class="fas fa-heart mr-2"></i>
                 </button>
             </div>

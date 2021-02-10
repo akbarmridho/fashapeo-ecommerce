@@ -9,9 +9,10 @@
 
         <a class="navbar-brand" href="{{ route('home') }}"><img src="/img/thin.png" alt="" height="50" /></a>
 
-        <a href="#" class="d-lg-none link-dark"><i class="fas fa-shopping-cart"></i><span
-                class="badge bg-danger rounded-pill badge-notification">1</span></a>
-
+        <a href="{{ route('customer.carts') }}" class="d-lg-none link-dark"><i class="fas fa-shopping-cart"></i>
+            @auth('customer')
+                <span class="badge bg-danger rounded-pill badge-notification">{{ $customer->cart_count }}</span>
+            @endauth</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
 

@@ -25,8 +25,6 @@
                 <hr class="divider">
             </div>
             <div class="row">
-
-                @csrf
                 <h4>Your cart</h4>
                 <div class="col-12 col-md-7 p-4">
                     @foreach ($products as $product)
@@ -39,4 +37,8 @@
             </div>
         </div>
     </main>
+@endsection
+
+@section('additional-layout')
+    @include('main.notifications.carts')
 @endsection

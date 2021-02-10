@@ -10,15 +10,21 @@
                     <h6 class="card-subtitle text-muted mb-3">Variant: {{ $item->variant }}</h6>
                 @endisset
                 <p class="card-text text-danger fw-bold h6 mb-3">
-                    @if ($item->product_summary['price_cut'] == 0)
-                        {{ $item->product_summary['final_price'] }}
+                    Base price:
+                    @if ($item->price_summary['price_cut'] == 0)
+                        {{ $item->price_summary['price'] }}
                     @else
-                        <del><span class="text-muted">{{ $item->product_summary['price'] }}</span></del>
-                        {{ $item->product_summary['final_price'] }}
+                        <del><span class="text-muted">{{ $item->price_summary['price'] }}</span></del>
+                        {{ $item->price_summary['after_cut'] }}
                     @endif
                 </p>
-                <p class="card-text">Quantity: {{ $item->quantity }}</p>
-                <p class="card-text">Notes: {{ $item->note }}</p>
+                <div class="card-text">
+                    <p>
+                        Quantity: {{ $item->quantity }} <br>
+                        Notes: {{ $item->note }}</p>
+                    <h6>Subtotal: {{ $item->quantity . 'x' . $item->price_summary['after_cut'] }} =
+                        {{ $item->price_summary['final_price'] }}</h6>
+                </div>
             </div>
         </div>
     </div>

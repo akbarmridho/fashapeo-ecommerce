@@ -15,10 +15,11 @@
         </a>
         <a href="{{ route('customer.notification') }}" class="list-group-item list-group-item-action
   @if (request()->routeIs('customer.notification')) active @endif
-            ">Notifications</a>
+            ">Notifications <span
+                class="badge rounded-pill bg-danger float-end">{{ $customer->notification_count }}</span></a>
         <a href="{{ route('customer.orders') }}" class="list-group-item list-group-item-action
   @if (request()->routeIs('customer.orders')) active @endif
-            ">Orders</a>
+            ">Orders <span class="badge rounded-pill bg-danger float-end">{{ $customer->order_count }}</span></a>
         <a href="{{ route('customer.address') }}" class="list-group-item list-group-item-action
   @if (request()->routeIs('customer.address.*') || request()->routeIs('customer.address')) active @endif
             ">Address</a>

@@ -46,7 +46,7 @@ class OrderCreated extends Notification
         return [
             'title' => 'A New Order Arrived',
             'message' => 'Order ' . $this->order->order_number . ' has been created. Please wait for status updates',
-            'link' => route('admin.orders.detail', ['order' => $this->order]),
+            'link' => route('admin.order.detail', ['order' => $this->order]),
         ];
     }
 }

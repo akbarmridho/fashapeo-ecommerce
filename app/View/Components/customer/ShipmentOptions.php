@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class ShipmentOptions extends Component
 {
     public $order;
+    public $shipments;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($order)
+    public function __construct($order, $shipments)
     {
         $this->order = $order;
+        $this->shipments = $shipments;
     }
 
     /**

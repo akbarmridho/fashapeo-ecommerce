@@ -11,7 +11,9 @@
 </dl>
 <p class="h4">Product details:</p>
 @foreach ($order->items as $item)
-    <x-main.product-overview :item="$item" />
+    <div class="col-12 col-lg-8">
+        <x-main.product-overview :item="$item" />
+    </div>
 @endforeach
 <hr class="divider">
 <p class="h5 mb-3 text-danger fw-bold">Total:
@@ -23,7 +25,7 @@
 </p>
 <p class="h4">Order details:</p>
 <dl class="row">
-    @isset($order->transaction))
+    @isset($order->transaction)
         <dt class="col-sm-3 fw-normal">Payment method</dt>
         <dd class="col-sm-9">{{ $order->transaction->payment_method }}</dd>
     @endisset

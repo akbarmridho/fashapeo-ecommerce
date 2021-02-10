@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('order_number', 20);
             $table->foreignId('user_id')->constrained()->nullOnDelete();
-            $table->foreignId('transaction_id')->constrained()->nullOnDelete();
-            $table->foreignId('shipment_id')->constrained()->nullOnDelete();
+            $table->foreignId('transaction_id')->constrained()->nullOnDelete()->nullable();
+            $table->foreignId('shipment_id')->constrained()->nullOnDelete()->nullable();
             $table->boolean('is_success')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();

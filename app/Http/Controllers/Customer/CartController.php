@@ -46,7 +46,11 @@ class CartController extends Controller
 
         $customer = Auth::guard('customer')->user();
 
-        $customer->carts()->syncWithoutDetaching([$validated['id'] => ['quantity' => $validated['quantity']]]);
+        if ($customer->carts()->where('product_id', $validated['id'])->exists()) {
+            return response('Duplicate cart', 422);
+        }
+
+        $customer->carts()->syncWithoutDetaching([$validated['id'] => ['quantity' => $quantity]]);
     }
 
     public function update(Request $request)

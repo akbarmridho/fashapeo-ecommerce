@@ -39,6 +39,7 @@ class OrderItem extends Model
         return [
             'price' => config('payment.currency_symbol') . $this->price,
             'price_cut' => $this->price_cut,
+            'after_cut' => config('payment.currency_symbol') . ($this->price - $this->price_cut),
             'final_price' => config('payment.currency_symbol') . $this->final_price,
         ];
     }

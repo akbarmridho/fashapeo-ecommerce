@@ -81,6 +81,7 @@ class OrderController extends Controller
     public function delete(Order $order)
     {
         $order->delete();
+        // hapus shipment dan relasi lain yang tidak otomatis terhapus
         session()->flash('status', 'Order Deleted');
 
         return back();

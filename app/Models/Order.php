@@ -42,7 +42,7 @@ class Order extends Model
 
     public function status()
     {
-        return $this->belongsToMany(Status::class)->using(OrderActivity::class)->withTimestamps();
+        return $this->belongsToMany(Status::class, 'order_activities')->using(OrderActivity::class)->withTimestamps();
     }
 
     public function transaction()
@@ -75,7 +75,7 @@ class Order extends Model
         return $query->with([
             'shipment',
             'transaction',
-            'activities.status',
+            'status',
             'items',
         ]);
     }
@@ -93,7 +93,7 @@ class Order extends Model
 
     public function getRecentStatusAttribute()
     {
-        $this->status->first();
+        return $this->status->sortByDesc('pivot.created_at')->first();
     }
 
     public function getSubtotalAttribute()
@@ -101,7 +101,7 @@ class Order extends Model
         $final = $this->items->sum('final_price');
         return [
             'int' => $final,
-            'sym' => config('payment.curreny_symbol') . $final,
+            'sym' => config('payment.currency_symbol') . $final,
         ];
     }
 }
