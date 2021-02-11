@@ -1,7 +1,6 @@
 require("./bootstrap");
 
 window.FilePond = require("./classes/main/FilePond");
-window.lozad = require("lozad");
 window.GLightbox = require("glightbox");
 window.mdb = require("mdb-ui-kit");
 window.tail = require("tail.select");

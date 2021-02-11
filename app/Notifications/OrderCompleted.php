@@ -44,7 +44,7 @@ class OrderCompleted extends Notification
     public function toArray($notifiable)
     {
         return [
-            'Order Completed',
+            'title' => 'Order Completed',
             'message' => 'Your order ' . $this->order->order_number . ' has been completed. Thank you for your order',
             'link' => route('customer.orders.show', ['order' => $this->order]),
         ];

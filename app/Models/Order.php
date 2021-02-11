@@ -22,6 +22,7 @@ class Order extends Model
         'transaction_id',
         'shipment_id',
         'completed_at',
+        'is_success'
     ];
 
     protected $casts = [
@@ -42,7 +43,7 @@ class Order extends Model
 
     public function status()
     {
-        return $this->belongsToMany(Status::class, 'order_activities')->using(OrderActivity::class)->withTimestamps();
+        return $this->belongsToMany(Status::class, 'order_activities')->using(OrderActivity::class)->withTimestamps()->withPivot('id');
     }
 
     public function transaction()
@@ -93,7 +94,7 @@ class Order extends Model
 
     public function getRecentStatusAttribute()
     {
-        return $this->status->sortByDesc('pivot.created_at')->first();
+        return $this->status->sortByDesc('pivot.id')->first();
     }
 
     public function getSubtotalAttribute()

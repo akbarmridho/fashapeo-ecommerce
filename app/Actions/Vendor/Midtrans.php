@@ -4,7 +4,7 @@ namespace App\Actions\Vendor;
 
 use App\Models\Order;
 use App\Transformers\CreateInvoiceDetail as Invoice;
-use Midtrans\Config as MidtransConfig;
+use Midtrans\Config;
 use Midtrans\Notification;
 use Midtrans\Snap;
 use Midtrans\Transaction;
@@ -18,10 +18,10 @@ class Midtrans
 
     public function __construct()
     {
-        MidtransConfig::$serverKey = config('vendor.midtrans_server');
-        MidtransConfig::$isProduction = config('app.debug');
-        MidtransConfig::$isSanitized = true;
-        MidtransConfig::$is3ds = true;
+        Config::$serverKey = config('vendor.midtrans_server');
+        Config::$isProduction = !config('app.debug');
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
     }
 
     public function notification()

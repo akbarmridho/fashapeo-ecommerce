@@ -8,17 +8,17 @@ class MidtransPaymentMethod
     {
         $method = $request['payment_type'];
 
-        $paymentMethod = 'unknow method';
+        $paymentMethod = 'unknown method';
 
         switch ($method) {
             case 'credit_card':
-                $paymentMethod = 'Credit card '.$request['bank'] ?: '';
+                $paymentMethod = 'Credit card ' . $request['bank'] ?: '';
                 break;
             case 'gopay':
                 $paymentMethod = 'Gopay';
                 break;
             case 'bank_transfer':
-                $paymentMethod = 'Bank Transfer'.$request['va_numbers'] ? \strtoupper($request['va_numbers']['bank']) : '';
+                $paymentMethod = 'Bank Transfer' . ($request['va_numbers'] ? \strtoupper($request['va_numbers'][0]['bank']) : '');
                 break;
             case 'echannel':
                 $paymentMethod = 'Mandiri Bill';

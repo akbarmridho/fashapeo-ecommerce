@@ -18,16 +18,16 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function active()
     {
-        return $this->order->withRelationship()->active()->paginate($this->page);
+        return $this->order->withRelationship()->latest()->active()->paginate($this->page);
     }
 
     public function cancelled()
     {
-        return $this->order->withRelationship()->cancelled()->paginate($this->page);
+        return $this->order->withRelationship()->latest()->cancelled()->paginate($this->page);
     }
 
     public function completed()
     {
-        return $this->order->withRelationship()->completed()->paginate($this->page);
+        return $this->order->withRelationship()->latest()->completed()->paginate($this->page);
     }
 }

@@ -21,14 +21,17 @@ class CreateInvoiceDetail
 
         foreach ($order->items as $item) {
             $productItems[] = [
-                'price' => $item->final_price,
+                'id' => $item->id,
+                'price' => $item->price - $item->price_cut,
                 'quantity' => $item->quantity,
-                'name' => $item->name . $item->variant ? ', ' . $item->variant : '',
+                'name' => $item->name . ($item->variant ? ', ' . $item->variant : ''),
             ];
         }
 
         $productItems[] = [
+            'id' => $shipment->id,
             'name' => $shipment->courier . ' ' . $shipment->service,
+            'quantity' => 1,
             'price' => $shipment->price,
         ];
 

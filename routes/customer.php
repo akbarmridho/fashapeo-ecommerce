@@ -72,7 +72,7 @@ Route::name('customer.')->group(function () {
         Route::get('orders/{order:order_number}', [OrderController::class, 'show'])
             ->name('orders.show');
 
-        Route::post('orders/order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
+        Route::post('orders/{order:order_number}/complete', [OrderController::class, 'markAsCompleted'])
             ->name('orders.complete');
     });
 
@@ -99,11 +99,11 @@ Route::name('customer.')->group(function () {
                 ->name('order.transaction');
         });
 
-        Route::get('/finish', [OrderRedirectController::class, 'finish']);
+        Route::get('/status/finish', [OrderRedirectController::class, 'finish']);
 
-        Route::get('/unfinish', [OrderRedirectController::class, 'unfinish']);
+        Route::get('/status/unfinish', [OrderRedirectController::class, 'unfinish']);
 
-        Route::get('/error', [OrderRedirectController::class, 'error']);
+        Route::get('/status/error', [OrderRedirectController::class, 'error']);
 
         Route::middleware(['order.check:success', 'can:show,order'])->get('/{order:order_number}/success', [CreatedOrderStatus::class, 'success'])
             ->name('order.status.success');

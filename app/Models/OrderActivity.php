@@ -8,6 +8,7 @@ use App\Casts\DateTimeCast;
 class OrderActivity extends Pivot
 {
     protected $fillable = [
+        'id',
         'order_id',
         'status_id',
     ];

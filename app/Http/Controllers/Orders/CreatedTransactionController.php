@@ -29,13 +29,20 @@ class CreatedTransactionController extends Controller
 
     public function notification(Midtrans $payment)
     {
-        $payment->notification;
+        $payment->notification();
         $status = $payment->transaction_status;
         $fraud = $payment->fraud_status;
         $order = Order::where('order_number', $payment->notification->order_id)->first();
 
         switch ($status) {
             case 'capture':
+                if ($fraud === 'accept') {
+                    $this->status->transcationSuccess($order);
+                } elseif ($fraud === 'challenge') {
+                    $payment->approve($payment->notification->order_id);
+                }
+                break;
+            case 'settlement':
                 if ($fraud === 'accept') {
                     $this->status->transcationSuccess($order);
                 } elseif ($fraud === 'challenge') {
@@ -57,6 +64,9 @@ class CreatedTransactionController extends Controller
                 break;
             case 'expire':
                 $this->status->transactionExpired($order);
+                break;
+            default:
+                throw new \InvalidArgumentException('Cannot validate status');
                 break;
         }
     }

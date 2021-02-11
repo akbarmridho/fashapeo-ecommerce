@@ -6,6 +6,6 @@ Welcome
 
 @section('content')
 
-<h1>HELLO! MUACH</h1>
+<h1>Welcome to Dashboard</h1>
 
 @endsection

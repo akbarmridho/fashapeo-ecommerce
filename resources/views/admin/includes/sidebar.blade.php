@@ -1,26 +1,33 @@
 <div class="navbar-dark bg-dark pt-5" id="admin-sidenav">
     <ul class="navbar-nav ps-4">
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{ route('admin.dashboard') }}">Dashboard</a>
+            <a class="nav-link
+            @if (request()->routeIs('admin.dashboard')) active @endif
+                " aria-current="page" href="{{ route('admin.dashboard') }}">Dashboard</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Analytics</a>
         </li>
-        <!-- Navbar dropdown -->
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="collapse"
                 data-mdb-target="#orders" aria-mdb-expanded="false">
                 Orders
             </a>
-            <!-- Dropdown menu -->
-            <div class="collapse list-group list-group-flush pe-4 small" id="orders">
+            <div class="collapse
+            @if (request()->routeIs('admin.orders.*')) show @endif
+                list-group list-group-flush pe-4 small" id="orders">
                 <div class="dropdown-menu-dark">
-                    <a class="list-group-item dropdown-item bg-dark" href="{{ route('admin.orders.active') }}">Active
+                    <a class="list-group-item dropdown-item bg-dark
+                    @if (request()->routeIs('admin.orders.active')) active @endif
+                        " href="{{ route('admin.orders.active') }}">Active
                         Orders</a>
-                    <a class="list-group-item dropdown-item bg-dark"
+                    <a class="list-group-item dropdown-item bg-dark
+                    @if (request()->routeIs('admin.orders.completed')) active @endif"
                         href="{{ route('admin.orders.completed') }}">Completed
                         Orders</a>
-                    <a class="list-group-item dropdown-item bg-dark"
+                    <a class="list-group-item dropdown-item bg-dark
+                    @if (request()->routeIs('admin.orders.cancelled')) active @endif
+                        "
                         href="{{ route('admin.orders.cancelled') }}">Cancelled
                         Orders</a>
                 </div>
@@ -32,7 +39,11 @@
                 Products
             </a>
             <!-- Dropdown menu -->
-            <div class="collapse list-group pe-4 small" id="products">
+            <div class="collapse list-group pe-4 small
+            @if(request()->routeIs('admin.products') || request()->routeIs('admin.products.create') || request()->routeIs('admin.variants'))
+            show
+            @endif
+            " id="products">
                 <div class="dropdown-menu-dark">
                     <a class="list-group-item bg-dark dropdown-item" href="{{ route('admin.products') }}">View
                         Products</a>
@@ -57,10 +68,18 @@
             </div>
         </li>
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ route('admin.warehouse') }}">Warehouses</a>
+            <a class="nav-link
+            @if(request()->routeIs('admin.warehouse'))
+            active
+            @endif
+            " aria-current="page" href="{{ route('admin.warehouse') }}">Warehouses</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
+            <a class="nav-link
+            @if(request()->routeIs('admin.categories'))
+            active
+            @endif
+            " aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="collapse"

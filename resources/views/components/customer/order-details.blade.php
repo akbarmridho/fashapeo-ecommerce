@@ -23,7 +23,7 @@
 </p>
 <p class="h4">Order details:</p>
 <dl class="row">
-    @isset($order->transaction))
+    @isset($order->transaction)
         <dt class="col-sm-3 fw-normal">Payment method</dt>
         <dd class="col-sm-9">{{ $order->transaction->payment_method }}</dd>
     @endisset
@@ -46,7 +46,7 @@
 </dl>
 <p class="h4">Order history:</p>
 <dl class="row">
-    @foreach ($order->status as $status)
+    @foreach ($order->status->sortBy('pivot.id') as $status)
         <dt class="col-sm-3 fw-normal">{{ $status->pivot->created_at }}</dt>
         <dd class="col-sm-9">{{ $status->name }} <br> {{ $status->description }}</dd>
     @endforeach

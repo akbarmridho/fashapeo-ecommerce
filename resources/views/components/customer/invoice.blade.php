@@ -7,7 +7,7 @@
         </dd>
         <dt class="col-sm-3">Product details:</dt>
         <dd class="col-sm-9">
-            @foreach ($order->item as $item)
+            @foreach ($order->items as $item)
                 <p>{{ $item->name }},
                     @isset($item->variant)
                         {{ $item->variant }} ,

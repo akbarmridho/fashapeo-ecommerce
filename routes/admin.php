@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CreatedProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -120,9 +121,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('order/{order:order_number}/cancel', [OrderController::class, 'cancel'])
         ->name('order.cancel');
 
-    Route::delete('order/{oder:order_number', [OrderController::class, 'delete'])
+    Route::delete('order/{order:order_number}', [OrderController::class, 'delete'])
         ->name('order.delete');
 
     Route::put('order/{order:order_number}/tracking', [OrderController::class, 'setTrackingNumber'])
         ->name('orders.tracking');
+
+    Route::get('my-account', [AdminController::class, 'account'])->name('my-account');
+    Route::get('notifications', [AdminController::class, 'notification'])->name('notification');
 });
