@@ -37,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $uris = explode('/', $this->app->request->getRequestUri());
 
+        if (!$uris || count($uris) <= 1) {
+            return false;
+        }
+
         if ($uris[1] === 'admin') {
             return true;
         }
