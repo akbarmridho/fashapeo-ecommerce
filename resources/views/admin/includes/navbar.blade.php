@@ -7,7 +7,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink"
                     role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                    <img src="/img/avatar.png" class="rounded-circle" height="22" alt="" loading="lazy" />
+                    <img src="/images/avatar.png" class="rounded-circle" height="22" alt="" loading="lazy" />
                     @if (auth('admin')->user()->notification_count > 0)
                         <span class="badge bg-danger badge-dot"></span>
                     @endif

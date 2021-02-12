@@ -7,7 +7,7 @@
         </button>
 
 
-        <a class="navbar-brand" href="{{ route('home') }}"><img src="/img/thin.png" alt="" height="50" /></a>
+        <a class="navbar-brand" href="{{ route('home') }}"><img src="/images/logo.png" alt="" height="50" /></a>
 
         <a href="{{ route('customer.carts') }}" class="d-lg-none link-dark"><i class="fas fa-shopping-cart"></i>
             @auth('customer')

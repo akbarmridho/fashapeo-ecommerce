@@ -57,7 +57,7 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Payment Support</h5>
 
-                <img src="/img/ATM-1400x514.png" alt="" class="img-fluid" />
+                {{-- <img src="/img/ATM-1400x514.png" alt="" class="img-fluid" /> --}}
             </div>
         </div>
     </div>

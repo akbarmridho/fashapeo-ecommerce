@@ -1,7 +1,7 @@
 <div class="p-4 shadow-1">
     <div class="row mb-4 p-2">
         <div class="col-4">
-            <img src="/img/avatar.png" alt="" class="img-fluid rounded-circle">
+            <img src="/images/avatar.png" alt="" class="img-fluid rounded-circle">
         </div>
         <div class="col-8 d-flex align-items-center">
             <p class="fw-bold h5">{{ $customer->name }}</p>
