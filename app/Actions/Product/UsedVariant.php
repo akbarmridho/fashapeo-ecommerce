@@ -15,7 +15,7 @@ trait UsedVariant
      */
     public function retreiveUsedVariant($input)
     {
-        if (isset($input)) {
+        if (isset($input) || $input == null) {
             return false;
         }
 
