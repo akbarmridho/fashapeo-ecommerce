@@ -31,7 +31,13 @@ class FilepondController extends Controller
 
         $path = config('image.temp_img_path', 'tmp_img');
 
-        if (! $newFile = $file->store($path.DIRECTORY_SEPARATOR.Str::random())) {
+        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+            $newFile = $file->store($path . DIRECTORY_SEPARATOR . Str::random(), config('image.img_disk'));
+        } else {
+            $newFile = $file->store($path . DIRECTORY_SEPARATOR . Str::random());
+        }
+
+        if (!$newFile) {
             return Response::make('Could not save file', 500, [
                 'Content-Type' => 'text/plain',
             ]);
@@ -57,13 +63,13 @@ class FilepondController extends Controller
 
     public function load(Request $request)
     {
-        if (! $request->has('load')) {
+        if (!$request->has('load')) {
             return Response::make('Load parameter is required', 422, [
                 'Content-Type' => 'text/plain',
             ]);
         }
 
-        if (! $request->has('type')) {
+        if (!$request->has('type')) {
             return Response::make('Type parameter is required', 422, [
                 'Content-Type' => 'text/plain',
             ]);
@@ -86,7 +92,7 @@ class FilepondController extends Controller
                 break;
         }
 
-        if (! $basePath) {
+        if (!$basePath) {
             return Response::make('Type parameter is invalid', 422, [
                 'Content-Type' => 'text/plain',
             ]);
@@ -94,10 +100,14 @@ class FilepondController extends Controller
 
         $filename = basename($image->url);
 
-        $path = Storage::disk('public')->path($basePath.DIRECTORY_SEPARATOR.$filename);
+        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+            $path = Storage::disk(config('image.img_disk'))->path($basePath . DIRECTORY_SEPARATOR . $filename);
+        } else {
+            $path = Storage::disk('public')->path($basePath . DIRECTORY_SEPARATOR . $filename);
+        }
 
         return response()->file($path, [
-            'Content-Disposition' => 'inline; filename="'.$filename.'"',
+            'Content-Disposition' => 'inline; filename="' . $filename . '"',
         ]);
     }
 }

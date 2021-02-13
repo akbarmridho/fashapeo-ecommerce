@@ -18,7 +18,7 @@ trait ProductImage
         $serialized = Serializer::convert($images);
         $productImages = $product->images();
 
-        if (array_key_exists('old', $serialized) && ! empty($serialized['old'])) {
+        if (array_key_exists('old', $serialized) && !empty($serialized['old'])) {
             $filtered = $productImages->whereNotIn('id', $serialized['old'])->get();
             $this->deleteImagesFromList($filtered, config('image.product_img_path'));
         }
@@ -70,10 +70,14 @@ trait ProductImage
                 return \basename($item);
             }
 
-            return $pathPrefix.DIRECTORY_SEPARATOR.\basename($item);
+            return $pathPrefix . DIRECTORY_SEPARATOR . \basename($item);
         });
 
-        Storage::disk('public')->delete($nameList->all());
+        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+            Storage::disk(config('image.img_disk'))->delete($nameList->all());
+        } else {
+            Storage::disk('public')->delete($nameList->all());
+        }
 
         Image::destroy($images->pluck('id')->all());
     }
@@ -92,10 +96,14 @@ trait ProductImage
         if ($pathPrefix === null) {
             $path = \basename($image->url);
         } else {
-            $path = $pathPrefix.DIRECTORY_SEPARATOR.\basename($image->url);
+            $path = $pathPrefix . DIRECTORY_SEPARATOR . \basename($image->url);
         }
 
-        Storage::disk('public')->delete($path);
+        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+            Storage::disk(config('iamge.img_disk'))->delete($path);
+        } else {
+            Storage::disk('public')->delete($path);
+        }
         $image->delete();
     }
 }
