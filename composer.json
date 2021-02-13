@@ -26,7 +26,7 @@
         "spatie/laravel-image-optimizer": "^1.6",
         "superbalist/laravel-google-cloud-storage": "^2.2",
         "teamtnt/laravel-scout-tntsearch-driver": "^11.1",
-        "ext-redis": "*"
+        "ext-redis": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
