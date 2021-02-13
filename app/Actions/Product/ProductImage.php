@@ -73,7 +73,7 @@ trait ProductImage
             return $pathPrefix . DIRECTORY_SEPARATOR . \basename($item);
         });
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             Storage::disk(config('image.img_disk'))->delete($nameList->all());
         } else {
             Storage::disk('public')->delete($nameList->all());
@@ -99,7 +99,7 @@ trait ProductImage
             $path = $pathPrefix . DIRECTORY_SEPARATOR . \basename($image->url);
         }
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             Storage::disk(config('iamge.img_disk'))->delete($path);
         } else {
             Storage::disk('public')->delete($path);

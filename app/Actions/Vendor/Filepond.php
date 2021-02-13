@@ -22,7 +22,7 @@ class Filepond
 
         $filepath = Crypt::decryptString($serverId);
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             if (!Str::startsWith($filepath, $this->getBasePath())) {
                 throw new InvalidPathException();
             }
@@ -37,7 +37,7 @@ class Filepond
 
     public function getBasePath()
     {
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             return Storage::disk(config('image.img_disk')->path(config('image.temp_img_path', 'temp_img')));
         } else {
             return Storage::path(config('image.temp_img_path', 'temp_img'));
@@ -48,7 +48,7 @@ class Filepond
     {
         $oldPath = $this->getPathFromServerId($encryptedPath);
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             return $this->moveCloudFile($oldPath, $pathPrefix);
         } else {
             return $this->moveLocalFile($oldPath, $pathPrefix);
@@ -59,7 +59,7 @@ class Filepond
     {
         $path = $this->getPathFromServerId($encryptedPath);
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             $res1 = Storage::disk(config('image.img_disk'));
         } else {
             $res1 = Storage::delete($path);
@@ -71,7 +71,7 @@ class Filepond
 
     public function deleteTemporaryPath($path)
     {
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             return Storage::disk(config('image.img_disk'))->deleteDirectory($path);
         }
 

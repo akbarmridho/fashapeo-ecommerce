@@ -31,7 +31,7 @@ class FilepondController extends Controller
 
         $path = config('image.temp_img_path', 'tmp_img');
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             $newFile = $file->store($path . DIRECTORY_SEPARATOR . Str::random(), config('image.img_disk'));
         } else {
             $newFile = $file->store($path . DIRECTORY_SEPARATOR . Str::random());
@@ -100,7 +100,7 @@ class FilepondController extends Controller
 
         $filename = basename($image->url);
 
-        if (config('image.img_disk') !== 'local' || config('image.img_disk') !== 'public') {
+        if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
             $path = Storage::disk(config('image.img_disk'))->path($basePath . DIRECTORY_SEPARATOR . $filename);
         } else {
             $path = Storage::disk('public')->path($basePath . DIRECTORY_SEPARATOR . $filename);

@@ -6,7 +6,7 @@
 
         <div class="row my-5">
             <div class="col mx-auto text-center">
-                <img src="/img/thin.png" alt="Logo" height="40">
+                <img src="/images/logo.png" alt="Logo" height="40">
             </div>
         </div>
 
