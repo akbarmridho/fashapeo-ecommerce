@@ -38,7 +38,7 @@ class Filepond
     public function getBasePath()
     {
         if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
-            return Storage::disk(config('image.img_disk')->path(config('image.temp_img_path', 'temp_img')));
+            return Storage::disk(config('image.img_disk'))->path(config('image.temp_img_path', 'temp_img'));
         } else {
             return Storage::path(config('image.temp_img_path', 'temp_img'));
         }
@@ -60,7 +60,7 @@ class Filepond
         $path = $this->getPathFromServerId($encryptedPath);
 
         if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
-            $res1 = Storage::disk(config('image.img_disk'));
+            $res1 = Storage::disk(config('image.img_disk'))->delete($path);
         } else {
             $res1 = Storage::delete($path);
         }
