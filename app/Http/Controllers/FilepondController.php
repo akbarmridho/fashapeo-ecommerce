@@ -101,10 +101,12 @@ class FilepondController extends Controller
         $filename = basename($image->url);
 
         if (!(config('image.img_disk') === 'local' || config('image.img_disk') === 'public')) {
-            $path = Storage::disk(config('image.img_disk'))->path($basePath . DIRECTORY_SEPARATOR . $filename);
-        } else {
-            $path = Storage::disk('public')->path($basePath . DIRECTORY_SEPARATOR . $filename);
+            return Storage::disk(config('image.img_disk'))->response($basePath . DIRECTORY_SEPARATOR . $filename, $filename, [
+                'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            ]);
         }
+
+        $path = Storage::disk('public')->path($basePath . DIRECTORY_SEPARATOR . $filename);
 
         return response()->file($path, [
             'Content-Disposition' => 'inline; filename="' . $filename . '"',
