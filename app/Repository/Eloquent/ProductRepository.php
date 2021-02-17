@@ -29,7 +29,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function search($query)
     {
-        return $this->master->search($query)->paginate($this->paginate);
+        return $this->master->withRelationship()->search($query)->paginate($this->paginate);
     }
 
     public function category(Category $category, $page = null)
@@ -40,6 +40,31 @@ class ProductRepository implements ProductRepositoryInterface
         }
         // parent
         return $this->master->whereIn('category_id', $category->children->plucK('id'))->withRelationship()->paginate($this->paginate);
+    }
+
+    public function categoryFilter(Category $category, $min, $max)
+    {
+        // $query = $this->master->where('category_id', $category->id)
+        // if ($term && ($min || $max)) {
+        //     if ($min || $max) {
+        //         //
+        //     } else if ($min) {
+        //         //
+        //     } else if ($max) {
+        //         //
+        //     }
+        // } else if ($term) {
+        //     //
+        // } else if ($min) {
+        //     //
+        // } else if ($max) {
+        //     //
+        // }
+    }
+
+    public function categorySearch(Category $category, $term)
+    {
+        //
     }
 
     public function findBySlug($product)

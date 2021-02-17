@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-redis": "^5.0",
         "anlutro/l4-settings": "^1.0",
         "arielmejiadev/larapex-charts": "^1.0",
         "barryvdh/laravel-dompdf": "^0.9.0",
@@ -22,11 +23,11 @@
         "laravel/scout": "^8.6",
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.5",
+        "league/flysystem-cached-adapter": "^1.1",
         "midtrans/midtrans-php": "^2.3",
         "spatie/laravel-image-optimizer": "^1.6",
         "superbalist/laravel-google-cloud-storage": "^2.2",
-        "teamtnt/laravel-scout-tntsearch-driver": "^11.1",
-        "ext-redis": "^5.0"
+        "teamtnt/laravel-scout-tntsearch-driver": "^11.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

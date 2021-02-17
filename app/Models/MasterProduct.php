@@ -65,7 +65,7 @@ class MasterProduct extends Model
 
     public function getSoldAttribute()
     {
-        return Cache::tags(['products'])->remember('product.' . $this->id . '.sold', 60 * 60 * 24, function () {
+        return Cache::tags(['products'])->remember('product.' . $this->id . '.sold', 60 * 60, function () {
             return $this->products()->join('order_items', 'products.id', '=', 'order_items.product_id')
                 ->join('orders', 'order_items.order_id', '=', 'orders.id')
                 ->where('orders.is_success', true)

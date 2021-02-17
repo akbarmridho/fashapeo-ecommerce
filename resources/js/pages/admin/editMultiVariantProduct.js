@@ -1,6 +1,6 @@
 const {
     UploadMasterProductImage,
-    UploadProductImage
+    UploadProductImage,
 } = require("../../config/Filepond");
 const AddProductVariant = require("../../classes/admin/AddProductVariant");
 const { config } = require("../../config/Quill");
@@ -24,20 +24,20 @@ class UploadProduct {
             this.handleUpload.bind(this)
         );
         this.form.addEventListener("change", this.validateInput.bind(this));
-        document.querySelectorAll(".filepond--root").forEach(element => {
-            element.addEventListener(
-                "FilePond:addfilestart",
-                this.disableUploadButton.bind(this)
-            );
-            element.addEventListener(
-                "FilePond:processfileprogress",
-                this.disableUploadButton.bind(this)
-            );
-            element.addEventListener(
-                "FilePond:updatefiles",
-                this.enableUploadButton.bind(this)
-            );
-        });
+        // document.querySelectorAll(".filepond--root").forEach(element => {
+        //     element.addEventListener(
+        //         "FilePond:addfilestart",
+        //         this.disableUploadButton.bind(this)
+        //     );
+        //     element.addEventListener(
+        //         "FilePond:processfileprogress",
+        //         this.disableUploadButton.bind(this)
+        //     );
+        //     element.addEventListener(
+        //         "FilePond:updatefiles",
+        //         this.enableUploadButton.bind(this)
+        //     );
+        // });
     }
 
     handleUpload() {
@@ -53,11 +53,11 @@ class UploadProduct {
 
         window.axios
             .post("", data)
-            .then(response => {
+            .then((response) => {
                 this.unsetButtonLoadState();
                 window.location.href = "/admin/products";
             })
-            .catch(error => {
+            .catch((error) => {
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();
@@ -105,7 +105,7 @@ class DeleteCurrentVariant {
     }
 
     initializeListener() {
-        this.rows.forEach(element => {
+        this.rows.forEach((element) => {
             element.querySelector("button").addEventListener(
                 "click",
                 () => {
@@ -128,14 +128,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document
         .querySelector("table")
         .querySelectorAll(".filepond")
-        .forEach(element => {
+        .forEach((element) => {
             let inputConfig;
             if (element.dataset.images) {
                 let images = JSON.parse(
                     element.dataset.images.replace(`&quot;`, `"`)
                 );
                 inputConfig = Object.assign({}, UploadProductImage, {
-                    files: images
+                    files: images,
                 });
             } else {
                 inputConfig = Object.assign({}, UploadProductImage);
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     window.tail("#category", {
-        search: true
+        search: true,
     });
     window.Quill.register("modules/imageUploader", ImageUploader);
     const quill = new window.Quill("#editor", config);

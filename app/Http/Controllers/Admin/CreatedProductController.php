@@ -34,13 +34,6 @@ class CreatedProductController extends Controller
     public function store(CreateNewProduct $creator, Request $request)
     {
         $product = $creator->create($request->all());
-        // DB::beginTransaction();
-        // try {
-        // } catch (\Exception $exception) {
-        //     DB::rollBack();
-        //     // return response()->json(['message' => 'Cannot create product'], 500);
-        // }
-        // DB::commit();
 
         Cache::tags('products')->flush();
 

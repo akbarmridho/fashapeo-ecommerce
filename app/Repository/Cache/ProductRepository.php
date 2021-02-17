@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Cookie;
 class ProductRepository implements ProductRepositoryInterface
 {
     private $parent;
-    // private $time = 60 * 60 * 24 * 30; // satu bulan
     private $time = 60 * 15;
 
     public function __construct(EloquentProductRepository $parent)
@@ -47,6 +46,16 @@ class ProductRepository implements ProductRepositoryInterface
                 return $this->parent->category($category);
             }
         );
+    }
+
+    public function categoryFilter(Category $category, $min, $max)
+    {
+        return $this->parent->categoryFilter($category, $min, $max);
+    }
+
+    public function categorySearch(Category $category, $term)
+    {
+        return $this->parent->categorySearch($category, $term);
     }
 
     public function findBySlug($product)

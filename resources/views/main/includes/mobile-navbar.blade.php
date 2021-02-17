@@ -3,14 +3,14 @@
     <ul class="navbar-nav ps-4">
         <li class="nav-item"></li>
         <li class="nav-item my-5">
-            <div class="input-group input-group-sm pe-4">
-                <form action="{{ route('products.search') }}" method="get">
+            <form action="{{ route('products.search') }}" method="get">
+                <div class="input-group input-group-sm pe-4">
                     <input name="term" type="text" class="form-control" placeholder="Seach" />
                     <button class="btn btn-sm btn-outline-primary" type="submit" data-mdb-ripple-color="dark">
                         <i class="fas fa-search"></i>
                     </button>
-                </form>
-            </div>
+                </div>
+            </form>
         </li>
         <li class="nav-item">
             <a class="nav-link
@@ -38,7 +38,7 @@
 
         @auth('customer')
             <li class="nav-item
-                    @if (request()->routeIs('customer.dashboard')) active @endif
+                                    @if (request()->routeIs('customer.dashboard')) active @endif
                 ">
                 <a href="{{ route('customer.dashboard') }}" class="nav-link">My Account</a>
             </li>
@@ -56,7 +56,9 @@
                 </form>
             </li>
         @else
-            <a href="{{ route('login') }}">Login</a>
+            <li class="nav-item">
+                <a href="{{ route('login') }}" class="nav-link">Login</a>
+            </li>
         @endauth
     </ul>
 </nav>

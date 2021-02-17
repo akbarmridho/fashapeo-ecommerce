@@ -24,6 +24,11 @@ class CreatedOrderController extends Controller
     {
         $customer = Auth::guard('customer')->user();
 
+        if ($customer->addresses()->count() === 0) {
+            session()->flash('error', 'Please set an address first');
+            return redirect()->route('customer.address');
+        }
+
         $order = $creator->place($customer);
 
         $this->status->orderCreated($order);

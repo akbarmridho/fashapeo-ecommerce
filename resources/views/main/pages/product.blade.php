@@ -40,11 +40,13 @@
                 <h2 class="h2">
                     {{ $product->name }}
                 </h2>
-                <p class="small"><span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i>
-                    <b>Sold {{ $product->sold }} Product</b>
+                <p class="small">
+                    {{-- <span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i> --}}
+                    {{-- <b>Sold {{ $product->sold }} Product</b> --}}
+                    <span class="text-muted">Sold {{ $product->sold }} product</span>
                 </p>
                 <div id="variations">
-                    <div class="row mt-5">
+                    <div class="row mt-4">
                         @isset($productInformation['variants'])
                             @foreach ($productInformation['variants'] as $variant => $options)
                                 <p class="h5">{{ $variant }}:</p>
@@ -61,7 +63,7 @@
                         @endisset
                         <div class="row mb-2">
                             <p class="h5">Price:</p>
-                            <div id="price">
+                            <div id="price" class="h6 fw-normal">
                                 <x-main.product-price-tag :price="$product->price" />
                             </div>
                         </div>
@@ -87,16 +89,19 @@
                         <div class="col-12 col-md-8">
                             @if ($wishlist)
                                 <button class="btn btn-secondary btn-rounded" id="wishlist" data-state="selected"
+                                    data-mdb-toggle="tooltip" title="Product already in wishlist"
                                     data-id="{{ $product->id }}">
                                     <i class="fas fa-heart mr-2"></i>
                                 </button>
                             @else
                                 <button class="btn btn-secondary btn-rounded" id="wishlist" data-state="unselected"
+                                    data-mdb-toggle="tooptip" title="Add product to wishlist"
                                     data-id="{{ $product->id }}">
                                     <i class="far fa-heart mr-2"></i>
                                 </button>
                             @endif
-                            <button class="btn btn-primary btn-rounded mt-2" id="cart">
+                            <button class="btn btn-primary btn-rounded mt-2" id="cart" data-mdb-toggle="tooltip"
+                                title="Add product to cart">
                                 <i class="fas fa-cart-plus mr-3" aria-hidden="true"></i>
                                 Add to cart
                             </button>

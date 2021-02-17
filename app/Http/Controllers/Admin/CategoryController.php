@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Repository\CategoryRepositoryInterface;
+use App\Services\CategoryService;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     private $category;
+    private $service;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    public function __construct(CategoryRepositoryInterface $categoryRepository, CategoryService $service)
     {
         $this->category = $categoryRepository;
+        $this->service = $service;
     }
 
     public function index()
@@ -22,9 +26,9 @@ class CategoryController extends Controller
         return view('admin.pages.categories')->with('categories', $categories);
     }
 
-    public function edit(int $id)
+    public function edit(Category $id)
     {
-        $editCategory = $this->category->find($id);
+        $editCategory = $id;
         $categories = $this->category->parents();
 
         return view('admin.pages.edit-category', compact('editCategory', 'categories'))->render();
@@ -32,16 +36,16 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $this->category->create($request->all());
+        $this->service->create($request->all());
 
         session()->flash('status', 'Category created');
 
         return back();
     }
 
-    public function update(Request $request, int $id)
+    public function update(Request $request, Category $id)
     {
-        if (! $this->category->update($request->all(), $id)) {
+        if (!$this->service->update($request->all(), $id)) {
             session()->flash('error', 'Categories only support one level of subcategory');
         } else {
             session()->flash('status', 'Category updated');
@@ -50,9 +54,9 @@ class CategoryController extends Controller
         return back();
     }
 
-    public function delete(int $id)
+    public function delete(Category $id)
     {
-        if (! $this->category->delete($id)) {
+        if (!$this->service->delete($id)) {
             session()->flash('error', 'Category with child cannot be deleted. 
                                        Please dissociate the children first');
         } else {

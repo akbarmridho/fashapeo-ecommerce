@@ -109,6 +109,7 @@ class UpdateCart {
     }
 
     deleteCart() {
+        this.disableDeleteCartButton();
         window.axios
             .delete(`/cart/${this.productId}`)
             .then((response) => {
@@ -118,7 +119,16 @@ class UpdateCart {
             })
             .catch((error) => {
                 this.cartFailed.show();
+                this.enableDeleteCartButton();
             });
+    }
+
+    disableDeleteCartButton() {
+        this.deleteButton.disabled = true;
+    }
+
+    enableDeleteCartButton() {
+        this.deleteButton.disabled = false;
     }
 
     removeElement() {

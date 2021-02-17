@@ -1,5 +1,6 @@
 <div class="bg-image">
-    <img src="/img/category3.jpg" alt="" class="img-fluid">
+    {{-- <img src="/img/category3.jpg" alt="" class="img-fluid"> --}}
+    <div style="min-height: 250px"></div>
     <div class="mask d-flex align-items-center justify-content-center" style="background-color: rgba(0,0,0,0.6)">
         <div class="py-3 px-5">
             <h1 class="display-4 fw-bold text-white uppercase">{{ strtoupper($category->name) }}</h1>

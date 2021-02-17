@@ -21,20 +21,20 @@ class UploadProduct {
             this.handleUpload.bind(this)
         );
         this.form.addEventListener("change", this.validateInput.bind(this));
-        document.querySelectorAll(".filepond--root").forEach(element => {
-            element.addEventListener(
-                "FilePond:addfilestart",
-                this.disableUploadButton.bind(this)
-            );
-            element.addEventListener(
-                "FilePond:processfileprogress",
-                this.disableUploadButton.bind(this)
-            );
-            element.addEventListener(
-                "FilePond:updatefiles",
-                this.enableUploadButton.bind(this)
-            );
-        });
+        // document.querySelectorAll(".filepond--root").forEach(element => {
+        //     element.addEventListener(
+        //         "FilePond:addfilestart",
+        //         this.disableUploadButton.bind(this)
+        //     );
+        //     element.addEventListener(
+        //         "FilePond:processfileprogress",
+        //         this.disableUploadButton.bind(this)
+        //     );
+        //     element.addEventListener(
+        //         "FilePond:updatefiles",
+        //         this.enableUploadButton.bind(this)
+        //     );
+        // });
     }
 
     handleUpload() {
@@ -49,11 +49,11 @@ class UploadProduct {
 
         window.axios
             .post("", data)
-            .then(response => {
+            .then((response) => {
                 this.unsetButtonLoadState();
                 window.location.href = "/admin/products";
             })
-            .catch(error => {
+            .catch((error) => {
                 this.enableUploadButton();
                 this.unsetButtonLoadState();
                 this.showErrorModal();
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         UploadMasterProductImage
     );
     window.tail("#category", {
-        search: true
+        search: true,
     });
     window.Quill.register("modules/imageUploader", ImageUploader);
     const quill = new window.Quill("#editor", config);

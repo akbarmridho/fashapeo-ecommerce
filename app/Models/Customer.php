@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Parental\HasParent;
+use Illuminate\Support\Facades\Cache;
 
 class Customer extends User
 {
@@ -40,6 +41,8 @@ class Customer extends User
 
     public function getOrderCountAttribute()
     {
-        return $this->orders()->whereNull('is_success')->count();
+        return Cache::remember('order_count.cust' . $this->id, 60 * 15, function () {
+            return $this->orders()->whereNull('is_success')->count();
+        });
     }
 }

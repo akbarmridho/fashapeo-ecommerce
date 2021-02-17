@@ -14,6 +14,10 @@ interface ProductRepositoryInterface
 
     public function category(Category $category, $page);
 
+    public function categoryFilter(Category $category, $min, $max);
+
+    public function categorySearch(Category $category, $term);
+
     public function findBySlug($product);
 
     public function bestSeller();

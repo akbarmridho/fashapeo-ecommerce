@@ -5,7 +5,6 @@ const config = {
             ["blockquote", "code-block"],
             ["image"],
 
-            [{ header: 1 }, { header: 2 }],
             [{ list: "ordered" }, { list: "bullet" }],
             [{ script: "sub" }, { script: "super" }],
             [{ indent: "-1" }, { indent: "+1" }],
@@ -18,25 +17,25 @@ const config = {
             [{ font: [] }],
             [{ align: [] }],
 
-            ["clean"]
+            ["clean"],
         ],
         imageUploader: {
-            upload: async file => {
+            upload: async (file) => {
                 const data = new FormData();
                 data.append("image", file);
                 return await window.axios
                     .post("/api/image/upload", data, {
                         headers: {
-                            "content-type": "multipart/form-data"
-                        }
+                            "content-type": "multipart/form-data",
+                        },
                     })
-                    .then(response => {
+                    .then((response) => {
                         return response.data;
                     });
-            }
-        }
+            },
+        },
     },
-    theme: "snow"
+    theme: "snow",
 };
 
 export { config };
