@@ -13,7 +13,13 @@
                 <div class="col-lg-9 p-4">
                     <div class="d-flex">
                         <p class="small ">Displaying {{ $products->count() }} products for category
-                            {{ $category->name }}</p>
+                            {{ $category->name }}
+                            @if (request()->has('term'))
+                                and search term {{ request()->term }}
+                            @elseif(request()->has('min') || request()->has('max'))
+                                and price range from {{ request()->min ?: 0 }} to {{ request()->max ?: 'undefined' }}
+                            @endif
+                        </p>
                         {{-- <div class="">
                             <select class="form-select">
                                 <option selected>Sort by</option>

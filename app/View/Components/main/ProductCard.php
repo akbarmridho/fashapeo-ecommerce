@@ -6,14 +6,18 @@ use Illuminate\View\Component;
 
 class ProductCard extends Component
 {
+    public $product;
+    public $tag;
+
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($product, $tag)
     {
-        //
+        $this->product = $product;
+        $this->tag = $tag;
     }
 
     /**

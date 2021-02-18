@@ -41,8 +41,10 @@ class MainPageController extends Controller
 
     public function category(Category $category, Request $request)
     {
-        if ($request->has('term') || $request->has('min') || $request->has('max')) {
-            $products = $this->products->categoryFilter($category, $request->term, $request->min, $request->max);
+        if ($request->has('term')) {
+            $products = $this->products->categorySearch($category, $request->term);
+        } else if ($request->has('min') || $request->has('max')) {
+            $products = $this->products->categoryFilter($category, $request->min, $request->max);
         } else {
             $products = $this->products->category($category, $request->page);
         }

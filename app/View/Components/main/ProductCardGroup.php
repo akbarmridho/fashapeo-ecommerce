@@ -8,16 +8,18 @@ class ProductCardGroup extends Component
 {
     public $title;
     public $products;
+    public $tag;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title, $products)
+    public function __construct($title, $products, $tag)
     {
         $this->title = $title;
         $this->products = $products;
+        $this->tag = $tag;
     }
 
     /**

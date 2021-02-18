@@ -41,8 +41,13 @@
                     {{ $product->name }}
                 </h2>
                 <p class="small">
-                    {{-- <span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i> --}}
-                    {{-- <b>Sold {{ $product->sold }} Product</b> --}}
+                    @if (request()->has('tag'))
+                        @if (request()->tag == 'best')
+                            <span class="badge bg-danger">Best Seller</span><i class="fas fa-minus mx-1"></i>
+                        @elseif(request()->tag == 'new')
+                            <span class="badge bg-warning">New Arrival</span><i class="fas fa-minus mx-1"></i>
+                        @endif
+                    @endif
                     <span class="text-muted">Sold {{ $product->sold }} product</span>
                 </p>
                 <div id="variations">
