@@ -118,3 +118,11 @@ input[type="number"] {
     max-width: 100% !important;
     height: auto !important;
 }
+
+.bg-notification {
+    background-color: #abdaf7;
+}
+
+.notification {
+    transition: all 0.1s;
+}

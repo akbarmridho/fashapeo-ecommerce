@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CreatedProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductDiscountController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UpdateProductController;
 use App\Http\Controllers\Admin\VariantController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -128,5 +129,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         ->name('orders.tracking');
 
     Route::get('my-account', [AdminController::class, 'account'])->name('my-account');
+
     Route::get('notifications', [AdminController::class, 'notification'])->name('notification');
+
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.site');
+
+    Route::post('setting/mail', [SettingController::class, 'mail'])->name('setting.mail');
+
+    Route::post('setting/contact', [SettingController::class, 'contact'])->name('setting.contact');
 });

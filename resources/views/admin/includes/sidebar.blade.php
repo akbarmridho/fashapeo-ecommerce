@@ -40,10 +40,9 @@
             </a>
             <!-- Dropdown menu -->
             <div class="collapse list-group pe-4 small
-            @if(request()->routeIs('admin.products') || request()->routeIs('admin.products.create') || request()->routeIs('admin.variants'))
-            show
-            @endif
-            " id="products">
+            @if (request()->routeIs('admin.products') ||
+                request()->routeIs('admin.products.create') || request()->routeIs('admin.variants')) show @endif
+                " id="products">
                 <div class="dropdown-menu-dark">
                     <a class="list-group-item bg-dark dropdown-item" href="{{ route('admin.products') }}">View
                         Products</a>
@@ -69,17 +68,13 @@
         </li>
         <li class="nav-item">
             <a class="nav-link
-            @if(request()->routeIs('admin.warehouse'))
-            active
-            @endif
-            " aria-current="page" href="{{ route('admin.warehouse') }}">Warehouses</a>
+            @if (request()->routeIs('admin.warehouse')) active @endif
+                " aria-current="page" href="{{ route('admin.warehouse') }}">Warehouses</a>
         </li>
         <li class="nav-item">
             <a class="nav-link
-            @if(request()->routeIs('admin.categories'))
-            active
-            @endif
-            " aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
+            @if (request()->routeIs('admin.categories')) active @endif
+                " aria-current="page" href="{{ route('admin.categories') }}">Categories</a>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-mdb-toggle="collapse"
@@ -105,14 +100,13 @@
                 Setting
             </a>
             <!-- Dropdown menu -->
-            <div class="collapse list-group list-group-flush pe-4 small" id="admin">
+            <div class="collapse list-group list-group-flush pe-4 small @if (request()->
+                routeIs('setting.*')) show @endif" id="admin">
                 <div class="dropdown-menu-dark">
-                    <a class="list-group-item dropdown-item bg-dark" href="#">Site Setting</a>
+                    <a class="list-group-item dropdown-item bg-dark @if (request()->routeIs('admin.setting.site')) active @endif"
+                        href="{{ route('admin.setting.site') }}">Site
+                        Setting</a>
                     <a class="list-group-item dropdown-item bg-dark" href="#">Carousel</a>
-                    <a class="list-group-item dropdown-item bg-dark" href="#">Product Group</a>
-                    <a class="list-group-item dropdown-item bg-dark" href="#">Permissions Setting</a>
-
-                    <a class="list-group-item dropdown-item bg-dark" href="#">Manage Admin</a>
                 </div>
             </div>
         </li>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Main\MainPageController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::middleware('auth')->group(function () {
+    Route::post('/notification/{notification}', [NotificationController::class, 'read'])
+        ->name('notification.read');
+    Route::post('/notification', [NotificationController::class, 'readAll'])
+        ->name('notification.all');
+});
 
 Route::get('/', [MainPageController::class, 'home'])->name('home');
 

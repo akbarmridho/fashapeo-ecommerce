@@ -1,5 +1,7 @@
-<div class="card mb-3 shadow-0 border small">
-    <div class="card-header"><b>{{ $notification->data['title'] }}</b> <span
+<div class="card mb-3 shadow-0 border small notification
+@if ($notification->unread()) bg-notification @endif
+    " data-id="{{ $notification->id }}">
+    <div class="card-header"><b>{{ $notification->data['title'] }}</b><span
             class="small">{{ $notification->created_at }}</span></div>
     <div class="card-body">
         <p class="card-text">

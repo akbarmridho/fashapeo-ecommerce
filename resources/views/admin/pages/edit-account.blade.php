@@ -4,6 +4,10 @@
     Edit Account
 @endsection
 
+@section('additional-script')
+    <script src="{{ mix('/js/pages/auth/register.js') }}" defer></script>
+@endsection
+
 @section('content')
     <div class="row mt-3">
         <h3 class="fw-bold">Update Account</h3>

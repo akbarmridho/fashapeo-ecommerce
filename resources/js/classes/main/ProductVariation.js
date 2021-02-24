@@ -69,9 +69,9 @@ class ProductVariation {
         this.products.forEach((variant) => {
             if (!variant.active | (variant.stock == 0)) {
                 document.querySelector(
-                    `input[value=${
+                    `input[value="${
                         variant[this.variations[0].dataset.variant]
-                    }]`
+                    }"]`
                 ).disabled = true;
             }
         });
@@ -86,7 +86,7 @@ class ProductVariation {
 
         filtered.forEach((variant) => {
             const input = document.querySelector(
-                `input[value=${selected.value}]`
+                `input[value="${selected.value}"]`
             );
             if (!variant.active | (variant.stock == 0)) {
                 input.disabled = true;

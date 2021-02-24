@@ -4,14 +4,14 @@ namespace App\Providers;
 
 use App\Repository\CategoryRepositoryInterface;
 use App\Repository\DeliveryRepositoryInterface;
-use App\Repository\Eloquent\CategoryRepository;
-use App\Repository\Eloquent\OrderRepository;
-use App\Repository\Eloquent\ProductRepository;
-use App\Repository\Eloquent\StatusRepository;
 use App\Repository\OrderRepositoryInterface;
 use App\Repository\ProductRepositoryInterface;
 use App\Repository\StatusRepositoryInterface;
-use App\Repository\Vendor\RajaongkirRepository;
+use App\Repository\Cache\CategoryRepository;
+use App\Repository\Cache\ProductRepository;
+use App\Repository\Cache\StatusRepository;
+use App\Repository\Cache\RajaongkirRepository;
+use App\Repository\Eloquent\OrderRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
