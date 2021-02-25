@@ -13,9 +13,14 @@ class UpdateMail
             'name' => 'string|max:255|required'
         ])->validateWithBag('mail');
 
-        setting([
-            'mailfrom.address' => $input['email'],
-            'mailfrom.name' => $input['name'],
-        ]);
+        $update = [];
+
+        foreach ($input as $key => $value) {
+            if ($value) {
+                $update['mailfrom.' . $key] = $value;
+            }
+        }
+
+        setting($update);
     }
 }

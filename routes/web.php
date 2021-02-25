@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:admin,customer')->group(function () {
     Route::post('/notification/{notification}', [NotificationController::class, 'read'])
         ->name('notification.read');
     Route::post('/notification', [NotificationController::class, 'readAll'])

@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function notification()
     {
         $customer = Auth::guard('customer')->user();
-        $notifications = $customer->notifications;
+        $notifications = $customer->notifications()->paginate(7);
         return view('customer.pages.my-account.notifications', compact('notifications'));
     }
 

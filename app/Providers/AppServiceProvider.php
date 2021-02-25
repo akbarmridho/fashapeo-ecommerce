@@ -31,6 +31,14 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::defaultView('main.pagination.main');
         Paginator::defaultSimpleView('main.pagination.main');
+
+        if (setting('mailfrom.address')) {
+            config(['mail.from.address' => setting('mailform.address')]);
+        }
+
+        if (setting('mailfrom.name')) {
+            config(['mail.from.name' => setting('mailfrom.name')]);
+        }
     }
 
     private function isAdmin()

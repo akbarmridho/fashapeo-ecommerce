@@ -4,6 +4,10 @@
      My Account
  @endsection
 
+ @section('additional-script')
+     <script src="{{ mix('/js/pages/notification.js') }}" defer></script>
+ @endsection
+
  @section('content')
      <main>
          <div class="container">
@@ -29,6 +33,9 @@
                          @foreach ($notifications as $notification)
                              <x-main.notifications :notification="$notification" />
                          @endforeach
+                         <div class="float-end">
+                             {{ $notifications->links() }}
+                         </div>
                      @endif
                  </div>
              </div>

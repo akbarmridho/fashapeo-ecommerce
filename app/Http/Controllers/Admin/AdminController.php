@@ -17,7 +17,7 @@ class AdminController extends Controller
     public function notification()
     {
         $user = Auth::guard('admin')->user();
-        $notifications = $user->notifications;
+        $notifications = $user->notifications()->paginate(7);
 
         return view('admin.pages.notifications', compact('notifications'));
     }

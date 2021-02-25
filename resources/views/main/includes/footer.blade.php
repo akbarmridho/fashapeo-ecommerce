@@ -40,18 +40,30 @@
                 <h5 class="text-uppercase">Contact Us</h5>
 
                 <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="#!" class="text-light"><i class="far fa-envelope me-2"></i>Email</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-light"><i class="fab fa-facebook-square me-2"></i>Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-light"><i class="fab fa-twitter-square me-2"></i>Twitter</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="text-light"><i class="fab fa-whatsapp me-2"></i>Whatsapp</a>
-                    </li>
+                    @if (setting('contact.email'))
+                        <li>
+                            <a href="{{ 'mailto:' . setting('contact.email') }}" class="text-light"><i
+                                    class="far fa-envelope me-2"></i>Email</a>
+                        </li>
+                    @endif
+                    @if (setting('contact.facebook'))
+                        <li>
+                            <a href="{{ 'https://facebook.com/' . setting('contact.facebook') }}"
+                                class="text-light"><i class="fab fa-facebook-square me-2"></i>Facebook</a>
+                        </li>
+                    @endif
+                    @if (setting('contact.twitter'))
+                        <li>
+                            <a href="{{ 'https://twitter.com/' . setting('contact.twitter') }}" class="text-light"><i
+                                    class="fab fa-twitter-square me-2"></i>Twitter</a>
+                        </li>
+                    @endif
+                    @if (setting('contact.whatsapp'))
+                        <li>
+                            <a href="{{ 'https://wa.me/' . setting('contact.whatsapp') }}" class="text-light"><i
+                                    class="fab fa-whatsapp me-2"></i>Whatsapp</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">

@@ -2,7 +2,7 @@
 @if ($notification->unread()) bg-notification @endif
     " data-id="{{ $notification->id }}">
     <div class="card-header"><b>{{ $notification->data['title'] }}</b><span
-            class="small">{{ $notification->created_at }}</span></div>
+            class="small ps-2">{{ $notification->created_at }}</span></div>
     <div class="card-body">
         <p class="card-text">
             {{ $notification->data['message'] }}

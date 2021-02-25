@@ -3,6 +3,7 @@
     "/js/admin.js": "/js/admin.js",
     "/js/pages/main.js": "/js/pages/main.js",
     "/js/pages/product.js": "/js/pages/product.js",
+    "/js/pages/notification.js": "/js/pages/notification.js",
     "/js/pages/customer/cart.js": "/js/pages/customer/cart.js",
     "/js/pages/customer/wishlist.js": "/js/pages/customer/wishlist.js",
     "/js/pages/customer/createAddress.js": "/js/pages/customer/createAddress.js",

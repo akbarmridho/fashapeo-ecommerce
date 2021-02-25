@@ -23,10 +23,14 @@ class SettingController extends Controller
     public function contact(Request $request)
     {
         (new UpdateContact)->update($request->all());
+
+        return back();
     }
 
     public function mail(Request $request)
     {
         (new UpdateMail)->update($request->all());
+
+        return back();
     }
 }
