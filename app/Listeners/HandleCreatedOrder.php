@@ -3,10 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\OrderCreated as OrderCreatedEvent;
+use App\Mail\OrderConfirmed as OrderCreatedMail;
 use App\Notifications\OrderCreated;
 use App\Notifications\Admin\OrderCreated as AdminOrderCreated;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -32,5 +34,6 @@ class HandleCreatedOrder
     {
         $event->customer->notify(new OrderCreated($event->order));
         Notification::send(Admin::all(), new AdminOrderCreated($event->order));
+        Mail::to($event->order->customer->email)->send(new OrderCreatedMail($event->order->toArray()));
     }
 }

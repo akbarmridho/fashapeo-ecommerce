@@ -43,25 +43,33 @@
                     @if (setting('contact.email'))
                         <li>
                             <a href="{{ 'mailto:' . setting('contact.email') }}" class="text-light"><i
-                                    class="far fa-envelope me-2"></i>Email</a>
+                                    class="far fa-envelope me-2"></i>{{ setting('contact.email') }}</a>
+                        </li>
+                    @endif
+                    @if (setting('contact.instagram'))
+                        <li>
+                            <a href="{{ 'https://instagram.com/' . setting('contact.instagram') }}"
+                                class="text-light"><i
+                                    class="fab fa-instagram me-2"></i>{{ '@' . setting('contact.instagram') }}</a>
                         </li>
                     @endif
                     @if (setting('contact.facebook'))
                         <li>
                             <a href="{{ 'https://facebook.com/' . setting('contact.facebook') }}"
-                                class="text-light"><i class="fab fa-facebook-square me-2"></i>Facebook</a>
+                                class="text-light"><i
+                                    class="fab fa-facebook-square me-2"></i>{{ setting('contact.facebook') }}</a>
                         </li>
                     @endif
                     @if (setting('contact.twitter'))
                         <li>
                             <a href="{{ 'https://twitter.com/' . setting('contact.twitter') }}" class="text-light"><i
-                                    class="fab fa-twitter-square me-2"></i>Twitter</a>
+                                    class="fab fa-twitter-square me-2"></i>{{ '@' . setting('contact.twitter') }}</a>
                         </li>
                     @endif
                     @if (setting('contact.whatsapp'))
                         <li>
                             <a href="{{ 'https://wa.me/' . setting('contact.whatsapp') }}" class="text-light"><i
-                                    class="fab fa-whatsapp me-2"></i>Whatsapp</a>
+                                    class="fab fa-whatsapp me-2"></i>{{ '+' . setting('contact.whatsapp') }}</a>
                         </li>
                     @endif
                 </ul>
@@ -74,5 +82,5 @@
         </div>
     </div>
 
-    <div class="text-center p-3">© {{ date('Y') }} Copyright: Fashapeo</div>
+    <div class="text-center p-3">© {{ date('Y') }} Copyright: {{ config('app.name') }}</div>
 </footer>

@@ -3,10 +3,12 @@
 namespace App\Listeners;
 
 use App\Models\Admin;
+use App\Mail\OrderFailed;
 use App\Notifications\OrderCancelled;
 use App\Notifications\Admin\OrderCancelled as AdminOrderCancelled;
 use App\Events\OrderCancelled as OrderCancelledEvent;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -32,5 +34,6 @@ class HandleOrderCancelled
     {
         $event->customer->notify(new OrderCancelled($event->order));
         Notification::send(Admin::all(), new AdminOrderCancelled($event->order));
+        Mail::to($event->order->customer->email)->send(new OrderFailed($event->order->toArray()));
     }
 }

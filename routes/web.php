@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Main\MainPageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Main\ContactController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,10 +33,11 @@ Route::get('/category/{category:slug}', [MainPageController::class, 'category'])
 Route::get('/search', [MainPageController::class, 'search'])
     ->name('products.search');
 
+Route::get('/contact-us', [ContactController::class, 'index'])
+    ->name('contact');
+
+Route::post('/contact-us', [ContactController::class, 'contact']);
+
 // Route::get('/page', function () {
 //     return view('customer.pages.single-page');
-// });
-
-// Route::get('/contact', function () {
-//     return view('customer.pages.contact');
 // });
