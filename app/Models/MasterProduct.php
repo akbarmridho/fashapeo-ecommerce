@@ -60,7 +60,9 @@ class MasterProduct extends Model
 
     public function getMainImageAttribute()
     {
-        return $this->images->sortByDesc('order')->first();
+        return Cache::tags(['products'])->remember('product.' . $this->id . 'img', 60 * 10, function () {
+            return $this->images->sortByDesc('order')->first();
+        });
     }
 
     public function getSoldAttribute()
@@ -97,12 +99,16 @@ class MasterProduct extends Model
 
     public function getPriceAttribute()
     {
-        return $this->calculatePrice();
+        return Cache::tags(['products'])->remember('product.' . $this->id . '.price', 60 * 30, function () {
+            return $this->calculatePrice();
+        });
     }
 
     public function getStockAttribute()
     {
-        return $this->products->sum('stock');
+        return Cache::tags(['products'])->remember('product.' . $this->id . '.stock', 60 * 10, function () {
+            return $this->products->sum('stock');
+        });
     }
 
     public function getSingleVariantAttribute()
@@ -119,44 +125,17 @@ class MasterProduct extends Model
 
     public function getProductInformationAttribute()
     {
-        $master = collect($this->products()->withRelationship()->get()->toArray());
-
-        $variants = $master->pluck('details')->flatten(1)->mapToGroups(function ($item, $key) {
-            return [$item['variant']['name'] => $item['variant_option']['name']];
-        })->map(function ($item, $key) {
-            return $item->unique();
+        return Cache::tags(['products'])->remember('product.' . $this->id . '.info', 60 * 60, function () {
+            return $this->serializeInformation();
         });
-
-        $products = $master->map(function ($item, $key) {
-            if ($item['active_discount']) {
-                $discountPrice = config('payment.currency_symbol') . (intval($item['price']) - intval($item['discount']['discount_value']));
-            } else {
-                $discountPrice = null;
-            }
-
-            $a = [
-                'id' => $item['id'],
-                'stock' => $item['stock'],
-                'image' => $item['image'] ? $item['image']['url'] : null,
-                'active' => $item['active'],
-                'price' => config('payment.currency_symbol') . $item['price'],
-                'discount_price' => $discountPrice,
-            ];
-
-            foreach ($item['details'] as $detail) {
-                $a[$detail['variant']['name']] = $detail['variant_option']['name'];
-            }
-
-            return $a;
-        });
-
-        return [
-            'variants' => $variants,
-            'products' => $products,
-        ];
     }
 
     public function getImagesFilepondJsonAttribute()
+    {
+        return $this->filepondImages();
+    }
+
+    protected function filepondImages()
     {
         $images = $this->images()->orderBy('order')->get();
 
@@ -214,6 +193,45 @@ class MasterProduct extends Model
             'min_final' => config('payment.currency_symbol') . $minModel['final_price'],
             'max_final' => config('payment.currency_symbol') . $maxModel['final_price'],
             'has_stock' => $this->stock > 0 ? true : false,
+        ];
+    }
+
+    protected function serializeInformation()
+    {
+        $master = collect($this->products()->withRelationship()->get()->toArray());
+
+        $variants = $master->pluck('details')->flatten(1)->mapToGroups(function ($item, $key) {
+            return [$item['variant']['name'] => $item['variant_option']['name']];
+        })->map(function ($item, $key) {
+            return $item->unique();
+        });
+
+        $products = $master->map(function ($item, $key) {
+            if ($item['active_discount']) {
+                $discountPrice = config('payment.currency_symbol') . (intval($item['price']) - intval($item['discount']['discount_value']));
+            } else {
+                $discountPrice = null;
+            }
+
+            $a = [
+                'id' => $item['id'],
+                'stock' => $item['stock'],
+                'image' => $item['image'] ? $item['image']['url'] : null,
+                'active' => $item['active'],
+                'price' => config('payment.currency_symbol') . $item['price'],
+                'discount_price' => $discountPrice,
+            ];
+
+            foreach ($item['details'] as $detail) {
+                $a[$detail['variant']['name']] = $detail['variant_option']['name'];
+            }
+
+            return $a;
+        });
+
+        return [
+            'variants' => $variants,
+            'products' => $products,
         ];
     }
 }

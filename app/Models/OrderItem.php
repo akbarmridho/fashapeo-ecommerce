@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class OrderItem extends Model
 {
@@ -36,12 +37,14 @@ class OrderItem extends Model
 
     public function getPriceSummaryAttribute()
     {
-        return [
-            'price' => config('payment.currency_symbol') . $this->price,
-            'price_cut' => $this->price_cut,
-            'after_cut' => config('payment.currency_symbol') . ($this->price - $this->price_cut),
-            'final_price' => config('payment.currency_symbol') . $this->final_price,
-        ];
+        return Cache::tags('order_items')->remember('item.' . $this->id, 60 * 5, function () {
+            return [
+                'price' => config('payment.currency_symbol') . $this->price,
+                'price_cut' => $this->price_cut,
+                'after_cut' => config('payment.currency_symbol') . ($this->price - $this->price_cut),
+                'final_price' => config('payment.currency_symbol') . $this->final_price,
+            ];
+        });
     }
 
     public function getImageAttribute()
