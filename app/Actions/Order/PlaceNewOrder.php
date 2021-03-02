@@ -49,7 +49,7 @@ class PlaceNewOrder
         if ($dsc = $product->active_discount) {
             $discount = $dsc->discount_value;
         } else {
-            $discount = 0;
+            $discount = null;
         }
 
         $orderItem = OrderItem::create([

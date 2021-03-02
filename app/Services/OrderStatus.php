@@ -30,7 +30,6 @@ class OrderStatus
     public function orderCreated(Order $order)
     {
         $this->statusUpdater->update($order, $this->status->orderCreated());
-        event(new OrderCreated($order));
     }
 
     public function orderProcessed(Order $order)
@@ -74,6 +73,7 @@ class OrderStatus
     public function shipmentCreated(Order $order)
     {
         $this->statusUpdater->update($order, $this->status->shipmentCreated());
+        event(new OrderCreated($order));
     }
 
     public function transcationSuccess(Order $order)

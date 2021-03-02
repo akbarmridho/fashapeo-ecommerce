@@ -34,6 +34,6 @@ class HandleConfirmedPayment
     {
         $event->customer->notify(new PaymentConfirmed($event->order));
         Notification::send(Admin::all(), new AdminPaymentConfirmed($event->order));
-        Mail::to($event->order->customer->email)->send(new OrderConfirmed($event->order->toArray()));
+        Mail::to($event->order->customer->email)->send(new OrderConfirmed($event->order->toArray(), $event->order->transaction->attributesToArray()));
     }
 }

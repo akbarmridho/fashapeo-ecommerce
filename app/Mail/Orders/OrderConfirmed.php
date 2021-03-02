@@ -12,10 +12,12 @@ class OrderConfirmed extends Mailable
     use Queueable, SerializesModels;
 
     public $content;
+    public $transaction;
 
-    public function __construct($content)
+    public function __construct($content, $transaction)
     {
         $this->content = $content;
+        $this->transaction = $transaction;
     }
 
     /**
@@ -26,6 +28,6 @@ class OrderConfirmed extends Mailable
     public function build()
     {
         return $this->subject('Your order #' . $this->content['order_number'] . ' payment has been confirmed')
-            ->markdown('email.orders.confirmed', ['content' => $this->content]);
+            ->markdown('email.orders.confirmed', ['content' => $this->content, 'transaction' => $this->transcation]);
     }
 }
