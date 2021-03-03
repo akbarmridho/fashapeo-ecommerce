@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CarouselController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CreatedProductController;
 use App\Http\Controllers\Admin\OrderController;
@@ -137,4 +138,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('setting/mail', [SettingController::class, 'mail'])->name('setting.mail');
 
     Route::post('setting/contact', [SettingController::class, 'contact'])->name('setting.contact');
+
+    Route::get('carousel', [CarouselController::class, 'index'])->name('carousel');
+
+    Route::get('carousel/create', [CarouselController::class, 'create'])->name('carousel.create');
+
+    Route::post('carousel/create', [CarouselController::class, 'store']);
 });

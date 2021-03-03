@@ -17,17 +17,21 @@ class CarouselController extends Controller
 
     public function index()
     {
-        //
+        return view('admin.pages.carousel');
     }
 
     public function create()
     {
-        //
+        return view('admin.pages.create-carousel');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        //
+        $this->carousel->create($request->all());
+
+        session()->flash('status', 'Carousel created');
+
+        return route('admin.carousel');
     }
 
     public function update()

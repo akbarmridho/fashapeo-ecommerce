@@ -94,7 +94,6 @@ class Filepond
         $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
         if (Storage::move($oldPath, $finalPath)) {
             $this->deleteTemporaryPath(\dirname($oldPath));
-
             return Storage::url($url);
         }
     }
@@ -113,6 +112,7 @@ class Filepond
 
         $finalPath = $targetPath . DIRECTORY_SEPARATOR . $imageName;
         if (Storage::disk(config('image.img_disk'))->move($oldPath, $finalPath)) {
+            $this->deleteTemporaryPath(\dirname($oldPath));
             return Storage::disk(config('image.img_disk'))->url($url);
         }
     }

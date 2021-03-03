@@ -87,6 +87,25 @@ const UploadMasterProductImage = {
     // }
 };
 
+const CarouselImage = {
+    server: {
+        process: "/api/image/process",
+        revert: "/api/image/delete",
+        restore: null,
+        load: "/api/image?type=product&load=",
+        fetch: null,
+    },
+    maxFileSize: "3MB",
+    maxFiles: 1,
+    allowMultiple: false,
+    required: true,
+    stylePanelAspectRatio: 2,
+    styleItemPanelAspectRatio: 2,
+    imageCropAspectRatio: 2,
+    credits: true,
+    imageResizeTargetWidth: 1200,
+};
+
 function dec2hex(dec) {
     return dec.toString(16).padStart(2, "0");
 }
@@ -97,4 +116,4 @@ const stringGenerator = (len) => {
     return Array.from(arr, dec2hex).join("");
 };
 
-export { UploadMasterProductImage, UploadProductImage };
+export { UploadMasterProductImage, UploadProductImage, CarouselImage };
