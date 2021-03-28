@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Address;
-use App\Models\User;
+use App\Models\Customer;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AddressPolicy
@@ -20,7 +20,7 @@ class AddressPolicy
         //
     }
 
-    public function update(User $user, Address $address)
+    public function update(Customer $user, Address $address)
     {
         return $user->id === $address->addressable->id;
     }

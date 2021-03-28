@@ -16,7 +16,7 @@ class VariantsIsValid implements Rule
         $variants = $this->retreiveUsedVariant($value);
 
         if (! $variants) {
-            return true;
+            return false;
         }
 
         foreach ($variants as $variant) {
